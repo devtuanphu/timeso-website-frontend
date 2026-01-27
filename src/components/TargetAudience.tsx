@@ -1,0 +1,138 @@
+"use client";
+import Image from "next/image";
+
+// Image assets from Figma (node 44:6869)
+const INDUSTRIES = [
+  {
+    name: "Công ty Dịch vụ/Bán lẻ",
+    description: "Quản lý ca kíp, lịch làm việc phức tạp tại F&B, bán lẻ, và call center.",
+    img: "/images/industries/5335aa5a5b4407aacac944d21dc27ba3d924662d.png",
+  },
+  {
+    name: "Nhà máy – Xưởng Sản xuất",
+    description: "Chấm công chính xác và theo dõi hiệu suất làm việc của dây chuyền.",
+    img: "/images/industries/137494bf6ea5d4ae4f904542819ead4ced389612.png",
+  },
+  {
+    name: "Doanh nghiệp Công nghệ/Startup",
+    description: "Hệ thống quản lý nhân sự linh hoạt, dễ mở rộng khi tăng trưởng nhanh.",
+    img: "/images/industries/409ae12f959767b7ff87251e30bc2f13cae31f46.png",
+  },
+  {
+    name: "Chuỗi Cửa hàng & Showroom",
+    description: "Quản lý đồng bộ chấm công và ca kíp cho nhân viên tại nhiều điểm bán.",
+    img: "/images/industries/b2e778a95e6d251fccc53bb6025a4d2d23da5db4.png",
+  },
+  {
+    name: "Công ty Vận hành Lực lượng Lớn",
+    description: "Quản lý tập trung số lượng lớn nhân viên dịch vụ/ca kíp.",
+    img: "/images/industries/a107e23357b63b9e7c8eee9925beb1c919204abc.png",
+  },
+];
+
+export default function TargetAudience() {
+  return (
+    <section className="bg-white py-12 md:py-[80px]" id="customers">
+      <div className="mx-auto flex max-w-[1280px] flex-col items-center gap-6 px-4 md:gap-[40px] md:px-[32px]">
+        {/* Heading */}
+        <h2 className="text-center text-2xl font-bold tracking-tight text-[#101828] capitalize md:text-[48px] md:tracking-[-0.96px]">
+          Ai Nên Tin Dùng{" "}
+          <span
+            className="bg-clip-text"
+            style={{
+              backgroundImage: "linear-gradient(90deg, #00E2E2 0%, #00969E 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            Timeso
+          </span>
+        </h2>
+
+        {/* Cards - Mobile: single column full width, Desktop: original layout */}
+        <div className="flex w-full flex-col gap-4 md:gap-[24px]">
+          {/* Mobile: Single column full width cards */}
+          <div className="flex flex-col gap-4 md:hidden">
+            {INDUSTRIES.map((ind, i) => (
+              <IndustryCardMobile key={i} industry={ind} />
+            ))}
+          </div>
+
+          {/* Desktop: Original layout */}
+          <div className="hidden md:flex md:flex-col md:gap-[24px]">
+            {/* First Row: 2 cards */}
+            <div className="flex justify-center gap-[24px]">
+              {INDUSTRIES.slice(0, 2).map((ind, i) => (
+                <IndustryCard key={i} industry={ind} />
+              ))}
+            </div>
+
+            {/* Second Row: 3 cards */}
+            <div className="flex justify-center gap-[24px]">
+              {INDUSTRIES.slice(2, 5).map((ind, i) => (
+                <IndustryCard key={i + 2} industry={ind} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function IndustryCard({
+  industry,
+}: {
+  industry: { name: string; description: string; img: string };
+}) {
+  return (
+    <div className="relative h-[340px] w-[280px] overflow-hidden rounded-tl-[12px] rounded-tr-[12px] rounded-br-[12px] rounded-bl-[48px] bg-[rgba(243,244,246,0.7)]">
+      {/* Background Image */}
+      <div className="absolute right-[7.5%] bottom-[64px] left-[7.5%] h-[286px]">
+        <Image src={industry.img} alt={industry.name} fill className="object-cover" />
+      </div>
+
+      {/* Gradient Overlay from transparent to #f7f7f8 */}
+      <div
+        className="absolute top-1/2 right-0 bottom-0 left-0"
+        style={{
+          background: "linear-gradient(to bottom, rgba(255,255,255,0) 0%, #f7f7f8 40%)",
+        }}
+      />
+
+      {/* Text Content - positioned at bottom */}
+      <div className="absolute right-0 bottom-[24px] left-0 flex flex-col items-center gap-[8px] px-[16px] text-center">
+        <h3 className="text-[16px] font-bold text-black">{industry.name}</h3>
+        <p className="text-[12px] leading-[19.5px] text-[#45556C]">{industry.description}</p>
+      </div>
+    </div>
+  );
+}
+
+function IndustryCardMobile({
+  industry,
+}: {
+  industry: { name: string; description: string; img: string };
+}) {
+  return (
+    <div className="relative w-full overflow-hidden rounded-[16px] bg-[rgba(243,244,246,0.7)]">
+      {/* Image Container */}
+      <div className="relative h-[180px] w-full">
+        <Image src={industry.img} alt={industry.name} fill className="object-cover" />
+        {/* Gradient Overlay */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "linear-gradient(to bottom, rgba(255,255,255,0) 40%, #f7f7f8 100%)",
+          }}
+        />
+      </div>
+
+      {/* Text Content */}
+      <div className="flex flex-col items-center gap-2 px-4 pt-2 pb-5 text-center">
+        <h3 className="text-base font-bold text-black">{industry.name}</h3>
+        <p className="text-sm leading-relaxed text-[#45556C]">{industry.description}</p>
+      </div>
+    </div>
+  );
+}
