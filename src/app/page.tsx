@@ -13,7 +13,7 @@ import NewsAndBlog from "@/components/NewsAndBlog";
 import Testimonials from "@/components/Testimonials";
 import BottomCTA from "@/components/BottomCTA";
 
-export default function Home() {
+export default async function Home() {
   return (
     <main>
       <Hero />
