@@ -15,27 +15,27 @@ const FEATURES = [
   {
     title: "Quản lý nhân sự thông minh AI",
     desc: "Nhân viên đông, quản lý vẫn gọn gàng.",
-    href: "#",
+    href: "/quan-ly-nhan-su",
   },
   {
     title: "Chấm công & theo dõi KPI",
     desc: "Chấm công chuẩn, đánh giá rõ ràng.",
-    href: "#",
+    href: "/cham-cong",
   },
   {
     title: "Auto sắp ca làm thông minh",
     desc: "Xếp ca tối ưu, giảm chi phí.",
-    href: "#",
+    href: "/sap-ca-thong-minh",
   },
   {
     title: "Quản lý tài sản & hàng hóa",
     desc: "Theo dõi xuất-nhập-tồn tiện lợi.",
-    href: "#",
+    href: "/quan-ly-tai-san",
   },
   {
     title: "Quản lý đơn hàng",
     desc: "Tạo đơn hàng nhanh, thanh toán dễ dàng.",
-    href: "#",
+    href: "/quan-ly-don-hang",
   },
 ];
 

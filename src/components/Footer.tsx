@@ -6,11 +6,9 @@ import Image from "next/image";
 // Logo image
 const LOGO_IMAGE = "/images/footer/logo-footer.png";
 
-// App store badges (same as Hero)
-const APP_STORE_BADGE =
-  "https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1319760000";
-const GOOGLE_PLAY_BADGE =
-  "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png";
+// App store badges - Local paths
+const APP_STORE_BADGE = "/images/app-store-badge.svg";
+const GOOGLE_PLAY_BADGE = "/images/google-play-badge.png";
 
 // Contact icons from Figma
 const PHONE_ICON = "/images/footer/c5b35aea493fff243b2d2a3fbe675fce8e2d4c7a.svg";
@@ -170,7 +168,6 @@ export default function Footer() {
                   width={132}
                   height={44}
                   className="h-[44px] w-auto"
-                  unoptimized
                 />
               </Link>
               <Link href="#" className="transition-opacity hover:opacity-80">
@@ -180,7 +177,6 @@ export default function Footer() {
                   width={165}
                   height={64}
                   className="-my-2 h-[60px] w-auto"
-                  unoptimized
                 />
               </Link>
             </div>
@@ -277,7 +273,6 @@ export default function Footer() {
                   width={132}
                   height={44}
                   className="h-[44px]"
-                  unoptimized
                 />
               </Link>
               <Link href="#" className="transition-opacity hover:opacity-80">
@@ -287,7 +282,6 @@ export default function Footer() {
                   width={165}
                   height={64}
                   className="-my-2 h-[64px]"
-                  unoptimized
                 />
               </Link>
             </div>

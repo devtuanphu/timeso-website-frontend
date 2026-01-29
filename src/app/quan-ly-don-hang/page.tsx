@@ -1,0 +1,491 @@
+import Image from "next/image";
+import Link from "next/link";
+
+// Assets from Figma
+const heroImage = "/figma_assets/f39d24ee2279b11358426c47a3f20d748d9bfa5a.png";
+
+export default async function OrderManagementPage() {
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden pt-[120px] pb-16 md:pt-[160px] md:pb-24">
+        {/* Background gradient - light cyan arc */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 h-full w-[70%] rounded-bl-[50%] bg-linear-to-bl from-[#01CFCF]/20 via-[#55DFDF]/10 to-transparent" />
+        </div>
+
+        <div className="relative container mx-auto px-4">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            {/* Left Content */}
+            <div className="text-center lg:text-left">
+              <h1 className="mb-6 text-[28px] leading-tight font-semibold text-[#101828] md:text-4xl lg:text-[48px] lg:leading-[1.2]">
+                <span className="">Quản Lý Đơn Hàng</span>
+              </h1>
+              <ul className="mx-auto mb-8 max-w-lg space-y-3 text-[14px] leading-relaxed text-[#475467] md:text-lg lg:mx-0">
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#475467]" />
+                  <span>Timeso giúp cửa hàng tạo và quản lý đơn hàng nhanh chóng.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#475467]" />
+                  <span>
+                    Khi khách đến, nhân viên chỉ cần bấm tạo đơn và đặt lịch phục vụ cho khách ngay
+                    trên hệ thống, giúp theo dõi đơn rõ ràng, <strong>tránh nhầm lẫn</strong> và{" "}
+                    <strong>phục vụ đúng thời gian</strong>.
+                  </span>
+                </li>
+              </ul>
+
+              {/* App Store Badges */}
+              <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6 lg:justify-start">
+                <Link
+                  href="#"
+                  className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
+                >
+                  <Image
+                    src="/images/app-store-badge.svg"
+                    alt="Download on the App Store"
+                    width={132}
+                    height={44}
+                    className="h-[40px] w-auto md:h-[44px]"
+                  />
+                </Link>
+                <Link
+                  href="#"
+                  className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
+                >
+                  <Image
+                    src="/images/google-play-badge.png"
+                    alt="Get it on Google Play"
+                    width={165}
+                    height={64}
+                    className="-my-2 h-[56px] w-auto md:h-[64px]"
+                  />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Image */}
+            <div className="relative">
+              <div className="relative mx-auto h-[400px] w-full max-w-[600px] lg:h-[569px]">
+                <Image
+                  src={heroImage}
+                  alt="Timeso Order Management App"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How it works Section - matching Figma node 325:6369 (responsive: 337:9170) */}
+      <section className="bg-linear-to-b from-[#dcffff] to-[#f1ffff] py-12 md:py-16 lg:py-24">
+        <div className="mx-auto max-w-[1280px] px-4 md:px-8">
+          {/* Part 1: Image Left, Content Right */}
+          <div className="grid grid-cols-1 items-center gap-6 md:gap-8 lg:grid-cols-2 lg:gap-16">
+            {/* Left - Circular Image */}
+            <div className="flex justify-center">
+              <div className="relative h-[200px] w-[200px] overflow-hidden rounded-full sm:h-[280px] sm:w-[280px] md:h-[350px] md:w-[350px] lg:h-[450px] lg:w-[450px]">
+                <Image
+                  src="/figma_assets/11582fd5b293911fb69adf7468b645381045d04b.png"
+                  alt="Timeso App Order Management"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Right - Content */}
+            <div className="flex flex-col justify-center text-center lg:text-left">
+              <h2 className="mb-3 text-[22px] font-bold text-[#101828] sm:text-[28px] md:mb-4 md:text-[36px] lg:text-[40px]">
+                Cửa hàng vận hành thế nào với Timeso?
+              </h2>
+              <p className="mb-4 text-[14px] font-bold text-[#101828] sm:text-[16px] md:mb-6 md:text-[20px]">
+                Tạo đơn – đặt lịch – phục vụ đúng hẹn
+              </p>
+              <ul className="mx-auto max-w-[400px] space-y-2 text-left text-[13px] leading-[24px] text-[#101828] sm:text-[14px] sm:leading-[28px] md:mx-0 md:max-w-none md:space-y-3 md:text-[16px]">
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#101828]" />
+                  <span>
+                    Khi khách đến cửa hàng, nhân viên chỉ cần tạo đơn và đặt lịch cho khách ngay
+                    trên hệ thống.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#101828]" />
+                  <span>
+                    Mọi thông tin được lưu lại rõ ràng: thời gian, dịch vụ, người phụ trách.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Horizontal Divider */}
+          <div className="my-8 border-t border-[#01CFCF]/30 md:my-12 lg:my-16" />
+
+          {/* Part 2: Content Left, Image Right */}
+          <div className="grid grid-cols-1 items-center gap-6 md:gap-8 lg:grid-cols-2 lg:gap-16">
+            {/* Left - Content (on mobile, this appears after image) */}
+            <div className="order-2 flex flex-col justify-center text-center lg:order-1 lg:text-left">
+              <h2 className="mb-4 text-[22px] font-bold text-[#101828] sm:text-[28px] md:mb-6 md:text-[36px] lg:text-[40px]">
+                Lợi ích chính:
+              </h2>
+              <ul className="mx-auto max-w-[400px] space-y-2 text-left text-[13px] leading-[24px] text-[#101828] sm:text-[14px] sm:leading-[28px] md:mx-0 md:max-w-none md:space-y-4 md:text-[16px]">
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#101828]" />
+                  <span>Tạo đơn nhanh, không cần ghi chép thủ công</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#101828]" />
+                  <span>Đặt lịch cho khách ngay khi tiếp nhận</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#101828]" />
+                  <span>Tránh trùng lịch, nhầm ca hoặc quên khách</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Right - Circular Image (on mobile, this appears first) */}
+            <div className="order-1 flex justify-center lg:order-2">
+              <div className="relative h-[200px] w-[200px] overflow-hidden rounded-full sm:h-[280px] sm:w-[280px] md:h-[350px] md:w-[350px] lg:h-[450px] lg:w-[450px]">
+                <Image
+                  src="/figma_assets/1f652fa7d0266d712fa04a12871c8780f4b43e72.png"
+                  alt="Timeso Benefits"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Quản Lý Vận Hành Thông Minh Section */}
+      <section className="bg-white py-16 md:py-20">
+        <div className="mx-auto max-w-[1280px] px-4 md:px-8">
+          <div className="mb-12 text-center">
+            <h2 className="mb-2 text-[24px] font-bold text-[#101828] md:text-[32px] lg:text-[40px]">
+              Quản Lý Vận Hành Thông Minh Với
+            </h2>
+            <p className="text-[24px] font-bold text-[#01CFCF] md:text-[32px] lg:text-[40px]">
+              AI Timeso
+            </p>
+            <p className="mt-4 text-[14px] text-[#475467] md:text-[16px]">
+              Chỉ với vài bước – dễ sử dụng – mọi ca vẫn hoàn thành tự định hướng
+            </p>
+          </div>
+
+          {/* Feature Cards */}
+          <div className="space-y-12">
+            {/* Feature 1 - Theo dõi đơn hàng rõ ràng */}
+            <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
+              <div className="relative h-[300px] overflow-hidden rounded-[16px] md:h-[350px]">
+                <Image
+                  src="/figma_assets/22e4c682258f224f70841b23f4805d4f91d23c3a.png"
+                  alt="Order Tracking"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div>
+                <h3 className="mb-4 text-[20px] font-bold text-[#101828] md:text-[24px]">
+                  Theo dõi đơn hàng rõ ràng
+                </h3>
+                <p className="mb-4 text-[14px] text-[#475467] md:text-[16px]">
+                  Mọi đơn hàng luôn được cập nhật trực tiếp.
+                </p>
+                <ul className="space-y-2 text-[14px] leading-relaxed text-[#475467] md:text-[16px]">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#475467]" />
+                    <span>
+                      Tổng quan của tiến trình đơn, trạng thái hàng đang xử lý trong, thực hiện
+                      xong, đơn hàng đã chuẩn bị xong, đơn hàng hoàn tất.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#475467]" />
+                    <span>
+                      Cửa hàng dễ dàng xem được công điểm và tiến độ xử lý từng khách hàng.
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Feature 2 - Đồng bộ với nhân viên & lịch làm việc */}
+            <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
+              <div className="order-2 lg:order-1">
+                <h3 className="mb-4 text-[20px] font-bold text-[#101828] md:text-[24px]">
+                  Đồng bộ với nhân viên & lịch làm việc
+                </h3>
+                <p className="mb-4 text-[14px] text-[#475467] md:text-[16px]">
+                  Với hệ thống sắp xếp, quản lý thông minh, lịch làm việc được gắn liền với nhân
+                  viên và tự động cập nhật khi có thay đổi.
+                </p>
+                <ul className="space-y-2 text-[14px] leading-relaxed text-[#475467] md:text-[16px]">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#475467]" />
+                    <span>Mỗi đơn gắn rõ người phụ trách.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#475467]" />
+                    <span>Tối ưu hóa thời gian phục vụ nhân viên.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#475467]" />
+                    <span>Phân bố công việc hợp lý trong ngày.</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="relative order-1 h-[300px] overflow-hidden rounded-[16px] md:h-[350px] lg:order-2">
+                <Image
+                  src="/figma_assets/927772feb12cf7bb3461f8731b250063c9238795.png"
+                  alt="Staff Sync"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Feature 3 - Phù hợp cho cửa hàng nhỏ */}
+            <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
+              <div className="relative h-[300px] overflow-hidden rounded-[16px] md:h-[350px]">
+                <Image
+                  src="/figma_assets/2fb5e002bbde20b8fcf8bb51fa906026401747e4.png"
+                  alt="Small Business"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div>
+                <h3 className="mb-4 text-[20px] font-bold text-[#101828] md:text-[24px]">
+                  Phù hợp cho cửa hàng nhỏ
+                </h3>
+                <p className="mb-4 text-[14px] text-[#475467] md:text-[16px]">
+                  Giải pháp tinh gọn cho các doanh nghiệp nhỏ, dễ dàng triển khai và vận hành.
+                </p>
+                <ul className="space-y-2 text-[14px] leading-relaxed text-[#475467] md:text-[16px]">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#475467]" />
+                    <span>Tạo đơn nhanh chóng, dễ dùng, phù hợp cho một đội ngũ nhỏ.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#475467]" />
+                    <span>Phù hợp cho một người, một doanh nghiệp.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#475467]" />
+                    <span>Phù hợp với Timeso mà không cần thao tác phức tạp.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section - Đa lĩnh vực */}
+      <section className="bg-white px-4 py-16 md:px-8 md:py-[80px]">
+        <div className="mx-auto max-w-[1280px]">
+          <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-16">
+            {/* Left Content */}
+            <div className="flex flex-col items-center text-center lg:w-[45%] lg:items-start lg:text-left">
+              <p className="mb-3 text-[14px] text-[#212121] md:text-[16px]">Phát triển ứng dụng</p>
+              <h2 className="mb-8 text-[28px] font-bold tracking-[-0.02em] text-[#01CFCF] uppercase md:mb-10 md:text-[40px] lg:text-[56px]">
+                ĐA LĨNH VỰC
+              </h2>
+
+              {/* Stats - vertical on mobile, horizontal on md+ */}
+              <div className="flex w-full flex-col items-center gap-6 md:flex-row md:items-start md:gap-8">
+                {[
+                  { value: "12", label: "Ngành nghề áp dụng từ bán lẻ, F&B đến sản xuất" },
+                  { value: "30%", label: "Tăng hiệu suất vận hành HR trung bình" },
+                  { value: "5.000+", label: "Nhân viên được quản lý và chấm công bằng AI" },
+                ].map((stat, idx) => (
+                  <div
+                    key={idx}
+                    className="flex flex-col items-center text-center md:flex-1 lg:items-start lg:text-left"
+                  >
+                    <p className="mb-2 text-[32px] font-bold text-[#212121] md:text-[40px] lg:text-[48px]">
+                      {stat.value}
+                    </p>
+                    <p className="text-[14px] leading-[20px] text-[#475467]">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Images - Circular scattered layout - Scaled for mobile */}
+            <div className="relative mt-8 h-[400px] w-full lg:mt-0 lg:h-[650px] lg:w-[55%]">
+              <div className="absolute top-0 left-1/2 h-[650px] w-[580px] origin-top -translate-x-1/2 scale-[0.6] sm:scale-75 md:scale-90 lg:static lg:top-auto lg:left-auto lg:w-full lg:origin-top-left lg:translate-x-0 lg:scale-100">
+                {/* === LEFT SIDE === */}
+
+                {/* Left top - Cafe scene */}
+                <div className="absolute top-[80px] left-0 h-[100px] w-[100px] overflow-hidden rounded-[12px] shadow-[0px_22px_64px_0px_rgba(22,28,45,0.19)]">
+                  <Image
+                    src="/images/recruitment/c29b80739a21e6e6f8454883c205bbe7ec0bece7.png"
+                    alt="Cafe"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Cyan Dots - left middle (below cafe) */}
+                <div className="absolute top-[200px] left-[15px] grid grid-cols-7 gap-[6px]">
+                  {[...Array(56)].map((_, i) => (
+                    <div key={i} className="h-[6px] w-[6px] rounded-full bg-[#00E2E2]" />
+                  ))}
+                </div>
+
+                {/* Left bottom - Restaurant with drinks */}
+                <div className="absolute top-[350px] left-0 h-[140px] w-[120px] overflow-hidden rounded-[12px] shadow-[0px_22px_64px_0px_rgba(22,28,45,0.19)]">
+                  <Image
+                    src="/images/recruitment/302e714f58fb2257078dca46e95644f6aba9f063.png"
+                    alt="Restaurant"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* === TOP === */}
+
+                {/* Top center - Scanner (above main) */}
+                <div className="absolute top-0 left-[220px] h-[80px] w-[130px] overflow-hidden rounded-[12px] shadow-[0px_22px_64px_0px_rgba(22,28,45,0.19)]">
+                  <Image
+                    src="/images/recruitment/cba621839bc1ea790ec7c154187f1ea99c30bcaf.png"
+                    alt="Scanner"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* === CENTER === */}
+
+                {/* Main large center image */}
+                <div className="absolute top-[100px] left-[140px] h-[350px] w-[280px] overflow-hidden rounded-[16px] shadow-[0px_22px_64px_0px_rgba(22,28,45,0.19)]">
+                  <Image
+                    src="/images/recruitment/092303d6b5d08b91913494a824974d41576925b6.png"
+                    alt="Business Owner"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* === RIGHT SIDE === */}
+
+                {/* Right top - Skyscraper */}
+                <div className="absolute top-[100px] right-0 h-[110px] w-[110px] overflow-hidden rounded-[12px] shadow-[0px_22px_64px_0px_rgba(22,28,45,0.19)]">
+                  <Image
+                    src="/images/recruitment/59aa5e0633c5fca8d22df2512de0f75309adbc61.png"
+                    alt="Skyscraper"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Right middle - Spa */}
+                <div className="absolute top-[240px] right-0 h-[120px] w-[130px] overflow-hidden rounded-[12px] shadow-[0px_22px_64px_0px_rgba(22,28,45,0.19)]">
+                  <Image
+                    src="/images/recruitment/66056b79e40cf5f1996db88693618e15b5821922.png"
+                    alt="Spa"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Right bottom - Warehouse */}
+                <div className="absolute top-[390px] right-0 h-[130px] w-[140px] overflow-hidden rounded-[12px] shadow-[0px_22px_64px_0px_rgba(22,28,45,0.19)]">
+                  <Image
+                    src="/images/recruitment/4209405a7a0ff7ca7d106c8406eb08ad095ed876.png"
+                    alt="Warehouse"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* === BOTTOM === */}
+
+                {/* Bottom center - Exhibition */}
+                <div className="absolute top-[470px] left-[250px] h-[110px] w-[130px] overflow-hidden rounded-[12px] shadow-[0px_22px_64px_0px_rgba(22,28,45,0.19)]">
+                  <Image
+                    src="/images/recruitment/4c59d259432e0ebbba2d36665b07b30807b01fed.png"
+                    alt="Exhibition"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Bottom left - Office meeting */}
+                <div className="absolute top-[580px] left-[140px] h-[100px] w-[100px] overflow-hidden rounded-[12px] shadow-[0px_22px_64px_0px_rgba(22,28,45,0.19)]">
+                  <Image
+                    src="/images/recruitment/ee7c6dcf45a3ab37da88ff4c8e46e7253921d18c.png"
+                    alt="Meeting"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="bg-white px-4 py-12 md:px-8 md:py-24">
+        <div className="mx-auto max-w-[1280px]">
+          <div className="flex flex-col items-center overflow-hidden rounded-[16px] bg-[#E6FEFF] p-6 md:flex-row md:rounded-[24px] md:p-0">
+            {/* Left Content */}
+            <div className="flex-1 text-center md:p-16 md:text-left">
+              <h2 className="mb-3 text-[18px] font-semibold tracking-[-0.02em] text-[#101828] md:mb-4 md:text-[28px] lg:text-[36px]">
+                Start your free trial
+              </h2>
+              <p className="mb-5 text-[12px] text-[#475467] md:mb-6 md:text-[16px] lg:text-[20px]">
+                Personal performance tracking made easy.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start md:gap-6">
+                <Link
+                  href="#"
+                  className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
+                >
+                  <Image
+                    src="/images/app-store-badge.svg"
+                    alt="Download on the App Store"
+                    width={132}
+                    height={44}
+                    className="h-[36px] w-auto md:h-[44px]"
+                  />
+                </Link>
+                <Link
+                  href="#"
+                  className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
+                >
+                  <Image
+                    src="/images/google-play-badge.png"
+                    alt="Get it on Google Play"
+                    width={165}
+                    height={64}
+                    className="-my-2 h-[52px] w-auto md:h-[64px]"
+                  />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Image */}
+            <div className="relative mt-6 h-[180px] w-full md:mt-0 md:h-[342px] md:w-[400px]">
+              <Image
+                src="/images/recruitment/0fde196edc3946aa5fa9569f9c8de980a700b345.png"
+                alt="Timeso App"
+                fill
+                className="object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

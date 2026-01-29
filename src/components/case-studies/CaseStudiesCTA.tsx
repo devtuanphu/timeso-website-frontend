@@ -2,10 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 const CTA_IMAGE = "/images/case-studies/image 2555.png";
-const APP_STORE_BADGE =
-  "https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1319760000";
-const GOOGLE_PLAY_BADGE =
-  "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png";
+const APP_STORE_BADGE = "/images/app-store-badge.svg";
+const GOOGLE_PLAY_BADGE = "/images/google-play-badge.png";
 
 export default function CaseStudiesCTA() {
   return (
@@ -34,7 +32,6 @@ export default function CaseStudiesCTA() {
                     width={132}
                     height={44}
                     className="h-[44px] w-auto"
-                    unoptimized
                   />
                 </Link>
                 <Link
@@ -47,7 +44,6 @@ export default function CaseStudiesCTA() {
                     width={165}
                     height={64}
                     className="-my-2 h-[56px] w-auto"
-                    unoptimized
                   />
                 </Link>
               </div>

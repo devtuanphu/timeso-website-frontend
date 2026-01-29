@@ -1,6 +1,3 @@
-"use client";
-
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -93,7 +90,7 @@ const BlogCard = ({ post }: { post: BlogPost }) => (
   </Link>
 );
 
-export default function BlogDetailPage() {
+export default async function BlogDetailPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header Section */}
@@ -130,7 +127,7 @@ export default function BlogDetailPage() {
 
       {/* Hero Image */}
       <div className="container mx-auto mb-12 px-4">
-        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-gray-100 lg:aspect-[2.5/1]">
+        <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-gray-100 lg:aspect-[2.5/1]">
           <Image src={heroImage} alt="Hero" fill className="object-cover" />
         </div>
       </div>
@@ -160,7 +157,7 @@ export default function BlogDetailPage() {
           </ul>
 
           {/* Image 1 */}
-          <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-xl bg-gray-100">
+          <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-xl bg-gray-100">
             <Image src={contentImage1} alt="Content" fill className="object-cover" />
           </div>
 
@@ -201,7 +198,7 @@ export default function BlogDetailPage() {
           </p>
 
           {/* Image 2 */}
-          <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-xl bg-gray-100">
+          <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-xl bg-gray-100">
             <Image src={contentImage2} alt="Content" fill className="object-cover" />
           </div>
 
@@ -230,7 +227,7 @@ export default function BlogDetailPage() {
           </div>
 
           {/* Image 3 */}
-          <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-xl bg-gray-100">
+          <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-xl bg-gray-100">
             <Image src={contentImage3} alt="Content" fill className="object-cover" />
           </div>
 

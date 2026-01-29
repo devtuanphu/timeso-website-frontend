@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -112,7 +110,7 @@ const WHY_CHOOSE = [
   },
 ];
 
-export default function RecruitmentPage() {
+export default async function RecruitmentPage() {
   return (
     <>
       <Navbar />
@@ -152,20 +150,18 @@ export default function RecruitmentPage() {
             <div className="mb-10 flex items-center gap-3">
               <Link href="#" className="transition-opacity hover:opacity-80">
                 <Image
-                  src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1319760000"
+                  src="/images/app-store-badge.svg"
                   alt="Download on the App Store"
                   width={132}
                   height={40}
-                  unoptimized
                 />
               </Link>
               <Link href="#" className="transition-opacity hover:opacity-80">
                 <Image
-                  src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                  src="/images/google-play-badge.png"
                   alt="Get it on Google Play"
                   width={152}
                   height={40}
-                  unoptimized
                 />
               </Link>
             </div>
@@ -507,20 +503,18 @@ export default function RecruitmentPage() {
               <div className="flex items-center gap-3">
                 <Link href="#" className="transition-opacity hover:opacity-80">
                   <Image
-                    src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1319760000"
+                    src="/images/app-store-badge.svg"
                     alt="Download on the App Store"
                     width={132}
                     height={40}
-                    unoptimized
                   />
                 </Link>
                 <Link href="#" className="transition-opacity hover:opacity-80">
                   <Image
-                    src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                    src="/images/google-play-badge.png"
                     alt="Get it on Google Play"
                     width={152}
                     height={40}
-                    unoptimized
                   />
                 </Link>
               </div>

@@ -2,11 +2,9 @@ import { Sparkles } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-// Standard Badges
-const APP_STORE_BADGE =
-  "https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1319760000";
-const GOOGLE_PLAY_BADGE =
-  "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png";
+// Standard Badges - Local paths
+const APP_STORE_BADGE = "/images/app-store-badge.svg";
+const GOOGLE_PLAY_BADGE = "/images/google-play-badge.png";
 
 export default function Hero() {
   return (
@@ -50,7 +48,6 @@ export default function Hero() {
                 width={132}
                 height={44}
                 className="h-[40px] w-auto md:h-[44px]"
-                unoptimized
               />
             </Link>
             <Link
@@ -63,7 +60,6 @@ export default function Hero() {
                 width={165}
                 height={64}
                 className="-my-2 h-[56px] w-auto md:h-[64px]"
-                unoptimized
               />
             </Link>
           </div>
