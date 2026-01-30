@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import Navbar from "@/components/Navbar";
+import { AnimatedPageSection, AnimatedHero } from "@/components/ui";
 
 // Import Swiper styles
 import "swiper/css";
@@ -72,462 +73,483 @@ export default function AboutPageClient() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="bg-white px-4 pt-[100px] pb-10 md:px-8 md:pt-[140px]">
-        <div className="mx-auto max-w-[1200px]">
-          <div className="mb-8 max-w-[1000px]">
-            <h1 className="mb-4 text-[28px] leading-tight font-bold tracking-[-0.02em] text-[#101828] md:text-[56px] md:leading-[1.1]">
-              Chinh phục mọi <span className="text-[#01CFCF]">thách thức quản lý</span>
-            </h1>
-            <p className="mb-6 max-w-[900px] text-sm leading-relaxed text-[#475467] md:text-lg md:leading-[28px]">
-              Chào bạn đến với Timeso - nền tảng quản lý nhân sự AI tiên tiến, với sự kết hợp hoàn
-              toàn giao diện app mobile của chúng tôi và dịch tự động, giúp bạn sử dụng có thể dễ đi
-              tới vị trí tốt hơn cho các dự thể vận hàng mà tới sống.
-            </p>
-            <div className="flex items-center gap-3 md:gap-6">
-              <Link
-                href="#"
-                className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
-              >
-                <Image
-                  src="/images/app-store-badge.svg"
-                  alt="Download on the App Store"
-                  width={132}
-                  height={44}
-                  className="h-[40px] w-auto md:h-[44px]"
-                />
-              </Link>
-              <Link
-                href="#"
-                className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
-              >
-                <Image
-                  src="/images/google-play-badge.png"
-                  alt="Get it on Google Play"
-                  width={165}
-                  height={64}
-                  className="-my-2 h-[56px] w-auto md:h-[64px]"
-                />
-              </Link>
-            </div>
-          </div>
-
-          {/* Hero Images Grid - matching Figma layout exactly */}
-          <div className="grid gap-4 md:grid-cols-2 md:gap-6">
-            {/* Left Image - Woman working at computer */}
-            <div className="relative h-[250px] overflow-hidden rounded-[16px] md:h-[440px] md:rounded-[24px]">
-              <Image
-                src="/images/about/d6604c8227042bb19de4e5724ae83e5aa40c0cba.png"
-                alt="Team collaboration"
-                fill
-                className="object-cover"
-              />
+      <AnimatedHero>
+        <section className="bg-white px-4 pt-[100px] pb-10 md:px-8 md:pt-[140px]">
+          <div className="mx-auto max-w-[1200px]">
+            <div className="mb-8 max-w-[1000px]">
+              <h1 className="mb-4 text-[28px] leading-tight font-bold tracking-[-0.02em] text-[#101828] md:text-[56px] md:leading-[1.1]">
+                Chinh phục mọi <span className="text-[#01CFCF]">thách thức quản lý</span>
+              </h1>
+              <p className="mb-6 max-w-[900px] text-sm leading-relaxed text-[#475467] md:text-lg md:leading-[28px]">
+                Chào bạn đến với Timeso - nền tảng quản lý nhân sự AI tiên tiến, với sự kết hợp hoàn
+                toàn giao diện app mobile của chúng tôi và dịch tự động, giúp bạn sử dụng có thể dễ
+                đi tới vị trí tốt hơn cho các dự thể vận hàng mà tới sống.
+              </p>
+              <div className="flex items-center gap-3 md:gap-6">
+                <Link
+                  href="#"
+                  className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
+                >
+                  <Image
+                    src="/images/app-store-badge.svg"
+                    alt="Download on the App Store"
+                    width={132}
+                    height={44}
+                    className="h-[40px] w-auto md:h-[44px]"
+                  />
+                </Link>
+                <Link
+                  href="#"
+                  className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
+                >
+                  <Image
+                    src="/images/google-play-badge.png"
+                    alt="Get it on Google Play"
+                    width={165}
+                    height={64}
+                    className="-my-2 h-[56px] w-auto md:h-[64px]"
+                  />
+                </Link>
+              </div>
             </div>
 
-            {/* Right Image - Hand holding phone with app + floating cards */}
-            <div className="relative h-[250px] overflow-hidden rounded-[16px] md:h-[440px] md:rounded-[24px]">
-              <Image
-                src="/images/about/463c3571bb784baeb275a97250798b8cbdc26b2c.png"
-                alt="Mobile app"
-                fill
-                className="object-cover"
-              />
+            {/* Hero Images Grid - matching Figma layout exactly */}
+            <div className="grid gap-4 md:grid-cols-2 md:gap-6">
+              {/* Left Image - Woman working at computer */}
+              <div className="relative h-[250px] overflow-hidden rounded-[16px] md:h-[440px] md:rounded-[24px]">
+                <Image
+                  src="/images/about/d6604c8227042bb19de4e5724ae83e5aa40c0cba.png"
+                  alt="Team collaboration"
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
-              {/* Floating card - I NEED YOUR ASSIST (top-left) */}
-              <div className="absolute top-3 left-3 rounded-[12px] bg-white/95 px-3 py-2 shadow-lg backdrop-blur-sm md:top-6 md:left-6 md:px-4 md:py-3">
-                <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E6FAFA] md:h-10 md:w-10">
-                    <svg
-                      className="h-4 w-4 text-[#01CFCF] md:h-5 md:w-5"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
-                    </svg>
+              {/* Right Image - Hand holding phone with app + floating cards */}
+              <div className="relative h-[250px] overflow-hidden rounded-[16px] md:h-[440px] md:rounded-[24px]">
+                <Image
+                  src="/images/about/463c3571bb784baeb275a97250798b8cbdc26b2c.png"
+                  alt="Mobile app"
+                  fill
+                  className="object-cover"
+                />
+
+                {/* Floating card - I NEED YOUR ASSIST (top-left) */}
+                <div className="absolute top-3 left-3 rounded-[12px] bg-white/95 px-3 py-2 shadow-lg backdrop-blur-sm md:top-6 md:left-6 md:px-4 md:py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E6FAFA] md:h-10 md:w-10">
+                      <svg
+                        className="h-4 w-4 text-[#01CFCF] md:h-5 md:w-5"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-semibold tracking-wide text-[#2A4A45] uppercase md:text-xs">
+                        I NEED YOUR
+                      </p>
+                      <p className="text-[10px] font-semibold tracking-wide text-[#01CFCF] uppercase md:text-xs">
+                        ASSIST
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-[10px] font-semibold tracking-wide text-[#2A4A45] uppercase md:text-xs">
-                      I NEED YOUR
-                    </p>
-                    <p className="text-[10px] font-semibold tracking-wide text-[#01CFCF] uppercase md:text-xs">
-                      ASSIST
-                    </p>
+                </div>
+
+                {/* Floating card - MAKE A CALL (bottom-right) */}
+                <div className="absolute right-3 bottom-3 rounded-[12px] bg-white/95 px-3 py-2 shadow-lg backdrop-blur-sm md:right-6 md:bottom-6 md:px-4 md:py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E6FAFA] md:h-10 md:w-10">
+                      <svg
+                        className="h-4 w-4 text-[#01CFCF] md:h-5 md:w-5"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-semibold tracking-wide text-[#2A4A45] uppercase md:text-xs">
+                        MAKE A
+                      </p>
+                      <p className="text-[10px] font-semibold tracking-wide text-[#01CFCF] uppercase md:text-xs">
+                        CALL
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-
-              {/* Floating card - MAKE A CALL (bottom-right) */}
-              <div className="absolute right-3 bottom-3 rounded-[12px] bg-white/95 px-3 py-2 shadow-lg backdrop-blur-sm md:right-6 md:bottom-6 md:px-4 md:py-3">
-                <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E6FAFA] md:h-10 md:w-10">
-                    <svg
-                      className="h-4 w-4 text-[#01CFCF] md:h-5 md:w-5"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-semibold tracking-wide text-[#2A4A45] uppercase md:text-xs">
-                      MAKE A
-                    </p>
-                    <p className="text-[10px] font-semibold tracking-wide text-[#01CFCF] uppercase md:text-xs">
-                      CALL
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedHero>
 
       {/* Story Section - Câu chuyện thành lập */}
-      <section className="bg-white py-16 md:py-24">
-        <div className="mx-auto max-w-[1280px] px-4 md:px-8">
-          <div className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
-            {/* Left - Text Content */}
-            <div className="flex flex-col gap-8">
-              <div className="flex flex-col gap-3">
-                <p className="text-lg font-semibold text-[#01CFCF] md:text-xl">
-                  Câu chuyện thành lập
-                </p>
-                <h2 className="text-2xl font-bold tracking-[-0.02em] text-[#101828] md:text-[40px] md:leading-[44px]">
-                  Timeso ra đời như thế nào
-                </h2>
-              </div>
-
-              <div className="flex flex-col gap-6 text-base leading-[28px] text-[#475467] md:text-lg">
-                <p>
-                  Timeso ra đời từ một câu hỏi đơn giản: &ldquo;Làm sao để việc quản lý nhân sự và
-                  vận hành trở nên nhẹ nhàng hơn cho mọi cửa hàng?&rdquo;
-                </p>
-                <p>
-                  Trong quá trình làm việc với nhiều cửa hàng và đội ngũ quản lý, chúng tôi nhận ra
-                  rằng những phương pháp thủ công không chỉ tốn thời gian mà còn khiến cửa hàng chậm
-                  lại.
-                </p>
-                <p>
-                  Chính từ nhu cầu đó, đội ngũ sáng lập Timeso quyết tâm tạo nên một nền tảng thông
-                  minh, dễ sử dụng nhưng đủ mạnh để tự động hóa những công việc phức tạp. Chúng tôi
-                  tin rằng khi cửa hàng tiết kiệm được thời gian, họ sẽ có nhiều hơn để tập trung
-                  vào điều quan trọng nhất: phát triển con người và tạo ra giá trị thật sự.
-                </p>
-              </div>
-            </div>
-
-            {/* Right - Image */}
-            <div className="relative h-[300px] overflow-hidden rounded-[24px] md:h-[592px]">
-              <Image
-                src="/images/about/73b7c2a56de9b2bde5d83664188677534e98ec81.png"
-                alt="Team meeting and collaboration"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section - Định hướng đến sự thành công */}
-      <section className="bg-white py-16 md:py-20">
-        <div className="mx-auto max-w-[1280px] px-4 md:px-8">
-          <h2 className="mb-12 text-center text-2xl font-bold tracking-[-1px] text-[#0C0407] capitalize md:mb-16 md:text-[40px]">
-            ĐỊNH HƯỚNG ĐẾN SỰ THÀNH CÔNG
-          </h2>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            {CORE_VALUES.map((value, idx) => (
-              <div key={idx} className="flex flex-col gap-6 border-l border-black/20 pl-6 md:pl-8">
-                <div className="flex flex-col gap-6">
-                  {/* Icon */}
-                  <Image
-                    src={value.icon}
-                    alt={value.title}
-                    width={48}
-                    height={48}
-                    className="h-12 w-12"
-                  />
-
-                  {/* Title */}
-                  <h3 className="text-xl leading-normal font-bold text-[#101828] md:text-2xl">
-                    {value.title}
-                  </h3>
+      <AnimatedPageSection delay={0.1}>
+        <section className="bg-white py-16 md:py-24">
+          <div className="mx-auto max-w-[1280px] px-4 md:px-8">
+            <div className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
+              {/* Left - Text Content */}
+              <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-3">
+                  <p className="text-lg font-semibold text-[#01CFCF] md:text-xl">
+                    Câu chuyện thành lập
+                  </p>
+                  <h2 className="text-2xl font-bold tracking-[-0.02em] text-[#101828] md:text-[40px] md:leading-[44px]">
+                    Timeso ra đời như thế nào
+                  </h2>
                 </div>
 
-                {/* Description */}
-                <p className="text-sm leading-[28px] text-[#475467] md:text-base">
-                  {value.description}
-                </p>
+                <div className="flex flex-col gap-6 text-base leading-[28px] text-[#475467] md:text-lg">
+                  <p>
+                    Timeso ra đời từ một câu hỏi đơn giản: &ldquo;Làm sao để việc quản lý nhân sự và
+                    vận hành trở nên nhẹ nhàng hơn cho mọi cửa hàng?&rdquo;
+                  </p>
+                  <p>
+                    Trong quá trình làm việc với nhiều cửa hàng và đội ngũ quản lý, chúng tôi nhận
+                    ra rằng những phương pháp thủ công không chỉ tốn thời gian mà còn khiến cửa hàng
+                    chậm lại.
+                  </p>
+                  <p>
+                    Chính từ nhu cầu đó, đội ngũ sáng lập Timeso quyết tâm tạo nên một nền tảng
+                    thông minh, dễ sử dụng nhưng đủ mạnh để tự động hóa những công việc phức tạp.
+                    Chúng tôi tin rằng khi cửa hàng tiết kiệm được thời gian, họ sẽ có nhiều hơn để
+                    tập trung vào điều quan trọng nhất: phát triển con người và tạo ra giá trị thật
+                    sự.
+                  </p>
+                </div>
               </div>
-            ))}
+
+              {/* Right - Image */}
+              <div className="relative h-[300px] overflow-hidden rounded-[24px] md:h-[592px]">
+                <Image
+                  src="/images/about/73b7c2a56de9b2bde5d83664188677534e98ec81.png"
+                  alt="Team meeting and collaboration"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedPageSection>
+
+      {/* Values Section - Định hướng đến sự thành công */}
+      <AnimatedPageSection delay={0.1}>
+        <section className="bg-white py-16 md:py-20">
+          <div className="mx-auto max-w-[1280px] px-4 md:px-8">
+            <h2 className="mb-12 text-center text-2xl font-bold tracking-[-1px] text-[#0C0407] capitalize md:mb-16 md:text-[40px]">
+              ĐỊNH HƯỚNG ĐẾN SỰ THÀNH CÔNG
+            </h2>
+
+            <div className="grid gap-8 md:grid-cols-3">
+              {CORE_VALUES.map((value, idx) => (
+                <div
+                  key={idx}
+                  className="flex flex-col gap-6 border-l border-black/20 pl-6 md:pl-8"
+                >
+                  <div className="flex flex-col gap-6">
+                    {/* Icon */}
+                    <Image
+                      src={value.icon}
+                      alt={value.title}
+                      width={48}
+                      height={48}
+                      className="h-12 w-12"
+                    />
+
+                    {/* Title */}
+                    <h3 className="text-xl leading-normal font-bold text-[#101828] md:text-2xl">
+                      {value.title}
+                    </h3>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-sm leading-[28px] text-[#475467] md:text-base">
+                    {value.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </AnimatedPageSection>
 
       {/* Innovation Section - Đổi mới không ngừng */}
-      <section className="bg-[#00A1A1] py-16 md:py-20">
-        <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-12 px-4 md:px-8">
-          {/* Header */}
-          <div className="flex flex-col items-center gap-8 text-center">
-            {/* Badge */}
-            <div className="rounded-full border border-white bg-white/15 px-4 py-2">
-              <span className="text-sm font-bold text-white md:text-base">NGUYÊN TẮC LÀM VIỆC</span>
+      <AnimatedPageSection delay={0.1}>
+        <section className="bg-[#00A1A1] py-16 md:py-20">
+          <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-12 px-4 md:px-8">
+            {/* Header */}
+            <div className="flex flex-col items-center gap-8 text-center">
+              {/* Badge */}
+              <div className="rounded-full border border-white bg-white/15 px-4 py-2">
+                <span className="text-sm font-bold text-white md:text-base">
+                  NGUYÊN TẮC LÀM VIỆC
+                </span>
+              </div>
+
+              {/* Title & Subtitle */}
+              <div className="flex flex-col gap-4">
+                <h2 className="text-2xl font-bold text-white md:text-[40px] md:leading-[40px]">
+                  Đổi Mới Không Ngừng
+                </h2>
+                <p className="mx-auto max-w-[800px] text-sm leading-relaxed text-white/90 md:text-lg md:leading-[28px]">
+                  Với sứ mệnh mang lại giải pháp tối ưu, Timeso luôn đặt đổi mới sáng tạo là kim chỉ
+                  nam trong việc phát triển công nghệ và nâng cao hiệu quả cho mọi doanh nghiệp.
+                </p>
+              </div>
             </div>
 
-            {/* Title & Subtitle */}
-            <div className="flex flex-col gap-4">
-              <h2 className="text-2xl font-bold text-white md:text-[40px] md:leading-[40px]">
-                Đổi Mới Không Ngừng
-              </h2>
-              <p className="mx-auto max-w-[800px] text-sm leading-relaxed text-white/90 md:text-lg md:leading-[28px]">
-                Với sứ mệnh mang lại giải pháp tối ưu, Timeso luôn đặt đổi mới sáng tạo là kim chỉ
-                nam trong việc phát triển công nghệ và nâng cao hiệu quả cho mọi doanh nghiệp.
-              </p>
+            {/* Bento Grid */}
+            <div className="flex w-full flex-col">
+              {/* Row 1: Text | Image | Text */}
+              <div className="grid overflow-hidden md:grid-cols-3">
+                {/* Card 1 - Trách Nhiệm Với Khách Hàng */}
+                <div className="flex min-h-[280px] flex-col justify-center gap-4 bg-white p-6 md:p-8">
+                  <h3 className="text-lg font-bold text-[#00A1A1] md:text-xl">
+                    Trách Nhiệm Với Khách Hàng
+                  </h3>
+                  <p className="text-sm leading-relaxed text-[#474747] md:text-base">
+                    Chúng tôi luôn nỗ lực mang đến giải pháp toàn diện, ổn định và dễ sử dụng; giúp
+                    khách hàng quản lý hiệu quả, phát triển bền vững và tối ưu vận hành trong mọi
+                    lĩnh vực.
+                  </p>
+                </div>
+
+                {/* Image - Middle */}
+                <div className="relative h-[280px]">
+                  <Image
+                    src="/images/about/20dfc5f747f30c3678b55f6ebd0199595182ea30.png"
+                    alt="Team meeting"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Card 2 - Trách Nhiệm Với Cộng Đồng & Sản Phẩm */}
+                <div className="flex min-h-[280px] flex-col justify-center gap-4 bg-white p-6 md:p-8">
+                  <h3 className="text-lg font-bold text-[#00A1A1] md:text-xl">
+                    Trách Nhiệm Với Cộng Đồng &amp; Sản Phẩm
+                  </h3>
+                  <p className="text-sm leading-relaxed text-[#474747] md:text-base">
+                    Chúng tôi phát triển sản phẩm an toàn – chất lượng – có giá trị lâu dài, đồng
+                    thời hướng đến xây dựng cộng đồng và xã hội phát triển bền vững thông qua công
+                    nghệ.
+                  </p>
+                </div>
+              </div>
+
+              {/* Row 2: Image | Text | Image */}
+              <div className="grid overflow-hidden md:grid-cols-3">
+                {/* Image - Left */}
+                <div className="relative h-[280px]">
+                  <Image
+                    src="/images/about/ba4dc61507a77d1a33d17c6dfbc92f1fe324f957.png"
+                    alt="Working together"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Card - Trách Nhiệm Với Nhân Sự - Middle */}
+                <div className="flex min-h-[280px] flex-col items-center justify-center gap-4 bg-white p-6 md:p-8">
+                  <h3 className="text-center text-lg font-bold text-[#00A1A1] md:text-xl">
+                    Trách Nhiệm Với Nhân Sự
+                  </h3>
+                  <p className="text-center text-sm leading-relaxed text-[#474747] md:text-base">
+                    Timeso cam kết tạo môi trường làm việc sáng tạo, minh bạch và hiệu quả để mỗi
+                    thành viên phát huy tối đa năng lực, cùng đóng góp vào sự phát triển chung.
+                  </p>
+                </div>
+
+                {/* Image - Right */}
+                <div className="relative h-[280px]">
+                  <Image
+                    src="/images/about/dbc0f518c9d64fc8cdcce6976008a967bfc065a2.png"
+                    alt="Office work"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-
-          {/* Bento Grid */}
-          <div className="flex w-full flex-col">
-            {/* Row 1: Text | Image | Text */}
-            <div className="grid overflow-hidden md:grid-cols-3">
-              {/* Card 1 - Trách Nhiệm Với Khách Hàng */}
-              <div className="flex min-h-[280px] flex-col justify-center gap-4 bg-white p-6 md:p-8">
-                <h3 className="text-lg font-bold text-[#00A1A1] md:text-xl">
-                  Trách Nhiệm Với Khách Hàng
-                </h3>
-                <p className="text-sm leading-relaxed text-[#474747] md:text-base">
-                  Chúng tôi luôn nỗ lực mang đến giải pháp toàn diện, ổn định và dễ sử dụng; giúp
-                  khách hàng quản lý hiệu quả, phát triển bền vững và tối ưu vận hành trong mọi lĩnh
-                  vực.
-                </p>
-              </div>
-
-              {/* Image - Middle */}
-              <div className="relative h-[280px]">
-                <Image
-                  src="/images/about/20dfc5f747f30c3678b55f6ebd0199595182ea30.png"
-                  alt="Team meeting"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Card 2 - Trách Nhiệm Với Cộng Đồng & Sản Phẩm */}
-              <div className="flex min-h-[280px] flex-col justify-center gap-4 bg-white p-6 md:p-8">
-                <h3 className="text-lg font-bold text-[#00A1A1] md:text-xl">
-                  Trách Nhiệm Với Cộng Đồng &amp; Sản Phẩm
-                </h3>
-                <p className="text-sm leading-relaxed text-[#474747] md:text-base">
-                  Chúng tôi phát triển sản phẩm an toàn – chất lượng – có giá trị lâu dài, đồng thời
-                  hướng đến xây dựng cộng đồng và xã hội phát triển bền vững thông qua công nghệ.
-                </p>
-              </div>
-            </div>
-
-            {/* Row 2: Image | Text | Image */}
-            <div className="grid overflow-hidden md:grid-cols-3">
-              {/* Image - Left */}
-              <div className="relative h-[280px]">
-                <Image
-                  src="/images/about/ba4dc61507a77d1a33d17c6dfbc92f1fe324f957.png"
-                  alt="Working together"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Card - Trách Nhiệm Với Nhân Sự - Middle */}
-              <div className="flex min-h-[280px] flex-col items-center justify-center gap-4 bg-white p-6 md:p-8">
-                <h3 className="text-center text-lg font-bold text-[#00A1A1] md:text-xl">
-                  Trách Nhiệm Với Nhân Sự
-                </h3>
-                <p className="text-center text-sm leading-relaxed text-[#474747] md:text-base">
-                  Timeso cam kết tạo môi trường làm việc sáng tạo, minh bạch và hiệu quả để mỗi
-                  thành viên phát huy tối đa năng lực, cùng đóng góp vào sự phát triển chung.
-                </p>
-              </div>
-
-              {/* Image - Right */}
-              <div className="relative h-[280px]">
-                <Image
-                  src="/images/about/dbc0f518c9d64fc8cdcce6976008a967bfc065a2.png"
-                  alt="Office work"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedPageSection>
 
       {/* Team Section */}
-      <TeamSection />
+      <AnimatedPageSection delay={0.1}>
+        <TeamSection />
+      </AnimatedPageSection>
 
       {/* CTA Section - Timeso giúp chủ quán nhỏ vươn tới thành công lớn */}
-      <section className="bg-white py-10 md:py-24">
-        <div className="mx-auto max-w-[1280px] px-4 md:px-8">
-          {/* Content - stacked on mobile, side by side on desktop */}
-          <div className="mb-10 text-center md:mb-0 md:flex md:items-center md:gap-16 md:text-left">
-            {/* Left Content */}
-            <div className="flex-1">
-              {/* Badge - centered on mobile */}
-              <div className="mb-4 inline-block rounded-full border-2 border-[#00E2E2] bg-white px-4 py-2 shadow-sm md:mb-5">
-                <span className="text-sm font-bold text-[#00A1A1]">Từ khó khăn đến giải pháp</span>
+      <AnimatedPageSection delay={0.1}>
+        <section className="bg-white py-10 md:py-24">
+          <div className="mx-auto max-w-[1280px] px-4 md:px-8">
+            {/* Content - stacked on mobile, side by side on desktop */}
+            <div className="mb-10 text-center md:mb-0 md:flex md:items-center md:gap-16 md:text-left">
+              {/* Left Content */}
+              <div className="flex-1">
+                {/* Badge - centered on mobile */}
+                <div className="mb-4 inline-block rounded-full border-2 border-[#00E2E2] bg-white px-4 py-2 shadow-sm md:mb-5">
+                  <span className="text-sm font-bold text-[#00A1A1]">
+                    Từ khó khăn đến giải pháp
+                  </span>
+                </div>
+
+                {/* Title - italic */}
+                <h2 className="mb-4 text-[24px] leading-[32px] font-semibold text-[#101828] md:mb-5 md:text-[36px] md:leading-[44px] md:tracking-[-0.02em]">
+                  Timeso giúp chủ quán nhỏ vươn tới thành công lớn!
+                </h2>
+
+                {/* Description */}
+                <p className="mx-auto max-w-[480px] text-base leading-relaxed text-[#475467] md:mx-0 md:text-xl md:leading-[30px]">
+                  Từng trải qua thiếu nhân sự, xoay ca gấp và sai lệch lương thưởng, chúng tôi tạo
+                  ra Timeso để giúp quản lý nhân sự, chia ca và tuyển dụng trở nên dễ dàng, minh
+                  bạch và hiệu quả hơn cho mọi cửa hàng.
+                </p>
               </div>
 
-              {/* Title - italic */}
-              <h2 className="mb-4 text-[24px] leading-[32px] font-semibold text-[#101828] md:mb-5 md:text-[36px] md:leading-[44px] md:tracking-[-0.02em]">
-                Timeso giúp chủ quán nhỏ vươn tới thành công lớn!
-              </h2>
+              {/* Desktop Image Grid - same layout as Figma */}
+              <div className="relative hidden h-[496px] w-full flex-1 md:block">
+                {/* Image 1 - Top center-right (240h x 160w) */}
+                <div
+                  className="absolute top-0 h-[240px] w-[160px] overflow-hidden rounded-[16px]"
+                  style={{ left: "calc(50% + 88px)", transform: "translateX(-50%)" }}
+                >
+                  <Image
+                    src="/images/about/ba4dc61507a77d1a33d17c6dfbc92f1fe324f957.png"
+                    alt="Desktop workspace"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
 
-              {/* Description */}
-              <p className="mx-auto max-w-[480px] text-base leading-relaxed text-[#475467] md:mx-0 md:text-xl md:leading-[30px]">
-                Từng trải qua thiếu nhân sự, xoay ca gấp và sai lệch lương thưởng, chúng tôi tạo ra
-                Timeso để giúp quản lý nhân sự, chia ca và tuyển dụng trở nên dễ dàng, minh bạch và
-                hiệu quả hơn cho mọi cửa hàng.
-              </p>
-            </div>
+                {/* Image 5 - Top center-left small (160x160) */}
+                <div
+                  className="absolute top-[80px] h-[160px] w-[160px] overflow-hidden rounded-[16px]"
+                  style={{ left: "calc(50% - 88px)", transform: "translateX(-50%)" }}
+                >
+                  <Image
+                    src="/images/about/b7e371af19942c45c8233545ea0c54eab9dc30f4.png"
+                    alt="Typing on laptop"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
 
-            {/* Desktop Image Grid - same layout as Figma */}
-            <div className="relative hidden h-[496px] w-full flex-1 md:block">
-              {/* Image 1 - Top center-right (240h x 160w) */}
-              <div
-                className="absolute top-0 h-[240px] w-[160px] overflow-hidden rounded-[16px]"
-                style={{ left: "calc(50% + 88px)", transform: "translateX(-50%)" }}
-              >
-                <Image
-                  src="/images/about/ba4dc61507a77d1a33d17c6dfbc92f1fe324f957.png"
-                  alt="Desktop workspace"
-                  fill
-                  className="object-cover"
-                />
+                {/* Image 3 - Bottom left (192x192) */}
+                <div
+                  className="absolute top-[256px] h-[192px] w-[192px] overflow-hidden rounded-[16px]"
+                  style={{ left: "calc(50% - 192px)", transform: "translateX(-50%)" }}
+                >
+                  <Image
+                    src="/images/about/e6859d0f29506264b8ce888a5c96bc4e769465f9.png"
+                    alt="Team high five"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Image 4 - Bottom center (240h x 160w) */}
+                <div
+                  className="absolute top-[256px] h-[240px] w-[160px] overflow-hidden rounded-[16px]"
+                  style={{ left: "50%", transform: "translateX(-50%)" }}
+                >
+                  <Image
+                    src="/images/about/84eb357be3124221837868f50d1ecde7fcc75628.png"
+                    alt="Office work"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Image 2 - Bottom right (160h x 192w) */}
+                <div
+                  className="absolute top-[256px] h-[160px] w-[192px] overflow-hidden rounded-[16px]"
+                  style={{ left: "calc(50% + 192px)", transform: "translateX(-50%)" }}
+                >
+                  <Image
+                    src="/images/about/d1ab1eb8e845b49d1797c1cee44a8d43644a305c.png"
+                    alt="POS payment"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
               </div>
 
-              {/* Image 5 - Top center-left small (160x160) */}
-              <div
-                className="absolute top-[80px] h-[160px] w-[160px] overflow-hidden rounded-[16px]"
-                style={{ left: "calc(50% - 88px)", transform: "translateX(-50%)" }}
-              >
-                <Image
-                  src="/images/about/b7e371af19942c45c8233545ea0c54eab9dc30f4.png"
-                  alt="Typing on laptop"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+              {/* Mobile Image Grid - same pattern, scaled to fit */}
+              <div className="relative h-[300px] w-full flex-1 md:hidden">
+                {/* Image 1 - Top center-right */}
+                <div
+                  className="absolute top-0 h-[145px] w-[97px] overflow-hidden rounded-[10px]"
+                  style={{ left: "calc(50% + 53px)", transform: "translateX(-50%)" }}
+                >
+                  <Image
+                    src="/images/about/ba4dc61507a77d1a33d17c6dfbc92f1fe324f957.png"
+                    alt="Desktop workspace"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
 
-              {/* Image 3 - Bottom left (192x192) */}
-              <div
-                className="absolute top-[256px] h-[192px] w-[192px] overflow-hidden rounded-[16px]"
-                style={{ left: "calc(50% - 192px)", transform: "translateX(-50%)" }}
-              >
-                <Image
-                  src="/images/about/e6859d0f29506264b8ce888a5c96bc4e769465f9.png"
-                  alt="Team high five"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+                {/* Image 5 - Top center-left small */}
+                <div
+                  className="absolute top-[48px] h-[97px] w-[97px] overflow-hidden rounded-[10px]"
+                  style={{ left: "calc(50% - 53px)", transform: "translateX(-50%)" }}
+                >
+                  <Image
+                    src="/images/about/b7e371af19942c45c8233545ea0c54eab9dc30f4.png"
+                    alt="Typing on laptop"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
 
-              {/* Image 4 - Bottom center (240h x 160w) */}
-              <div
-                className="absolute top-[256px] h-[240px] w-[160px] overflow-hidden rounded-[16px]"
-                style={{ left: "50%", transform: "translateX(-50%)" }}
-              >
-                <Image
-                  src="/images/about/84eb357be3124221837868f50d1ecde7fcc75628.png"
-                  alt="Office work"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+                {/* Image 3 - Bottom left */}
+                <div
+                  className="absolute top-[155px] h-[116px] w-[116px] overflow-hidden rounded-[10px]"
+                  style={{ left: "calc(50% - 116px)", transform: "translateX(-50%)" }}
+                >
+                  <Image
+                    src="/images/about/e6859d0f29506264b8ce888a5c96bc4e769465f9.png"
+                    alt="Team high five"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
 
-              {/* Image 2 - Bottom right (160h x 192w) */}
-              <div
-                className="absolute top-[256px] h-[160px] w-[192px] overflow-hidden rounded-[16px]"
-                style={{ left: "calc(50% + 192px)", transform: "translateX(-50%)" }}
-              >
-                <Image
-                  src="/images/about/d1ab1eb8e845b49d1797c1cee44a8d43644a305c.png"
-                  alt="POS payment"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
+                {/* Image 4 - Bottom center */}
+                <div
+                  className="absolute top-[155px] h-[145px] w-[97px] overflow-hidden rounded-[10px]"
+                  style={{ left: "50%", transform: "translateX(-50%)" }}
+                >
+                  <Image
+                    src="/images/about/84eb357be3124221837868f50d1ecde7fcc75628.png"
+                    alt="Office work"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
 
-            {/* Mobile Image Grid - same pattern, scaled to fit */}
-            <div className="relative h-[300px] w-full flex-1 md:hidden">
-              {/* Image 1 - Top center-right */}
-              <div
-                className="absolute top-0 h-[145px] w-[97px] overflow-hidden rounded-[10px]"
-                style={{ left: "calc(50% + 53px)", transform: "translateX(-50%)" }}
-              >
-                <Image
-                  src="/images/about/ba4dc61507a77d1a33d17c6dfbc92f1fe324f957.png"
-                  alt="Desktop workspace"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Image 5 - Top center-left small */}
-              <div
-                className="absolute top-[48px] h-[97px] w-[97px] overflow-hidden rounded-[10px]"
-                style={{ left: "calc(50% - 53px)", transform: "translateX(-50%)" }}
-              >
-                <Image
-                  src="/images/about/b7e371af19942c45c8233545ea0c54eab9dc30f4.png"
-                  alt="Typing on laptop"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Image 3 - Bottom left */}
-              <div
-                className="absolute top-[155px] h-[116px] w-[116px] overflow-hidden rounded-[10px]"
-                style={{ left: "calc(50% - 116px)", transform: "translateX(-50%)" }}
-              >
-                <Image
-                  src="/images/about/e6859d0f29506264b8ce888a5c96bc4e769465f9.png"
-                  alt="Team high five"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Image 4 - Bottom center */}
-              <div
-                className="absolute top-[155px] h-[145px] w-[97px] overflow-hidden rounded-[10px]"
-                style={{ left: "50%", transform: "translateX(-50%)" }}
-              >
-                <Image
-                  src="/images/about/84eb357be3124221837868f50d1ecde7fcc75628.png"
-                  alt="Office work"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Image 2 - Bottom right */}
-              <div
-                className="absolute top-[155px] h-[97px] w-[116px] overflow-hidden rounded-[10px]"
-                style={{ left: "calc(50% + 116px)", transform: "translateX(-50%)" }}
-              >
-                <Image
-                  src="/images/about/d1ab1eb8e845b49d1797c1cee44a8d43644a305c.png"
-                  alt="POS payment"
-                  fill
-                  className="object-cover"
-                />
+                {/* Image 2 - Bottom right */}
+                <div
+                  className="absolute top-[155px] h-[97px] w-[116px] overflow-hidden rounded-[10px]"
+                  style={{ left: "calc(50% + 116px)", transform: "translateX(-50%)" }}
+                >
+                  <Image
+                    src="/images/about/d1ab1eb8e845b49d1797c1cee44a8d43644a305c.png"
+                    alt="POS payment"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedPageSection>
     </>
   );
 }

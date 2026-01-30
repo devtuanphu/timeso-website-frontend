@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Search, ChevronDown, Calendar, ArrowRight, X } from "lucide-react";
+import { AnimatedPageSection, AnimatedHero } from "@/components/ui";
 
 // --- Types ---
 
@@ -328,102 +329,106 @@ export default function BlogPageClient() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header Section */}
-      <div className="bg-white pt-[120px] pb-12 md:pt-[160px] md:pb-[80px]">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col items-start gap-4">
-            <h1 className="text-4xl leading-tight font-semibold tracking-tight text-[#101828] md:text-[48px] md:leading-[60px] md:tracking-[-0.96px]">
-              Kiến Thức Quản Lý & Vận Hành Hiện Đại
-            </h1>
-            <p className="max-w-3xl text-lg text-[#475467] md:text-[20px] md:leading-[30px]">
-              Nơi cập nhật thông tin, góc nhìn thực tiễn và kinh nghiệm triển khai Timeso.
-            </p>
+      <AnimatedHero>
+        <div className="bg-white pt-[120px] pb-12 md:pt-[160px] md:pb-[80px]">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col items-start gap-4">
+              <h1 className="text-4xl leading-tight font-semibold tracking-tight text-[#101828] md:text-[48px] md:leading-[60px] md:tracking-[-0.96px]">
+                Kiến Thức Quản Lý & Vận Hành Hiện Đại
+              </h1>
+              <p className="max-w-3xl text-lg text-[#475467] md:text-[20px] md:leading-[30px]">
+                Nơi cập nhật thông tin, góc nhìn thực tiễn và kinh nghiệm triển khai Timeso.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </AnimatedHero>
 
-      <div className="container mx-auto px-4 py-12 lg:py-16">
-        {/* Mobile Filter & Search */}
-        <div className="mb-8 flex gap-3 lg:hidden">
-          <div className="relative flex-1">
-            <input
-              type="text"
-              placeholder="Tìm kiếm"
-              className="h-11 w-full rounded-lg border border-[#D0D5DD] bg-white pr-4 pl-10 text-sm text-[#101828] placeholder-[#667085] shadow-xs outline-none focus:border-[#01CFCF] focus:ring-1 focus:ring-[#01CFCF]"
-            />
-            <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-[#667085]" />
-          </div>
-          <button
-            onClick={() => setIsSidebarOpen(true)}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[#D0D5DD] bg-white p-0 text-[#344054] shadow-xs hover:bg-gray-50 focus:outline-none"
-          >
-            <Image
-              src="/images/news/mage_filter.png"
-              alt="Filter"
-              width={24}
-              height={24}
-              className="h-6 w-6"
-            />
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
-          {/* Sidebar: 4 Columns */}
-          <div className="hidden lg:col-span-4 lg:block">
-            <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      <AnimatedPageSection delay={0.1}>
+        <div className="container mx-auto px-4 py-12 lg:py-16">
+          {/* Mobile Filter & Search */}
+          <div className="mb-8 flex gap-3 lg:hidden">
+            <div className="relative flex-1">
+              <input
+                type="text"
+                placeholder="Tìm kiếm"
+                className="h-11 w-full rounded-lg border border-[#D0D5DD] bg-white pr-4 pl-10 text-sm text-[#101828] placeholder-[#667085] shadow-xs outline-none focus:border-[#01CFCF] focus:ring-1 focus:ring-[#01CFCF]"
+              />
+              <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-[#667085]" />
+            </div>
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[#D0D5DD] bg-white p-0 text-[#344054] shadow-xs hover:bg-gray-50 focus:outline-none"
+            >
+              <Image
+                src="/images/news/mage_filter.png"
+                alt="Filter"
+                width={24}
+                height={24}
+                className="h-6 w-6"
+              />
+            </button>
           </div>
 
-          {/* Main Content: 8 Columns */}
-          <div className="lg:col-span-8">
-            {/* Featured Post */}
-            <FeaturedPost post={featuredPost} />
-
-            {/* Grid Posts */}
-            <div className="mb-12 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2">
-              {gridPosts.map((post) => (
-                <BlogCard key={post.id} post={post} />
-              ))}
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
+            {/* Sidebar: 4 Columns */}
+            <div className="hidden lg:col-span-4 lg:block">
+              <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
             </div>
 
-            {/* Pagination */}
-            <div className="flex items-center justify-between border-t border-gray-200 pt-6">
-              <button className="flex items-center gap-2 rounded-lg py-2 pr-4 pl-0 text-sm font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50">
-                <ArrowRight className="h-4 w-4 rotate-180" />
-                Trước
-              </button>
+            {/* Main Content: 8 Columns */}
+            <div className="lg:col-span-8">
+              {/* Featured Post */}
+              <FeaturedPost post={featuredPost} />
 
-              {/* Mobile Text */}
-              <span className="text-sm font-medium text-gray-700 md:hidden">Trang 1 / 10</span>
-
-              {/* Desktop Number List */}
-              <div className="hidden items-center gap-1 md:flex">
-                {[1, 2, 3, "...", 8, 9, 10].map((item, idx) => {
-                  return typeof item === "number" ? (
-                    <button
-                      key={idx}
-                      className={`h-10 w-10 rounded-lg text-sm font-medium transition-colors ${
-                        item === 1
-                          ? "bg-[#F9F5FF] text-[#01CFCF]"
-                          : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      }`}
-                    >
-                      {item}
-                    </button>
-                  ) : (
-                    <span key={idx} className="px-2 text-gray-500">
-                      ...
-                    </span>
-                  );
-                })}
+              {/* Grid Posts */}
+              <div className="mb-12 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2">
+                {gridPosts.map((post) => (
+                  <BlogCard key={post.id} post={post} />
+                ))}
               </div>
 
-              <button className="flex items-center gap-2 rounded-lg py-2 pr-0 pl-4 text-sm font-medium text-gray-500 hover:text-gray-700">
-                Tiếp
-                <ArrowRight className="h-4 w-4" />
-              </button>
+              {/* Pagination */}
+              <div className="flex items-center justify-between border-t border-gray-200 pt-6">
+                <button className="flex items-center gap-2 rounded-lg py-2 pr-4 pl-0 text-sm font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50">
+                  <ArrowRight className="h-4 w-4 rotate-180" />
+                  Trước
+                </button>
+
+                {/* Mobile Text */}
+                <span className="text-sm font-medium text-gray-700 md:hidden">Trang 1 / 10</span>
+
+                {/* Desktop Number List */}
+                <div className="hidden items-center gap-1 md:flex">
+                  {[1, 2, 3, "...", 8, 9, 10].map((item, idx) => {
+                    return typeof item === "number" ? (
+                      <button
+                        key={idx}
+                        className={`h-10 w-10 rounded-lg text-sm font-medium transition-colors ${
+                          item === 1
+                            ? "bg-[#F9F5FF] text-[#01CFCF]"
+                            : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        }`}
+                      >
+                        {item}
+                      </button>
+                    ) : (
+                      <span key={idx} className="px-2 text-gray-500">
+                        ...
+                      </span>
+                    );
+                  })}
+                </div>
+
+                <button className="flex items-center gap-2 rounded-lg py-2 pr-0 pl-4 text-sm font-medium text-gray-500 hover:text-gray-700">
+                  Tiếp
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </AnimatedPageSection>
 
       {/* Mobile Sidebar (Drawer) */}
       <div className="lg:hidden">
