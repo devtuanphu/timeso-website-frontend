@@ -7,7 +7,6 @@ import { Navigation } from "swiper/modules";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Swiper as SwiperType } from "swiper";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 
