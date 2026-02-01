@@ -3,12 +3,35 @@
 import Image from "next/image";
 import ContactForm from "@/components/contact/ContactForm";
 import { AnimatedPageSection, AnimatedHero } from "@/components/ui";
+import type { LienHeData } from "@/types/strapi";
+import { getStrapiMediaUrl } from "@/lib/strapi";
 
-// Assets
-const heroImage = "/figma_assets/463c3571bb784baeb275a97250798b8cbdc26b2c.png";
-const officeImage = "/figma_assets/2fb5e002bbde20b8fcf8bb51fa906026401747e4.png";
+// Default Assets (fallback)
+const DEFAULT_HERO_IMAGE = "/figma_assets/463c3571bb784baeb275a97250798b8cbdc26b2c.png";
+const DEFAULT_OFFICE_IMAGE = "/figma_assets/2fb5e002bbde20b8fcf8bb51fa906026401747e4.png";
 
-export function ContactPageClient() {
+// Default content (fallback)
+const DEFAULT_CONTACT = {
+  email: "sales@untitledui.com",
+  address: "100 Smith Street\nCollingwood VIC 3068 AU",
+  phone: "+1 (555) 000-0000",
+  hours: "Mon-Fri from 8am to 5pm.",
+};
+
+interface ContactPageClientProps {
+  strapiData?: LienHeData | null;
+}
+
+export function ContactPageClient({ strapiData }: ContactPageClientProps) {
+  // Hero image
+  const heroImage = DEFAULT_HERO_IMAGE;
+
+  // Contact info
+  const email = strapiData?.email ?? DEFAULT_CONTACT.email;
+  const address = strapiData?.dia_chi ?? DEFAULT_CONTACT.address;
+  const phone = strapiData?.so_dien_thoai ?? DEFAULT_CONTACT.phone;
+  const hours = strapiData?.gio_lam_viec ?? DEFAULT_CONTACT.hours;
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -32,7 +55,7 @@ export function ContactPageClient() {
       <AnimatedPageSection delay={0.1}>
         <div className="container mx-auto mt-16 px-4 md:mt-24">
           <div className="relative aspect-3/1 w-full overflow-hidden rounded-2xl bg-gray-100">
-            <Image src={officeImage} alt="Timeso Office" fill className="object-cover" />
+            <Image src={DEFAULT_OFFICE_IMAGE} alt="Timeso Office" fill className="object-cover" />
           </div>
         </div>
       </AnimatedPageSection>
@@ -48,11 +71,8 @@ export function ContactPageClient() {
               </div>
               <h3 className="mb-2 text-xl font-semibold text-[#101828]">Chat to sales</h3>
               <p className="mb-4 text-base text-[#475467]">Speak to our friendly team.</p>
-              <a
-                href="mailto:sales@untitledui.com"
-                className="font-semibold text-[#01CFCF] hover:underline"
-              >
-                sales@untitledui.com
+              <a href={`mailto:${email}`} className="font-semibold text-[#01CFCF] hover:underline">
+                {email}
               </a>
             </div>
 
@@ -68,10 +88,11 @@ export function ContactPageClient() {
               </div>
               <h3 className="mb-2 text-xl font-semibold text-[#101828]">Visit us</h3>
               <p className="mb-4 text-base text-[#475467]">Visit our office HQ.</p>
-              <a href="#" className="font-semibold text-[#01CFCF] hover:underline">
-                100 Smith Street
-                <br />
-                Collingwood VIC 3068 AU
+              <a
+                href="#"
+                className="font-semibold whitespace-pre-line text-[#01CFCF] hover:underline"
+              >
+                {address}
               </a>
             </div>
 
@@ -81,9 +102,12 @@ export function ContactPageClient() {
                 <Image src="/images/contact/Featured icon3.png" alt="Call" width={48} height={48} />
               </div>
               <h3 className="mb-2 text-xl font-semibold text-[#101828]">Call us</h3>
-              <p className="mb-4 text-base text-[#475467]">Mon-Fri from 8am to 5pm.</p>
-              <a href="tel:+15550000000" className="font-semibold text-[#01CFCF] hover:underline">
-                +1 (555) 000-0000
+              <p className="mb-4 text-base text-[#475467]">{hours}</p>
+              <a
+                href={`tel:${phone.replace(/\s/g, "")}`}
+                className="font-semibold text-[#01CFCF] hover:underline"
+              >
+                {phone}
               </a>
             </div>
           </div>

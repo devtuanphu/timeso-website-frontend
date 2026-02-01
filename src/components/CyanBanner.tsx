@@ -2,16 +2,45 @@
 
 import Image from "next/image";
 import { UserCheck, Sparkles, Wand2, BarChart3 } from "lucide-react";
+import type { CyanBannerSection, StatItem } from "@/types/strapi";
 
 // Image Assets
 const ILLUSTRATION = "/images/banner/Layer 1.png";
 
-export default function CyanBanner() {
+const DEFAULT_BADGES = [
+  { icon: "UserCheck", text: "Chấm công chính xác" },
+  { icon: "Sparkles", text: "Tối ưu chi phí nhân sự" },
+  { icon: "Wand2", text: "Phân ca tự động bằng AI" },
+  { icon: "BarChart3", text: "Báo cáo hiệu suất tức thì" },
+];
+
+const IconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  UserCheck,
+  Sparkles,
+  Wand2,
+  BarChart3,
+};
+
+interface CyanBannerProps {
+  data?: CyanBannerSection | null;
+}
+
+export default function CyanBanner({ data }: CyanBannerProps) {
+  const title = data?.tieu_de ?? "Tăng tốc quản lý với sức mạnh AI";
+  const subtitle = data?.tieu_de_phu ?? "Quản lý nhanh hơn – thông minh hơn với AI";
+
+  const badges = data?.thong_ke?.length
+    ? data.thong_ke.map((item: StatItem, index: number) => ({
+        icon: DEFAULT_BADGES[index]?.icon ?? "Sparkles",
+        text: item.mo_ta,
+      }))
+    : DEFAULT_BADGES;
+
   return (
     <section className="hidden bg-white py-10 md:block">
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
         <div className="relative h-[182px] w-full overflow-hidden rounded-[24px] bg-linear-to-r from-[#00ada3] via-[#00ada3] to-[#defffc] shadow-sm">
-          {/* Background Decorative Ellipses (Simulated) */}
+          {/* Background Decorative Ellipses */}
           <div
             className="pointer-events-none absolute top-0 left-0 h-[328px] w-[322px] rounded-full opacity-20"
             style={{
@@ -31,31 +60,25 @@ export default function CyanBanner() {
           {/* Left Content */}
           <div className="absolute top-[29.7px] left-[30.54px] z-10 flex flex-col gap-[8px]">
             <h2 className="text-[24px] leading-normal font-bold tracking-tight text-white">
-              Tăng tốc quản lý với sức mạnh AI
+              {title}
             </h2>
             <p className="font-['Ubuntu_Sans',sans-serif] text-[14px] font-medium text-white/90">
-              Quản lý nhanh hơn – thông minh hơn với AI
+              {subtitle}
             </p>
           </div>
 
           {/* Badges Container */}
           <div className="absolute top-[113.88px] left-[30.54px] z-10 flex items-center gap-[12px]">
-            <Badge
-              icon={<UserCheck className="h-4 w-4 text-[#62748E]" />}
-              text="Chấm công chính xác"
-            />
-            <Badge
-              icon={<Sparkles className="h-4 w-4 text-[#62748E]" />}
-              text="Tối ưu chi phí nhân sự"
-            />
-            <Badge
-              icon={<Wand2 className="h-4 w-4 text-[#62748E]" />}
-              text="Phân ca tự động bằng AI"
-            />
-            <Badge
-              icon={<BarChart3 className="h-4 w-4 text-[#62748E]" />}
-              text="Báo cáo hiệu suất tức thì"
-            />
+            {badges.map((badge, index) => {
+              const Icon = IconMap[badge.icon] ?? Sparkles;
+              return (
+                <Badge
+                  key={index}
+                  icon={<Icon className="h-4 w-4 text-[#62748E]" />}
+                  text={badge.text}
+                />
+              );
+            })}
           </div>
 
           {/* Right side illustration */}

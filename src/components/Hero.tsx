@@ -1,12 +1,38 @@
 import { Sparkles } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import type { HeroSection } from "@/types/strapi";
 
 // Standard Badges - Local paths
 const APP_STORE_BADGE = "/images/app-store-badge.svg";
 const GOOGLE_PLAY_BADGE = "/images/google-play-badge.png";
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
-export default function Hero() {
+// Default content (fallback)
+const DEFAULT_CONTENT = {
+  title: "Nền tảng quản lý nhân sự bằng",
+  description:
+    "Timeso giúp doanh nghiệp tự động hóa HR bằng AI, từ tuyển dụng đến chấm công và quản lý hiệu suất, giảm giấy tờ để tập trung phát triển nhân tài.",
+};
+
+interface HeroProps {
+  data?: HeroSection | null;
+}
+
+export default function Hero({ data }: HeroProps) {
+  const title = data?.tieu_de ?? DEFAULT_CONTENT.title;
+  const description = data?.mo_ta ?? DEFAULT_CONTENT.description;
+  const showBadges = data?.hien_thi_badges ?? true;
+  const appStoreUrl = data?.app_store_url ?? "#";
+  const googlePlayUrl = data?.google_play_url ?? "#";
+
+  // Video URL
+  const videoUrl = data?.video?.url
+    ? data.video.url.startsWith("http")
+      ? data.video.url
+      : `${STRAPI_URL}${data.video.url}`
+    : null;
+
   return (
     <section className="bg-white px-4 pt-[120px] pb-[60px] md:px-8 md:pt-[160px] md:pb-[100px]">
       <div className="relative z-10 mx-auto max-w-[1280px]">
@@ -16,53 +42,66 @@ export default function Hero() {
             Timeso
           </h2>
 
-          {/* Main Heading */}
-          <h1 className="mb-4 flex flex-col items-center justify-center gap-1 text-center text-2xl leading-tight font-bold tracking-tight text-[#101828] md:mb-6 md:flex-row md:gap-3 md:text-6xl">
-            <span>Nền tảng quản lý</span>
-            <span className="flex items-center">
-              nhân sự bằng{" "}
-              <span className="ml-1 flex items-center text-[#34D9D9]">
-                AI
-                <Sparkles className="mb-2 ml-1 h-5 w-5 animate-pulse fill-current text-[#34D9D9] md:mb-4 md:h-8 md:w-8" />
-              </span>
+          {/* Main Heading - Single title with hardcoded AI */}
+          <h1 className="mb-4 text-center text-2xl leading-tight font-bold tracking-tight text-[#101828] md:mb-6 md:text-6xl">
+            {title}{" "}
+            <span className="inline-flex items-center text-[#34D9D9]">
+              AI
+              <Sparkles className="mb-1 ml-1 h-5 w-5 animate-pulse fill-current text-[#34D9D9] md:mb-2 md:h-8 md:w-8" />
             </span>
           </h1>
 
           {/* Subheading */}
           <p className="mb-8 max-w-[900px] px-2 text-sm leading-relaxed font-medium text-[#475467] md:mb-10 md:px-0 md:text-lg">
-            Timeso giúp doanh nghiệp tự động hóa HR bằng AI, từ tuyển dụng đến chấm công và quản lý
-            hiệu suất,
-            <br className="hidden md:block" />
-            giảm giấy tờ để tập trung phát triển nhân tài.
+            {description}
           </p>
 
           {/* Action Buttons (Black Badges) */}
-          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6">
-            <Link
-              href="#"
-              className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
-            >
-              <Image
-                src={APP_STORE_BADGE}
-                alt="Download on the App Store"
-                width={132}
-                height={44}
-                className="h-[40px] w-auto md:h-[44px]"
-              />
-            </Link>
-            <Link
-              href="#"
-              className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
-            >
-              <Image
-                src={GOOGLE_PLAY_BADGE}
-                alt="Get it on Google Play"
-                width={165}
-                height={64}
-                className="-my-2 h-[56px] w-auto md:h-[64px]"
-              />
-            </Link>
-          </div>
+          {showBadges && (
+            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6">
+              <Link
+                href={appStoreUrl}
+                className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
+              >
+                <Image
+                  src={APP_STORE_BADGE}
+                  alt="Download on the App Store"
+                  width={132}
+                  height={44}
+                  className="h-[40px] w-auto md:h-[44px]"
+                />
+              </Link>
+              <Link
+                href={googlePlayUrl}
+                className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
+              >
+                <Image
+                  src={GOOGLE_PLAY_BADGE}
+                  alt="Get it on Google Play"
+                  width={165}
+                  height={64}
+                  className="-my-2 h-[56px] w-auto md:h-[64px]"
+                />
+              </Link>
+            </div>
+          )}
+
+          {/* Hero Video */}
+          {videoUrl && (
+            <div className="mt-10 w-full md:mt-16">
+              <div className="relative aspect-video w-full overflow-hidden rounded-2xl shadow-2xl md:rounded-3xl">
+                <video
+                  src={videoUrl}
+                  className="h-full w-full object-cover"
+                  controls
+                  playsInline
+                  preload="metadata"
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

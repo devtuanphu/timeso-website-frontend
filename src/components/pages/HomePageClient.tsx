@@ -1,7 +1,6 @@
 "use client";
 
 import Hero from "@/components/Hero";
-import HeroVideo from "@/components/HeroVideo";
 import TrustedBy from "@/components/TrustedBy";
 import WhyChoose from "@/components/WhyChoose";
 import AllInOne from "@/components/AllInOne";
@@ -15,64 +14,65 @@ import NewsAndBlog from "@/components/NewsAndBlog";
 import Testimonials from "@/components/Testimonials";
 import BottomCTA from "@/components/BottomCTA";
 import { AnimatedPageSection, AnimatedHero } from "@/components/ui";
+import type { TrangChuData } from "@/types/strapi";
 
-export function HomePageClient() {
+interface HomePageClientProps {
+  strapiData?: TrangChuData | null;
+}
+
+export function HomePageClient({ strapiData }: HomePageClientProps) {
   return (
     <main>
       <AnimatedHero>
-        <Hero />
+        <Hero data={strapiData?.hero} />
       </AnimatedHero>
 
       <AnimatedPageSection delay={0.1}>
-        <HeroVideo />
+        <TrustedBy data={strapiData?.trusted_by} />
       </AnimatedPageSection>
 
       <AnimatedPageSection delay={0.1}>
-        <TrustedBy />
+        <WhyChoose data={strapiData?.why_choose} />
       </AnimatedPageSection>
 
       <AnimatedPageSection delay={0.1}>
-        <WhyChoose />
+        <AllInOne data={strapiData?.all_in_one} />
       </AnimatedPageSection>
 
       <AnimatedPageSection delay={0.1}>
-        <AllInOne />
+        <AISectionRefined data={strapiData?.ai_section} />
       </AnimatedPageSection>
 
       <AnimatedPageSection delay={0.1}>
-        <AISectionRefined />
+        <CyanBanner data={strapiData?.cyan_banner} />
       </AnimatedPageSection>
 
       <AnimatedPageSection delay={0.1}>
-        <CyanBanner />
+        <TargetAudience data={strapiData?.target_audience} />
       </AnimatedPageSection>
 
       <AnimatedPageSection delay={0.1}>
-        <TargetAudience />
+        <UserStories data={strapiData?.user_stories} />
       </AnimatedPageSection>
 
       <AnimatedPageSection delay={0.1}>
-        <UserStories />
+        <Comparison data={strapiData?.comparison} />
       </AnimatedPageSection>
 
       <AnimatedPageSection delay={0.1}>
-        <Comparison />
+        <Pricing data={strapiData?.pricing} />
       </AnimatedPageSection>
 
       <AnimatedPageSection delay={0.1}>
-        <Pricing />
+        <NewsAndBlog posts={strapiData?.bai_viet_noi_bat} />
       </AnimatedPageSection>
 
       <AnimatedPageSection delay={0.1}>
-        <NewsAndBlog />
+        <Testimonials data={strapiData?.testimonials} />
       </AnimatedPageSection>
 
       <AnimatedPageSection delay={0.1}>
-        <Testimonials />
-      </AnimatedPageSection>
-
-      <AnimatedPageSection delay={0.1}>
-        <BottomCTA />
+        <BottomCTA data={strapiData?.cta} />
       </AnimatedPageSection>
     </main>
   );

@@ -4,8 +4,9 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { CountUpStats } from "./CountUpStats";
+import type { DaLinhVucSection as DaLinhVucSectionType } from "@/types/strapi";
 
-const stats = [
+const DEFAULT_STATS = [
   { value: 12, suffix: "", label: "Ngành nghề áp dụng từ bán lẻ, F&B đến sản xuất" },
   { value: 30, suffix: "%", label: "Tăng hiệu suất vận hành HR trung bình" },
   { value: 5000, suffix: "+", label: "Nhân viên được quản lý và chấm công bằng AI" },
@@ -59,11 +60,21 @@ const images = [
   },
 ];
 
-export function DaLinhVucSection() {
-  const { ref: sectionRef, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+interface DaLinhVucSectionProps {
+  data?: DaLinhVucSectionType | null;
+}
+
+export function DaLinhVucSection({ data }: DaLinhVucSectionProps) {
+  const { ref: sectionRef, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  const title = data?.tieu_de ?? "ĐA LĨNH VỰC";
+  const stats = data?.thong_ke?.length
+    ? data.thong_ke.map((s, i) => ({
+        value: parseInt(s.gia_tri, 10) || DEFAULT_STATS[i]?.value || 0,
+        suffix: s.hau_to ?? DEFAULT_STATS[i]?.suffix ?? "",
+        label: s.mo_ta ?? DEFAULT_STATS[i]?.label ?? "",
+      }))
+    : DEFAULT_STATS;
 
   return (
     <section ref={sectionRef} className="bg-white px-4 py-16 md:px-8 md:py-[80px]">
@@ -85,10 +96,9 @@ export function DaLinhVucSection() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="mb-8 text-[28px] font-bold tracking-[-0.02em] text-[#01CFCF] uppercase md:mb-10 md:text-[40px] lg:text-[56px]"
             >
-              ĐA LĨNH VỰC
+              {title}
             </motion.h2>
 
-            {/* Stats - vertical on mobile, horizontal on md+ */}
             <div className="flex w-full flex-col items-center gap-6 md:flex-row md:items-start md:gap-8">
               {stats.map((stat, idx) => (
                 <motion.div
@@ -107,10 +117,9 @@ export function DaLinhVucSection() {
             </div>
           </div>
 
-          {/* Right Images - Circular scattered layout */}
+          {/* Right Images */}
           <div className="relative mt-8 h-[400px] w-full lg:mt-0 lg:h-[650px] lg:w-[55%]">
             <div className="absolute top-0 left-1/2 h-[650px] w-[580px] origin-top -translate-x-1/2 scale-[0.6] sm:scale-75 md:scale-90 lg:static lg:top-auto lg:left-auto lg:w-full lg:origin-top-left lg:translate-x-0 lg:scale-100">
-              {/* Cyan Dots */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
@@ -122,7 +131,6 @@ export function DaLinhVucSection() {
                 ))}
               </motion.div>
 
-              {/* Images */}
               {images.map((img, idx) => (
                 <motion.div
                   key={idx}

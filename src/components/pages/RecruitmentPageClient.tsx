@@ -6,6 +6,22 @@ import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { AnimatedPageSection, AnimatedHero } from "@/components/ui";
+import type { TuyenDungData } from "@/types/strapi";
+import { getStrapiMediaUrl } from "@/lib/strapi";
+
+// Default Hero Content
+const DEFAULT_HERO = {
+  title: "Timeso - Giải Pháp Chấm Dứt Nỗi Lo Tuyển Dụng",
+  description:
+    "Tự động hóa tuyển dụng từ lọc hồ sơ đến phỏng vấn, Giúp doanh nghiệp thu hút và tuyển chọn nhân tài nhanh chóng – hiệu quả với công nghệ AI phỏng vấn và đánh giá ứng viên. Timeso giúp các đối tác kinh doanh tự động, giống như một nền tảng HR bạn cần.",
+};
+
+const DEFAULT_CTA = {
+  title: "TẢI MIỄN PHÍ NGAY",
+  subtitle: "Trải nghiệm giải pháp tuyển dụng 4.0 từ Timeso",
+};
+
+const DEFAULT_CTA_IMAGE = "/images/recruitment/0fde196edc3946aa5fa9569f9c8de980a700b345.png";
 
 // Services data
 const SERVICES = [
@@ -113,7 +129,24 @@ const WHY_CHOOSE = [
   },
 ];
 
-export function RecruitmentPageClient() {
+interface RecruitmentPageClientProps {
+  strapiData?: TuyenDungData | null;
+}
+
+export function RecruitmentPageClient({ strapiData }: RecruitmentPageClientProps) {
+  // Extract Strapi data with fallbacks
+  const heroTitle = strapiData?.hero?.tieu_de ?? DEFAULT_HERO.title;
+  const heroDescription = strapiData?.hero?.mo_ta ?? DEFAULT_HERO.description;
+  const appStoreUrl = strapiData?.hero?.app_store_url ?? "#";
+  const googlePlayUrl = strapiData?.hero?.google_play_url ?? "#";
+
+  // CTA data
+  const ctaTitle = strapiData?.cta?.tieu_de ?? DEFAULT_CTA.title;
+  const ctaSubtitle = strapiData?.cta?.mo_ta ?? DEFAULT_CTA.subtitle;
+  const ctaAppStoreUrl = strapiData?.cta?.app_store_url ?? "#";
+  const ctaGooglePlayUrl = strapiData?.cta?.google_play_url ?? "#";
+  const ctaImage = getStrapiMediaUrl(strapiData?.cta?.hinh_anh) ?? DEFAULT_CTA_IMAGE;
+
   return (
     <>
       <Navbar />
@@ -139,22 +172,18 @@ export function RecruitmentPageClient() {
                 <span className="bg-linear-to-r from-[#00E2E2] to-[#00969E] bg-clip-text text-transparent">
                   Timeso
                 </span>
-                {" - Giải Pháp Chấm "}
-                <br className="hidden md:block" />
-                Dứt Nỗi Lo Tuyển Dụng
+                {" - "}
+                {heroTitle.replace("Timeso - ", "").replace("Timeso – ", "")}
               </h1>
 
               {/* Description */}
               <p className="mb-8 max-w-[808px] text-[14px] leading-relaxed text-[#475467] md:text-[16px] md:leading-[26px]">
-                Tự động hóa tuyển dụng từ lọc hồ sơ đến phỏng vấn, Giúp doanh nghiệp thu hút và
-                tuyển chọn nhân tài nhanh chóng – hiệu quả với công nghệ AI phỏng vấn và đánh giá
-                ứng viên. Timeso giúp các đối tác kinh doanh tự động, giống như một nền tảng HR bạn
-                cần.
+                {heroDescription}
               </p>
 
               {/* App badges */}
               <div className="mb-10 flex items-center gap-3">
-                <Link href="#" className="transition-opacity hover:opacity-80">
+                <Link href={appStoreUrl} className="transition-opacity hover:opacity-80">
                   <Image
                     src="/images/app-store-badge.svg"
                     alt="Download on the App Store"
@@ -162,7 +191,7 @@ export function RecruitmentPageClient() {
                     height={40}
                   />
                 </Link>
-                <Link href="#" className="transition-opacity hover:opacity-80">
+                <Link href={googlePlayUrl} className="transition-opacity hover:opacity-80">
                   <Image
                     src="/images/google-play-badge.png"
                     alt="Get it on Google Play"
@@ -510,13 +539,11 @@ export function RecruitmentPageClient() {
               {/* Left Content */}
               <div className="flex-1 p-6 md:p-16">
                 <h2 className="mb-4 text-[28px] font-semibold tracking-[-0.02em] text-[#101828] md:text-[36px]">
-                  TẢI MIỄN PHÍ NGAY
+                  {ctaTitle}
                 </h2>
-                <p className="mb-6 text-[16px] text-[#475467] md:text-[20px]">
-                  Trải nghiệm giải pháp tuyển dụng 4.0 từ Timeso
-                </p>
+                <p className="mb-6 text-[16px] text-[#475467] md:text-[20px]">{ctaSubtitle}</p>
                 <div className="flex items-center gap-3">
-                  <Link href="#" className="transition-opacity hover:opacity-80">
+                  <Link href={ctaAppStoreUrl} className="transition-opacity hover:opacity-80">
                     <Image
                       src="/images/app-store-badge.svg"
                       alt="Download on the App Store"
@@ -524,7 +551,7 @@ export function RecruitmentPageClient() {
                       height={40}
                     />
                   </Link>
-                  <Link href="#" className="transition-opacity hover:opacity-80">
+                  <Link href={ctaGooglePlayUrl} className="transition-opacity hover:opacity-80">
                     <Image
                       src="/images/google-play-badge.png"
                       alt="Get it on Google Play"
@@ -537,12 +564,7 @@ export function RecruitmentPageClient() {
 
               {/* Right Image */}
               <div className="relative h-[250px] w-full md:h-[342px] md:w-[400px]">
-                <Image
-                  src="/images/recruitment/0fde196edc3946aa5fa9569f9c8de980a700b345.png"
-                  alt="Timeso App"
-                  fill
-                  className="object-contain"
-                />
+                <Image src={ctaImage} alt="Timeso App" fill className="object-contain" />
               </div>
             </div>
           </div>

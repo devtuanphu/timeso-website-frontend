@@ -5,6 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, ChevronDown, Calendar, ArrowRight, X } from "lucide-react";
 import { AnimatedPageSection, AnimatedHero } from "@/components/ui";
+import type { BaiViet, TrangBlogData } from "@/types/strapi";
+
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
 // --- Types ---
 
@@ -25,7 +28,48 @@ interface BlogPost {
   featured?: boolean;
 }
 
-// --- Mock Data ---
+interface BlogPageClientProps {
+  pageData?: TrangBlogData | null;
+  posts: BaiViet[];
+}
+
+// --- Helper Functions ---
+
+function getStrapiImageUrl(url?: string): string {
+  if (!url) return "/images/blog/placeholder.png";
+  if (url.startsWith("http")) return url;
+  return `${STRAPI_URL}${url}`;
+}
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("vi-VN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+function mapStrapiPostToBlogPost(post: BaiViet): BlogPost {
+  return {
+    id: post.id,
+    title: post.tieu_de,
+    slug: post.slug,
+    desc: post.mo_ta || "",
+    author: {
+      name: post.tac_gia || "Timeso Team",
+      avatar: "/images/blog/avatar-default.png",
+      color: "#01CFCF",
+    },
+    date: formatDate(post.createdAt),
+    tags: post.tags || [],
+    category: post.danh_muc || "Tin tức",
+    image: getStrapiImageUrl(post.hinh_dai_dien?.url),
+    featured: post.noi_bat,
+  };
+}
+
+// --- Mock Data (fallback) ---
 
 const CATEGORIES = [
   { id: "all", label: "Tất cả" },
@@ -35,15 +79,15 @@ const CATEGORIES = [
   { id: "data", label: "Quản lý dữ liệu" },
 ];
 
-const BLOG_POSTS: BlogPost[] = [
+const FALLBACK_POSTS: BlogPost[] = [
   {
     id: 1,
     title: "Tối Ưu Ca Làm Bằng AI",
     slug: "toi-uu-ca-lam-bang-ai",
     desc: "Làm sao để AI dự đoán nhu cầu theo giờ cao điểm và tự động đề xuất ca làm tối ưu?",
     author: {
-      name: "Olivia Rhye",
-      avatar: "/images/blog/31db83164c6379a997eca9fe6670a6346ec9afdf.png",
+      name: "Timeso Team",
+      avatar: "/images/blog/avatar-default.png",
       color: "#C7B9DA",
     },
     date: "20 Jan 2022",
@@ -51,72 +95,6 @@ const BLOG_POSTS: BlogPost[] = [
     category: "Công nghệ & AI",
     image: "/images/blog/31db83164c6379a997eca9fe6670a6346ec9afdf.png",
     featured: true,
-  },
-  {
-    id: 2,
-    title: "Chấm Công Thông Minh",
-    slug: "cham-cong-thong-minh",
-    desc: "Timeso giúp cửa hàng loại bỏ ghi chép thủ công, tăng minh bạch và tối ưu chi phí nhân sự. Đây là hướng...",
-    author: { name: "Phoenix Baker", avatar: "/images/blog/avatar2.png", color: "#AA9C75" },
-    date: "19 Jan 2022",
-    tags: ["Quản trị nhân sự", "86 lượt xem"],
-    category: "Quản trị nhân sự",
-    image: "/images/blog/2f1190870d753151f58657595136f67c584b5c8c.png",
-  },
-  {
-    id: 3,
-    title: "Giảm 70% Lỗi Chi Với 1 Hệ Thống",
-    slug: "giam-70-loi-chi",
-    desc: "The rise of RESTful APIs has been met by a rise in tools for creating, testing, and managing them.",
-    author: { name: "Lana Steiner", avatar: "/images/blog/avatar3.png", color: "#D4B5AD" },
-    date: "18 Jan 2022",
-    tags: ["Công nghệ & AI", "78 lượt xem"],
-    category: "Công nghệ & AI",
-    image: "/images/blog/961775ee44c3d63e0abfba137bcda5e250751037.png",
-  },
-  {
-    id: 4,
-    title: "AI Trong Tuyển Dụng",
-    slug: "ai-trong-tuyen-dung",
-    desc: "Cách cửa hàng F&B và bán lẻ ứng dụng AI để giảm tải cho HR trong mùa cao điểm tuyển dụng.",
-    author: { name: "Alec Whitten", avatar: "/images/blog/avatar4.png", color: "#ABB677" },
-    date: "17 Jan 2022",
-    tags: ["Quản trị nhân sự", "78 lượt xem"],
-    category: "Quản trị nhân sự",
-    image: "/images/blog/2780e16db1a4a364d3d872737f7fe9563d7abb29.png",
-  },
-  {
-    id: 5,
-    title: "Xây Dựng Bộ Quy Tắc Vận Hành Cho Chuỗi Nhiều Chi Nhánh",
-    slug: "xay-dung-bo-quy-tac",
-    desc: "Các cửa hàng mở rộng nhanh thường gặp vấn đề thiếu đồng bộ. Dưới đây là cách Timeso hỗ trợ chuẩn ...",
-    author: { name: "Demi Wilkinson", avatar: "/images/blog/avatar5.png", color: "#BEA887" },
-    date: "16 Jan 2022",
-    tags: ["Quản lý hiệu suất", "70 lượt xem"],
-    category: "Quản lý hiệu suất",
-    image: "/images/blog/c220b565fba3f3369a85cb9bd4d04bf17c85be21.png",
-  },
-  {
-    id: 6,
-    title: "Tự Động Hóa Bảng Lương: Giảm 50% Thời Gian Xử Lý",
-    slug: "tu-dong-hoa-bang-luong",
-    desc: "Nhiều cửa hàng mất hàng giờ để tổng hợp công – ca – thưởng – phạt. Timeso giúp đồng bộ toàn bộ ...",
-    author: { name: "Candice Wu", avatar: "/images/blog/avatar6.png", color: "#A2A8CD" },
-    date: "15 Jan 2022",
-    tags: ["Quản trị nhân sự", "78 lượt xem"],
-    category: "Quản trị nhân sự",
-    image: "/images/blog/d688ab8bff2aebfc3cab587865468c4713ecad78.png",
-  },
-  {
-    id: 7,
-    title: "Cách Các Chuỗi F&B Giữ Chân Nhân Sự",
-    slug: "cach-cac-chuoi-fb-giu-chan",
-    desc: "Bật mí các chỉ số quan trọng như tỉ lệ đi muộn, số giờ làm, mức độ gắn kết... giúp quản lý phát hiện sớm rủi ro",
-    author: { name: "Natali Craig", avatar: "/images/blog/avatar7.png", color: "#D1BAA9" },
-    date: "14 Jan 2022",
-    tags: ["Quản trị nhân sự", "78 lượt xem"],
-    category: "Quản trị nhân sự",
-    image: "/images/blog/b08531ec74251700739464df6dfadf9bb2126963.png",
   },
 ];
 
@@ -235,10 +213,10 @@ const FeaturedPost = ({ post }: { post: BlogPost }) => {
         <div>
           <div className="mb-3 inline-flex items-center gap-2 rounded-2xl bg-[#E6FAFA] py-1 pr-2.5 pl-1 mix-blend-multiply">
             <span className="rounded-2xl bg-white px-2 py-0.5 text-xs font-medium text-[#019393]">
-              {post.tags[0]}
+              {post.category}
             </span>
             <span className="text-xs font-medium text-[#019393]">
-              {post.tags[1] || "Đề xuất xem"}
+              {post.featured ? "Nổi bật" : "Đề xuất xem"}
             </span>
           </div>
           <h2 className="mb-4 text-3xl leading-tight font-semibold text-[#101828] md:text-4xl">
@@ -253,7 +231,7 @@ const FeaturedPost = ({ post }: { post: BlogPost }) => {
             style={{ backgroundColor: post.author.color }}
           >
             <div className="flex h-full w-full items-center justify-center text-xs font-bold text-white">
-              {post.author.name.substring(0, 2)}
+              {post.author.name.substring(0, 2).toUpperCase()}
             </div>
           </div>
           <div className="flex flex-col">
@@ -283,9 +261,6 @@ const BlogCard = ({ post }: { post: BlogPost }) => {
             <span className="rounded-2xl bg-white px-2 py-0.5 text-xs font-medium text-[#019393]">
               {post.category}
             </span>
-            {post.tags[1] && (
-              <span className="text-xs font-medium text-[#019393]">{post.tags[1]}</span>
-            )}
           </div>
 
           <div className="mb-2">
@@ -306,7 +281,7 @@ const BlogCard = ({ post }: { post: BlogPost }) => {
             style={{ backgroundColor: post.author.color }}
           >
             <div className="flex h-full w-full items-center justify-center text-xs font-bold text-white">
-              {post.author.name.substring(0, 2)}
+              {post.author.name.substring(0, 2).toUpperCase()}
             </div>
           </div>
           <div className="flex flex-col">
@@ -319,12 +294,23 @@ const BlogCard = ({ post }: { post: BlogPost }) => {
   );
 };
 
-// --- Page & Pagination ---
+// --- Page Component ---
 
-export default function BlogPageClient() {
+export default function BlogPageClient({ pageData, posts }: BlogPageClientProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const featuredPost = BLOG_POSTS[0];
-  const gridPosts = BLOG_POSTS.slice(1);
+
+  // Map Strapi posts to BlogPost format, or use fallback
+  const blogPosts: BlogPost[] =
+    posts.length > 0 ? posts.map(mapStrapiPostToBlogPost) : FALLBACK_POSTS;
+
+  const featuredPost = blogPosts.find((p) => p.featured) || blogPosts[0];
+  const gridPosts = blogPosts.filter((p) => p.id !== featuredPost.id);
+
+  // Page content from Strapi or defaults
+  const heroTitle = pageData?.hero?.tieu_de || "Kiến Thức Quản Lý & Vận Hành Hiện Đại";
+  const heroDesc =
+    pageData?.hero?.mo_ta ||
+    "Nơi cập nhật thông tin, góc nhìn thực tiễn và kinh nghiệm triển khai Timeso.";
 
   return (
     <div className="min-h-screen bg-white">
@@ -334,10 +320,10 @@ export default function BlogPageClient() {
           <div className="container mx-auto px-4">
             <div className="flex flex-col items-start gap-4">
               <h1 className="text-4xl leading-tight font-semibold tracking-tight text-[#101828] md:text-[48px] md:leading-[60px] md:tracking-[-0.96px]">
-                Kiến Thức Quản Lý & Vận Hành Hiện Đại
+                {heroTitle}
               </h1>
               <p className="max-w-3xl text-lg text-[#475467] md:text-[20px] md:leading-[30px]">
-                Nơi cập nhật thông tin, góc nhìn thực tiễn và kinh nghiệm triển khai Timeso.
+                {heroDesc}
               </p>
             </div>
           </div>
@@ -379,7 +365,7 @@ export default function BlogPageClient() {
             {/* Main Content: 8 Columns */}
             <div className="lg:col-span-8">
               {/* Featured Post */}
-              <FeaturedPost post={featuredPost} />
+              {featuredPost && <FeaturedPost post={featuredPost} />}
 
               {/* Grid Posts */}
               <div className="mb-12 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2">
@@ -388,43 +374,37 @@ export default function BlogPageClient() {
                 ))}
               </div>
 
-              {/* Pagination */}
-              <div className="flex items-center justify-between border-t border-gray-200 pt-6">
-                <button className="flex items-center gap-2 rounded-lg py-2 pr-4 pl-0 text-sm font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50">
-                  <ArrowRight className="h-4 w-4 rotate-180" />
-                  Trước
-                </button>
-
-                {/* Mobile Text */}
-                <span className="text-sm font-medium text-gray-700 md:hidden">Trang 1 / 10</span>
-
-                {/* Desktop Number List */}
-                <div className="hidden items-center gap-1 md:flex">
-                  {[1, 2, 3, "...", 8, 9, 10].map((item, idx) => {
-                    return typeof item === "number" ? (
-                      <button
-                        key={idx}
-                        className={`h-10 w-10 rounded-lg text-sm font-medium transition-colors ${
-                          item === 1
-                            ? "bg-[#F9F5FF] text-[#01CFCF]"
-                            : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                        }`}
-                      >
-                        {item}
-                      </button>
-                    ) : (
-                      <span key={idx} className="px-2 text-gray-500">
-                        ...
-                      </span>
-                    );
-                  })}
+              {/* No posts message */}
+              {blogPosts.length === 0 && (
+                <div className="py-16 text-center">
+                  <p className="text-lg text-gray-500">Chưa có bài viết nào.</p>
                 </div>
+              )}
 
-                <button className="flex items-center gap-2 rounded-lg py-2 pr-0 pl-4 text-sm font-medium text-gray-500 hover:text-gray-700">
-                  Tiếp
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
+              {/* Pagination */}
+              {blogPosts.length > 0 && (
+                <div className="flex items-center justify-between border-t border-gray-200 pt-6">
+                  <button className="flex items-center gap-2 rounded-lg py-2 pr-4 pl-0 text-sm font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50">
+                    <ArrowRight className="h-4 w-4 rotate-180" />
+                    Trước
+                  </button>
+
+                  {/* Mobile Text */}
+                  <span className="text-sm font-medium text-gray-700 md:hidden">Trang 1 / 1</span>
+
+                  {/* Desktop Number List */}
+                  <div className="hidden items-center gap-1 md:flex">
+                    <button className="h-10 w-10 rounded-lg bg-[#F9F5FF] text-sm font-medium text-[#01CFCF]">
+                      1
+                    </button>
+                  </div>
+
+                  <button className="flex items-center gap-2 rounded-lg py-2 pr-0 pl-4 text-sm font-medium text-gray-500 hover:text-gray-700">
+                    Tiếp
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

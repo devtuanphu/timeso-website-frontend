@@ -3,8 +3,11 @@
 import { useState } from "react";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
+import type { AllInOneSection, AllInOneModule } from "@/types/strapi";
+import { getStrapiMediaUrl } from "@/lib/strapi";
 
-const MODULES = [
+// Default modules (fallback)
+const DEFAULT_MODULES = [
   {
     id: 1,
     title: "Tuyển dụng",
@@ -26,7 +29,7 @@ const MODULES = [
   {
     id: 4,
     title: "Tạo đơn hàng",
-    desc: "Timeso giúp cửa hàng tạo đơn nhanh chóng, thanh toán dễ dàng. Quản lý lịch hẹn, đơn hàng một cách rõ ràng, hạn chế nhầm lẫn và trùng lịch.",
+    desc: "Timeso giúp cửa hàng tạo đơn nhanh chóng, thanh toán dễ dàng. Quản lý lịch hẹn, đơn hàng một cách rõ ràng.",
     image: "/images/all-in-one/a998eb2ed393b08cb42215a71c61c1ac9cc019bb.png",
   },
   {
@@ -37,8 +40,34 @@ const MODULES = [
   },
 ];
 
-export default function AllInOne() {
+const DEFAULT_CONTENT = {
+  title: "Mọi tính năng bạn cần",
+  titleSuffix: "— trong một nền tảng",
+  description: "Tự động hóa quy trình và tối ưu vận hành từ tuyển dụng đến quản lý nhân sự.",
+};
+
+interface AllInOneProps {
+  data?: AllInOneSection | null;
+}
+
+export default function AllInOne({ data }: AllInOneProps) {
   const [activeId, setActiveId] = useState(1);
+
+  const modules = data?.modules?.length
+    ? data.modules.map((mod: AllInOneModule, index: number) => ({
+        id: index + 1,
+        title: mod.tieu_de,
+        desc: mod.mo_ta ?? "",
+        image:
+          getStrapiMediaUrl(mod.hinh_anh) ??
+          DEFAULT_MODULES[index]?.image ??
+          "/images/placeholder.png",
+      }))
+    : DEFAULT_MODULES;
+
+  const title = data?.tieu_de ?? DEFAULT_CONTENT.title;
+  const titleSuffix = data?.tieu_de_phu ?? DEFAULT_CONTENT.titleSuffix;
+  const description = data?.mo_ta ?? DEFAULT_CONTENT.description;
 
   return (
     <section className="overflow-hidden bg-[#FCFFFF] py-12 md:py-24" id="features">
@@ -46,17 +75,17 @@ export default function AllInOne() {
         {/* Header */}
         <div className="mb-10 md:mb-20">
           <h2 className="mb-4 text-2xl leading-tight font-bold tracking-tight text-[#101828] md:mb-6 md:text-[48px] md:leading-[1.2] md:tracking-[-0.96px]">
-            Mọi tính năng bạn cần <span className="text-[#101828]/60">— trong một nền tảng</span>
+            {title} <span className="text-[#101828]/60">{titleSuffix}</span>
           </h2>
           <p className="max-w-3xl text-sm leading-relaxed text-[#475467] md:text-[18px] md:leading-[28px]">
-            Tự động hóa quy trình và tối ưu vận hành từ tuyển dụng đến quản lý nhân sự.
+            {description}
           </p>
         </div>
 
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-12">
           {/* Left: Tabs */}
           <div className="flex w-full flex-col gap-0 lg:w-[500px]">
-            {MODULES.map((mod) => (
+            {modules.map((mod) => (
               <div
                 key={mod.id}
                 onClick={() => setActiveId(mod.id)}
@@ -94,7 +123,7 @@ export default function AllInOne() {
                 <div className="absolute top-0 right-0 left-0 h-4 bg-[#344054]/50 backdrop-blur-sm md:h-6"></div>
                 <div className="relative h-full w-full pt-4 md:pt-6">
                   <Image
-                    src={MODULES.find((m) => m.id === activeId)?.image || MODULES[2].image}
+                    src={modules.find((m) => m.id === activeId)?.image || modules[0].image}
                     alt="Timeso Dashboard"
                     fill
                     className="object-cover"

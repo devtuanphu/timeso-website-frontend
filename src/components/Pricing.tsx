@@ -1,8 +1,10 @@
 "use client";
 
 import { Check } from "lucide-react";
+import type { PricingSection, PricingPlan } from "@/types/strapi";
 
-const PLANS = [
+// Default plans (fallback)
+const DEFAULT_PLANS = [
   {
     name: "Free",
     nameColor: "text-[#00BAC7]",
@@ -62,25 +64,58 @@ const PLANS = [
   },
 ];
 
-export default function Pricing() {
+const DEFAULT_CONTENT = {
+  title: "Choose the",
+  titleHighlight: "Right Plan!",
+  description:
+    "Select from best plans, ensuring a perfect match. Need more or less? Customize your subscription for a seamless fit!",
+};
+
+interface PricingProps {
+  data?: PricingSection | null;
+}
+
+export default function Pricing({ data }: PricingProps) {
+  const title =
+    data?.tieu_de ??
+    `${DEFAULT_CONTENT.title} <span class="text-[#00BAC7] italic">${DEFAULT_CONTENT.titleHighlight}</span>`;
+  const description = data?.mo_ta ?? DEFAULT_CONTENT.description;
+
+  const plans = data?.goi_gia?.length
+    ? data.goi_gia.map((plan: PricingPlan, index: number) => ({
+        name: plan.ten_goi,
+        nameColor: plan.noi_bat ? "text-[#101828]" : "text-[#00BAC7]",
+        price: plan.gia,
+        period: plan.don_vi ?? "/tháng",
+        description: plan.mo_ta ?? "",
+        buttonText: plan.nut_text ?? "Bắt đầu",
+        buttonStyle: plan.noi_bat
+          ? "bg-[#00BAC7] text-white hover:bg-[#00A3AF]"
+          : "border border-[#D0D5DD] bg-white text-[#344054] hover:bg-gray-50",
+        features: plan.tinh_nang ?? [],
+        checkColor: plan.noi_bat ? "text-[#00BAC7]" : "text-[#98A2B3]",
+        isPopular: plan.noi_bat ?? false,
+        hasDashedBorder: plan.noi_bat ?? false,
+      }))
+    : DEFAULT_PLANS;
+
   return (
     <section className="bg-white py-12 md:py-[80px]">
       <div className="mx-auto max-w-[1280px] px-4 md:px-[80px]">
         {/* Header */}
         <div className="mb-8 text-center md:mb-[48px]">
-          <h2 className="text-2xl leading-tight font-bold tracking-tight text-[#101828] md:text-[48px] md:leading-[58px] md:tracking-[-0.96px]">
-            Choose the <span className="text-[#00BAC7] italic">Right Plan!</span>
-          </h2>
+          <h2
+            className="text-2xl leading-tight font-bold tracking-tight text-[#101828] md:text-[48px] md:leading-[58px] md:tracking-[-0.96px]"
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
           <p className="mt-3 text-sm leading-relaxed text-[#475467] md:mt-[16px] md:text-[18px] md:leading-[28px]">
-            Select from best plans, ensuring a perfect match. Need more or less?
-            <br className="hidden md:block" />
-            Customize your subscription for a seamless fit!
+            {description}
           </p>
         </div>
 
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-[32px]">
-          {PLANS.map((plan, idx) => (
+          {plans.map((plan, idx) => (
             <div
               key={idx}
               className="relative flex flex-col rounded-[16px] p-6 md:p-[32px]"

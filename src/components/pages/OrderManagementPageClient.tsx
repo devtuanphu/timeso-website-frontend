@@ -3,47 +3,72 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DaLinhVucSection, AnimatedPageSection, AnimatedHero } from "@/components/ui";
+import type { QuanLyDonHangData } from "@/types/strapi";
+import { getStrapiMediaUrl } from "@/lib/strapi";
 
-// Assets from Figma
-const heroImage = "/figma_assets/f39d24ee2279b11358426c47a3f20d748d9bfa5a.png";
+// Default Assets (fallback)
+const DEFAULT_HERO_IMAGE = "/figma_assets/f39d24ee2279b11358426c47a3f20d748d9bfa5a.png";
 
-export function OrderManagementPageClient() {
+// Default content (fallback)
+const DEFAULT_HERO = {
+  title: "Quản Lý Đơn Hàng",
+  description: [
+    "Timeso giúp cửa hàng tạo và quản lý đơn hàng nhanh chóng.",
+    "Khi khách đến, nhân viên chỉ cần bấm tạo đơn và đặt lịch phục vụ cho khách ngay trên hệ thống, giúp theo dõi đơn rõ ràng, tránh nhầm lẫn và phục vụ đúng thời gian.",
+  ],
+};
+
+const DEFAULT_CTA = {
+  title: "Start your free trial",
+  subtitle: "Personal performance tracking made easy.",
+};
+
+interface OrderManagementPageClientProps {
+  strapiData?: QuanLyDonHangData | null;
+}
+
+export function OrderManagementPageClient({ strapiData }: OrderManagementPageClientProps) {
+  // Hero data
+  const heroTitle = strapiData?.hero?.tieu_de ?? DEFAULT_HERO.title;
+  const heroDescription = strapiData?.hero?.mo_ta ?? DEFAULT_HERO.description.join(" ");
+  const heroImage = DEFAULT_HERO_IMAGE;
+  const appStoreUrl = strapiData?.hero?.app_store_url ?? "#";
+  const googlePlayUrl = strapiData?.hero?.google_play_url ?? "#";
+
+  // CTA data
+  const ctaTitle = strapiData?.cta?.tieu_de ?? DEFAULT_CTA.title;
+  const ctaSubtitle = strapiData?.cta?.mo_ta ?? DEFAULT_CTA.subtitle;
+  const ctaAppStoreUrl = strapiData?.cta?.app_store_url ?? "#";
+  const ctaGooglePlayUrl = strapiData?.cta?.google_play_url ?? "#";
+  const ctaImage =
+    getStrapiMediaUrl(strapiData?.cta?.hinh_anh) ??
+    "/images/recruitment/0fde196edc3946aa5fa9569f9c8de980a700b345.png";
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <AnimatedHero>
         <section className="relative overflow-hidden pt-[120px] pb-16 md:pt-[160px] md:pb-24">
-          {/* Background gradient - light cyan arc */}
           <div className="absolute inset-0">
             <div className="absolute top-0 right-0 h-full w-[70%] rounded-bl-[50%] bg-linear-to-bl from-[#01CFCF]/20 via-[#55DFDF]/10 to-transparent" />
           </div>
 
           <div className="relative container mx-auto px-4">
             <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-              {/* Left Content */}
               <div className="text-center lg:text-left">
                 <h1 className="mb-6 text-[28px] leading-tight font-semibold text-[#101828] md:text-4xl lg:text-[48px] lg:leading-[1.2]">
-                  <span className="">Quản Lý Đơn Hàng</span>
+                  <span>{heroTitle}</span>
                 </h1>
                 <ul className="mx-auto mb-8 max-w-lg space-y-3 text-[14px] leading-relaxed text-[#475467] md:text-lg lg:mx-0">
                   <li className="flex items-start gap-2">
                     <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#475467]" />
-                    <span>Timeso giúp cửa hàng tạo và quản lý đơn hàng nhanh chóng.</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#475467]" />
-                    <span>
-                      Khi khách đến, nhân viên chỉ cần bấm tạo đơn và đặt lịch phục vụ cho khách
-                      ngay trên hệ thống, giúp theo dõi đơn rõ ràng, <strong>tránh nhầm lẫn</strong>{" "}
-                      và <strong>phục vụ đúng thời gian</strong>.
-                    </span>
+                    <span>{heroDescription}</span>
                   </li>
                 </ul>
 
-                {/* App Store Badges */}
                 <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6 lg:justify-start">
                   <Link
-                    href="#"
+                    href={appStoreUrl}
                     className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
                   >
                     <Image
@@ -55,7 +80,7 @@ export function OrderManagementPageClient() {
                     />
                   </Link>
                   <Link
-                    href="#"
+                    href={googlePlayUrl}
                     className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
                   >
                     <Image
@@ -69,7 +94,6 @@ export function OrderManagementPageClient() {
                 </div>
               </div>
 
-              {/* Right Image */}
               <div className="relative">
                 <div className="relative mx-auto h-[400px] w-full max-w-[600px] lg:h-[569px]">
                   <Image
@@ -89,9 +113,7 @@ export function OrderManagementPageClient() {
       <AnimatedPageSection delay={0.1}>
         <section className="bg-linear-to-b from-[#dcffff] to-[#f1ffff] py-12 md:py-16 lg:py-24">
           <div className="mx-auto max-w-[1280px] px-4 md:px-8">
-            {/* Part 1: Image Left, Content Right */}
             <div className="grid grid-cols-1 items-center gap-6 md:gap-8 lg:grid-cols-2 lg:gap-16">
-              {/* Left - Circular Image */}
               <div className="flex justify-center">
                 <div className="relative h-[200px] w-[200px] overflow-hidden rounded-full sm:h-[280px] sm:w-[280px] md:h-[350px] md:w-[350px] lg:h-[450px] lg:w-[450px]">
                   <Image
@@ -103,7 +125,6 @@ export function OrderManagementPageClient() {
                 </div>
               </div>
 
-              {/* Right - Content */}
               <div className="flex flex-col justify-center text-center lg:text-left">
                 <h2 className="mb-3 text-[22px] font-bold text-[#101828] sm:text-[28px] md:mb-4 md:text-[36px] lg:text-[40px]">
                   Cửa hàng vận hành thế nào với Timeso?
@@ -129,12 +150,9 @@ export function OrderManagementPageClient() {
               </div>
             </div>
 
-            {/* Horizontal Divider */}
             <div className="my-8 border-t border-[#01CFCF]/30 md:my-12 lg:my-16" />
 
-            {/* Part 2: Content Left, Image Right */}
             <div className="grid grid-cols-1 items-center gap-6 md:gap-8 lg:grid-cols-2 lg:gap-16">
-              {/* Left - Content (on mobile, this appears after image) */}
               <div className="order-2 flex flex-col justify-center text-center lg:order-1 lg:text-left">
                 <h2 className="mb-4 text-[22px] font-bold text-[#101828] sm:text-[28px] md:mb-6 md:text-[36px] lg:text-[40px]">
                   Lợi ích chính:
@@ -155,7 +173,6 @@ export function OrderManagementPageClient() {
                 </ul>
               </div>
 
-              {/* Right - Circular Image (on mobile, this appears first) */}
               <div className="order-1 flex justify-center lg:order-2">
                 <div className="relative h-[200px] w-[200px] overflow-hidden rounded-full sm:h-[280px] sm:w-[280px] md:h-[350px] md:w-[350px] lg:h-[450px] lg:w-[450px]">
                   <Image
@@ -187,9 +204,7 @@ export function OrderManagementPageClient() {
               </p>
             </div>
 
-            {/* Feature Cards */}
             <div className="space-y-12">
-              {/* Feature 1 - Theo dõi đơn hàng rõ ràng */}
               <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
                 <div className="relative h-[300px] overflow-hidden rounded-[16px] md:h-[350px]">
                   <Image
@@ -224,7 +239,6 @@ export function OrderManagementPageClient() {
                 </div>
               </div>
 
-              {/* Feature 2 - Đồng bộ với nhân viên & lịch làm việc */}
               <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
                 <div className="order-2 lg:order-1">
                   <h3 className="mb-4 text-[20px] font-bold text-[#101828] md:text-[24px]">
@@ -259,7 +273,6 @@ export function OrderManagementPageClient() {
                 </div>
               </div>
 
-              {/* Feature 3 - Phù hợp cho cửa hàng nhỏ */}
               <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
                 <div className="relative h-[300px] overflow-hidden rounded-[16px] md:h-[350px]">
                   <Image
@@ -297,25 +310,24 @@ export function OrderManagementPageClient() {
         </section>
       </AnimatedPageSection>
 
-      {/* Stats Section - Đa lĩnh vực with animations */}
-      <DaLinhVucSection />
+      {/* Stats Section */}
+      <DaLinhVucSection data={strapiData?.da_linh_vuc} />
 
       {/* CTA Section */}
       <AnimatedPageSection delay={0.1}>
         <section className="bg-white px-4 py-12 md:px-8 md:py-24">
           <div className="mx-auto max-w-[1280px]">
             <div className="flex flex-col items-center overflow-hidden rounded-[16px] bg-[#E6FEFF] p-6 md:flex-row md:rounded-[24px] md:p-0">
-              {/* Left Content */}
               <div className="flex-1 text-center md:p-16 md:text-left">
                 <h2 className="mb-3 text-[18px] font-semibold tracking-[-0.02em] text-[#101828] md:mb-4 md:text-[28px] lg:text-[36px]">
-                  Start your free trial
+                  {ctaTitle}
                 </h2>
                 <p className="mb-5 text-[12px] text-[#475467] md:mb-6 md:text-[16px] lg:text-[20px]">
-                  Personal performance tracking made easy.
+                  {ctaSubtitle}
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start md:gap-6">
                   <Link
-                    href="#"
+                    href={ctaAppStoreUrl}
                     className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
                   >
                     <Image
@@ -327,7 +339,7 @@ export function OrderManagementPageClient() {
                     />
                   </Link>
                   <Link
-                    href="#"
+                    href={ctaGooglePlayUrl}
                     className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
                   >
                     <Image
@@ -340,15 +352,8 @@ export function OrderManagementPageClient() {
                   </Link>
                 </div>
               </div>
-
-              {/* Right Image */}
               <div className="relative mt-6 h-[180px] w-full md:mt-0 md:h-[342px] md:w-[400px]">
-                <Image
-                  src="/images/recruitment/0fde196edc3946aa5fa9569f9c8de980a700b345.png"
-                  alt="Timeso App"
-                  fill
-                  className="object-contain"
-                />
+                <Image src={ctaImage} alt="Timeso App" fill className="object-contain" />
               </div>
             </div>
           </div>

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import CaseStudyCard from "./CaseStudyCard";
+import type { CaseStudy } from "@/types/strapi";
+import { getStrapiMediaUrl } from "@/lib/strapi";
 
 const CATEGORIES = [
   { id: "all", label: "Tất cả" },
@@ -12,7 +14,7 @@ const CATEGORIES = [
   { id: "recruitment", label: "Tuyển dụng" },
 ];
 
-const CASE_STUDIES = [
+const DEFAULT_CASE_STUDIES = [
   {
     id: 1,
     categoryId: "experience",
@@ -44,14 +46,34 @@ const CASE_STUDIES = [
   },
 ];
 
-export default function CaseStudiesList() {
+interface CaseStudiesListProps {
+  caseStudies?: CaseStudy[];
+}
+
+export default function CaseStudiesList({ caseStudies = [] }: CaseStudiesListProps) {
   const [activeCategory, setActiveCategory] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Transform Strapi data to display format
+  const displayStudies =
+    caseStudies.length > 0
+      ? caseStudies.map((study, idx) => ({
+          id: study.id,
+          categoryId: study.nganh ?? "experience",
+          category: study.nganh ?? "Chia sẻ kinh nghiệm",
+          title: study.tieu_de,
+          description: study.mo_ta ?? "",
+          image:
+            getStrapiMediaUrl(study.hinh_dai_dien) ??
+            "/images/case-studies/22e4c682258f224f70841b23f4805d4f91d23c3a.png",
+          imagePosition: (idx % 2 === 0 ? "left" : "right") as "left" | "right",
+        }))
+      : DEFAULT_CASE_STUDIES;
+
   const filteredStudies =
     activeCategory === "all"
-      ? CASE_STUDIES
-      : CASE_STUDIES.filter((s) => s.categoryId === activeCategory);
+      ? displayStudies
+      : displayStudies.filter((s) => s.categoryId === activeCategory);
 
   return (
     <section className="bg-white py-16 md:py-20">

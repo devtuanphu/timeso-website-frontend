@@ -1,11 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { CtaSection } from "@/types/strapi";
 
 const CTA_IMAGE = "/images/case-studies/image 2555.png";
 const APP_STORE_BADGE = "/images/app-store-badge.svg";
 const GOOGLE_PLAY_BADGE = "/images/google-play-badge.png";
 
-export default function CaseStudiesCTA() {
+const DEFAULT_CONTENT = {
+  title: "Start your free trial",
+  description: "Personal performance tracking made easy.",
+};
+
+interface CaseStudiesCTAProps {
+  data?: CtaSection | null;
+}
+
+export default function CaseStudiesCTA({ data }: CaseStudiesCTAProps) {
+  const title = data?.tieu_de ?? DEFAULT_CONTENT.title;
+  const description = data?.mo_ta ?? DEFAULT_CONTENT.description;
+  const appStoreUrl = data?.app_store_url ?? "#";
+  const googlePlayUrl = data?.google_play_url ?? "#";
+
   return (
     <section className="bg-[#E6FAFA] py-16 md:py-24">
       <div className="mx-auto max-w-[1280px] px-4 md:px-[80px]">
@@ -14,16 +29,14 @@ export default function CaseStudiesCTA() {
             {/* Content */}
             <div className="max-w-[600px]">
               <h2 className="mb-4 text-2xl font-semibold text-[#101828] md:text-[36px] md:leading-[44px]">
-                Start your free trial
+                {title}
               </h2>
-              <p className="mb-8 text-lg text-[#475467]">
-                Personal performance tracking made easy.
-              </p>
+              <p className="mb-8 text-lg text-[#475467]">{description}</p>
 
               {/* App Store Badges */}
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="#"
+                  href={appStoreUrl}
                   className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
                 >
                   <Image
@@ -35,7 +48,7 @@ export default function CaseStudiesCTA() {
                   />
                 </Link>
                 <Link
-                  href="#"
+                  href={googlePlayUrl}
                   className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
                 >
                   <Image

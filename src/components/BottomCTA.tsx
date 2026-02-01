@@ -2,15 +2,33 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import type { CtaSection } from "@/types/strapi";
+import { getStrapiMediaUrl } from "@/lib/strapi";
 
-// Phone mockup image from Figma
+// Default content (fallback)
 const PHONE_MOCKUP = "/images/cta/927772feb12cf7bb3461f8731b250063c9238795.png";
-
-// App store badges - Local paths
 const APP_STORE_BADGE = "/images/app-store-badge.svg";
 const GOOGLE_PLAY_BADGE = "/images/google-play-badge.png";
 
-export default function BottomCTA() {
+const DEFAULT_CONTENT = {
+  title: "TRẢI NGHIỆM NGAY",
+  subtitle: "- Nâng tầm cửa hàng của bạn!",
+  description:
+    "Dễ dàng theo dõi và tối ưu hiệu suất làm việc của bạn mọi lúc, mọi nơi với bản dùng thử miễn phí.",
+};
+
+interface BottomCTAProps {
+  data?: CtaSection | null;
+}
+
+export default function BottomCTA({ data }: BottomCTAProps) {
+  const title = data?.tieu_de ?? DEFAULT_CONTENT.title;
+  const subtitle = DEFAULT_CONTENT.subtitle;
+  const description = data?.mo_ta ?? DEFAULT_CONTENT.description;
+  const phoneImage = getStrapiMediaUrl(data?.hinh_anh) ?? PHONE_MOCKUP;
+  const appStoreUrl = data?.app_store_url ?? "#";
+  const googlePlayUrl = data?.google_play_url ?? "#";
+
   return (
     <section
       className="relative overflow-hidden"
@@ -24,21 +42,20 @@ export default function BottomCTA() {
         <div className="w-full px-4 py-12 text-center md:w-[760px] md:py-[170px] md:pl-[131px] md:text-left">
           {/* Title */}
           <h2 className="text-2xl leading-tight font-bold tracking-tight text-[#00BAC7] uppercase md:text-[48px] md:leading-[58px] md:tracking-[-0.96px]">
-            TRẢI NGHIỆM NGAY
+            {title}
           </h2>
           <p className="mb-4 text-xl leading-tight font-medium text-[#101828] md:mb-[20px] md:text-[36px] md:leading-[44px]">
-            - Nâng tầm cửa hàng của bạn!
+            {subtitle}
           </p>
 
           {/* Description */}
           <p className="mb-6 text-sm leading-relaxed text-[#475467] md:mb-[40px] md:max-w-[486px] md:text-[16px] md:leading-[30px]">
-            Dễ dàng theo dõi và tối ưu hiệu suất làm việc của bạn mọi lúc, mọi nơi với bản dùng thử
-            miễn phí.
+            {description}
           </p>
 
           {/* App Store Badges */}
           <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start md:gap-[12px]">
-            <Link href="#" className="transition-opacity hover:opacity-80">
+            <Link href={appStoreUrl} className="transition-opacity hover:opacity-80">
               <Image
                 src={APP_STORE_BADGE}
                 alt="Download on App Store"
@@ -47,7 +64,7 @@ export default function BottomCTA() {
                 className="h-[40px] w-auto md:h-[44px]"
               />
             </Link>
-            <Link href="#" className="transition-opacity hover:opacity-80">
+            <Link href={googlePlayUrl} className="transition-opacity hover:opacity-80">
               <Image
                 src={GOOGLE_PLAY_BADGE}
                 alt="Get it on Google Play"
@@ -71,14 +88,14 @@ export default function BottomCTA() {
 
           {/* Phone Image */}
           <div className="relative h-[558px] w-[558px]">
-            <Image src={PHONE_MOCKUP} alt="Timeso Mobile App" fill className="object-cover" />
+            <Image src={phoneImage} alt="Timeso Mobile App" fill className="object-cover" />
           </div>
         </div>
 
         {/* Mobile Phone Mockup - smaller version */}
         <div className="relative flex justify-center pb-8 md:hidden">
           <div className="relative h-[300px] w-[300px]">
-            <Image src={PHONE_MOCKUP} alt="Timeso Mobile App" fill className="object-contain" />
+            <Image src={phoneImage} alt="Timeso Mobile App" fill className="object-contain" />
           </div>
         </div>
       </div>

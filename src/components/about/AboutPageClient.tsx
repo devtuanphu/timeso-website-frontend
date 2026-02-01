@@ -9,13 +9,15 @@ import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import Navbar from "@/components/Navbar";
 import { AnimatedPageSection, AnimatedHero } from "@/components/ui";
+import type { VeChungToiData, ThanhVien } from "@/types/strapi";
+import { getStrapiMediaUrl } from "@/lib/strapi";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 
-// Team members data from Figma
-const TEAM_MEMBERS = [
+// Team members data from Figma (fallback)
+const DEFAULT_TEAM_MEMBERS = [
   {
     name: "Alisa Hester",
     role: "Founder & CEO",
@@ -42,8 +44,8 @@ const TEAM_MEMBERS = [
   },
 ];
 
-// Core values data - matching Figma design
-const CORE_VALUES = [
+// Core values data - matching Figma design (fallback)
+const DEFAULT_CORE_VALUES = [
   {
     icon: "/images/case-studies/foundation_target.png",
     iconBg: "#21D4D4",
@@ -67,7 +69,59 @@ const CORE_VALUES = [
   },
 ];
 
-export default function AboutPageClient() {
+// Default hero content
+const DEFAULT_HERO = {
+  title: "Chinh phục mọi",
+  titleHighlight: "thách thức quản lý",
+  description:
+    "Chào bạn đến với Timeso - nền tảng quản lý nhân sự AI tiên tiến, với sự kết hợp hoàn toàn giao diện app mobile của chúng tôi và dịch tự động, giúp bạn sử dụng có thể dễ đi tới vị trí tốt hơn cho các dự thể vận hàng mà tới sống.",
+};
+
+// Default story content
+const DEFAULT_STORY = `
+Timeso ra đời từ một câu hỏi đơn giản: "Làm sao để việc quản lý nhân sự và vận hành trở nên nhẹ nhàng hơn cho mọi cửa hàng?"
+
+Trong quá trình làm việc với nhiều cửa hàng và đội ngũ quản lý, chúng tôi nhận ra rằng những phương pháp thủ công không chỉ tốn thời gian mà còn khiến cửa hàng chậm lại.
+
+Chính từ nhu cầu đó, đội ngũ sáng lập Timeso quyết tâm tạo nên một nền tảng thông minh, dễ sử dụng nhưng đủ mạnh để tự động hóa những công việc phức tạp. Chúng tôi tin rằng khi cửa hàng tiết kiệm được thời gian, họ sẽ có nhiều hơn để tập trung vào điều quan trọng nhất: phát triển con người và tạo ra giá trị thật sự.
+`;
+
+interface AboutPageClientProps {
+  strapiData?: VeChungToiData | null;
+  teamMembers?: ThanhVien[] | null;
+}
+
+export default function AboutPageClient({ strapiData, teamMembers }: AboutPageClientProps) {
+  // Hero data
+  const heroTitle = strapiData?.hero?.tieu_de ?? DEFAULT_HERO.title;
+  const heroDescription = strapiData?.hero?.mo_ta ?? DEFAULT_HERO.description;
+  const appStoreUrl = strapiData?.hero?.app_store_url ?? "#";
+  const googlePlayUrl = strapiData?.hero?.google_play_url ?? "#";
+
+  // Story content
+  const storyContent = strapiData?.cau_chuyen ?? DEFAULT_STORY;
+  const storyImage =
+    getStrapiMediaUrl(strapiData?.hinh_cau_chuyen) ??
+    "/images/about/73b7c2a56de9b2bde5d83664188677534e98ec81.png";
+
+  // Core values
+  const coreValues =
+    strapiData?.gia_tri_cot_loi?.map((item, i) => ({
+      icon: getStrapiMediaUrl(item.icon) ?? DEFAULT_CORE_VALUES[i]?.icon ?? "",
+      iconBg: DEFAULT_CORE_VALUES[i]?.iconBg ?? "#21D4D4",
+      title: item.tieu_de,
+      description: item.mo_ta ?? "",
+    })) ?? DEFAULT_CORE_VALUES;
+
+  // Team members
+  const teamData =
+    teamMembers?.map((member) => ({
+      name: member.ten,
+      role: member.chuc_vu ?? "",
+      description: member.mo_ta ?? "",
+      image: getStrapiMediaUrl(member.avatar) ?? DEFAULT_TEAM_MEMBERS[0]?.image ?? "",
+    })) ?? DEFAULT_TEAM_MEMBERS;
+
   return (
     <>
       <Navbar />
@@ -78,16 +132,14 @@ export default function AboutPageClient() {
           <div className="mx-auto max-w-[1200px]">
             <div className="mb-8 max-w-[1000px]">
               <h1 className="mb-4 text-[28px] leading-tight font-bold tracking-[-0.02em] text-[#101828] md:text-[56px] md:leading-[1.1]">
-                Chinh phục mọi <span className="text-[#01CFCF]">thách thức quản lý</span>
+                {heroTitle} <span className="text-[#01CFCF]">thách thức quản lý</span>
               </h1>
               <p className="mb-6 max-w-[900px] text-sm leading-relaxed text-[#475467] md:text-lg md:leading-[28px]">
-                Chào bạn đến với Timeso - nền tảng quản lý nhân sự AI tiên tiến, với sự kết hợp hoàn
-                toàn giao diện app mobile của chúng tôi và dịch tự động, giúp bạn sử dụng có thể dễ
-                đi tới vị trí tốt hơn cho các dự thể vận hàng mà tới sống.
+                {heroDescription}
               </p>
               <div className="flex items-center gap-3 md:gap-6">
                 <Link
-                  href="#"
+                  href={appStoreUrl}
                   className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
                 >
                   <Image
@@ -99,7 +151,7 @@ export default function AboutPageClient() {
                   />
                 </Link>
                 <Link
-                  href="#"
+                  href={googlePlayUrl}
                   className="transform transition-opacity duration-200 hover:scale-105 hover:opacity-80"
                 >
                   <Image
@@ -224,7 +276,7 @@ export default function AboutPageClient() {
               {/* Right - Image */}
               <div className="relative h-[300px] overflow-hidden rounded-[24px] md:h-[592px]">
                 <Image
-                  src="/images/about/73b7c2a56de9b2bde5d83664188677534e98ec81.png"
+                  src={storyImage}
                   alt="Team meeting and collaboration"
                   fill
                   className="object-cover"
@@ -244,33 +296,38 @@ export default function AboutPageClient() {
             </h2>
 
             <div className="grid gap-8 md:grid-cols-3">
-              {CORE_VALUES.map((value, idx) => (
-                <div
-                  key={idx}
-                  className="flex flex-col gap-6 border-l border-black/20 pl-6 md:pl-8"
-                >
-                  <div className="flex flex-col gap-6">
-                    {/* Icon */}
-                    <Image
-                      src={value.icon}
-                      alt={value.title}
-                      width={48}
-                      height={48}
-                      className="h-12 w-12"
-                    />
+              {coreValues.map(
+                (
+                  value: { icon: string; iconBg: string; title: string; description: string },
+                  idx: number
+                ) => (
+                  <div
+                    key={idx}
+                    className="flex flex-col gap-6 border-l border-black/20 pl-6 md:pl-8"
+                  >
+                    <div className="flex flex-col gap-6">
+                      {/* Icon */}
+                      <Image
+                        src={value.icon}
+                        alt={value.title}
+                        width={48}
+                        height={48}
+                        className="h-12 w-12"
+                      />
 
-                    {/* Title */}
-                    <h3 className="text-xl leading-normal font-bold text-[#101828] md:text-2xl">
-                      {value.title}
-                    </h3>
+                      {/* Title */}
+                      <h3 className="text-xl leading-normal font-bold text-[#101828] md:text-2xl">
+                        {value.title}
+                      </h3>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-sm leading-[28px] text-[#475467] md:text-base">
+                      {value.description}
+                    </p>
                   </div>
-
-                  {/* Description */}
-                  <p className="text-sm leading-[28px] text-[#475467] md:text-base">
-                    {value.description}
-                  </p>
-                </div>
-              ))}
+                )
+              )}
             </div>
           </div>
         </section>
@@ -380,7 +437,7 @@ export default function AboutPageClient() {
 
       {/* Team Section */}
       <AnimatedPageSection delay={0.1}>
-        <TeamSection />
+        <TeamSection teamData={teamData} />
       </AnimatedPageSection>
 
       {/* CTA Section - Timeso giúp chủ quán nhỏ vươn tới thành công lớn */}
@@ -555,7 +612,11 @@ export default function AboutPageClient() {
 }
 
 // Team Section Component with Swiper
-function TeamSection() {
+function TeamSection({
+  teamData,
+}: {
+  teamData: Array<{ name: string; role: string; description: string; image: string }>;
+}) {
   const swiperRef = useRef<SwiperType | null>(null);
 
   return (
@@ -606,11 +667,16 @@ function TeamSection() {
             1024: { slidesPerView: 3.2, spaceBetween: 24 },
           }}
         >
-          {TEAM_MEMBERS.map((member, i) => (
-            <SwiperSlide key={i}>
-              <TeamMemberCard member={member} />
-            </SwiperSlide>
-          ))}
+          {teamData.map(
+            (
+              member: { name: string; role: string; description: string; image: string },
+              i: number
+            ) => (
+              <SwiperSlide key={i}>
+                <TeamMemberCard member={member} />
+              </SwiperSlide>
+            )
+          )}
         </Swiper>
       </div>
     </section>
