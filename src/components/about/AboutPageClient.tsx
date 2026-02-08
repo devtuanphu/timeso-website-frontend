@@ -16,75 +16,7 @@ import { getStrapiMediaUrl } from "@/lib/strapi";
 import "swiper/css";
 import "swiper/css/navigation";
 
-// Team members data from Figma (fallback)
-const DEFAULT_TEAM_MEMBERS = [
-  {
-    name: "Alisa Hester",
-    role: "Founder & CEO",
-    description: "Former co-founder of Opendoor. Early staff at Spotify and Clearbit.",
-    image: "/images/about/7a57024084ebbe9fa6c5bd5800fd62c4515e05c9.png",
-  },
-  {
-    name: "Rich Wilson",
-    role: "Engineering Manager",
-    description: "Lead engineering teams at Figma, Pitch, and Protocol Labs.",
-    image: "/images/about/df55f4c30a2e74600f505bfbc2d269b5f9f501c1.png",
-  },
-  {
-    name: "Annie Stanley",
-    role: "Product Manager",
-    description: "Former PM for Airtable, Medium, Ghost, and Lumi.",
-    image: "/images/about/3f960e2ca3c81e7acf46a158fa01aaf8898a82f9.png",
-  },
-  {
-    name: "John Carter",
-    role: "Frontend Developer",
-    description: "Former developer at Stripe and Postman.",
-    image: "/images/about/758ead75a245e76d61ddb2b40fe4aa4be05925c5.png",
-  },
-];
-
-// Core values data - matching Figma design (fallback)
-const DEFAULT_CORE_VALUES = [
-  {
-    icon: "/images/case-studies/foundation_target.png",
-    iconBg: "#21D4D4",
-    title: "Sứ Mệnh",
-    description:
-      "Tầm nhìn của Timeso là trở thành nền tảng quản lý nhân sự và kinh doanh hàng đầu, giúp cửa hàng tối ưu hóa hiệu suất, tăng trưởng bền vững và xây dựng đội ngũ mạnh mẽ lâu dài. Timeso không chỉ là công cụ, mà là người bạn đồng hành giúp cửa hàng đột phá và vươn tầm quốc tế.",
-  },
-  {
-    icon: "/images/case-studies/foundation_target2.png",
-    iconBg: "#F79009",
-    title: "Tầm Nhìn",
-    description:
-      "Timeso cung cấp giải pháp quản lý toàn diện, giúp cửa hàng và cửa hàng tối ưu hóa quy trình công việc, từ nhân sự đến kinh doanh. Chúng tôi cam kết mang đến nền tảng công nghệ dễ sử dụng, mạnh mẽ, giúp tiết kiệm thời gian, giảm chi phí và tăng năng suất. Timeso là đối tác tin cậy đồng hành cùng cửa hàng trên con đường phát triển bền vững.",
-  },
-  {
-    icon: "/images/case-studies/foundation_target3.png",
-    iconBg: "#F04438",
-    title: "Giá Trị Cốt Lõi",
-    description:
-      "Giá trị cốt lõi của Timeso là tận tâm, đổi mới và minh bạch. Chúng tôi cam kết cung cấp giải pháp thông minh, giúp cửa hàng tiết kiệm thời gian, nâng cao hiệu suất và đảm bảo tính chính xác trong quản lý. Timeso luôn linh hoạt và sáng tạo, đáp ứng nhanh chóng nhu cầu thay đổi của thị trường và xây dựng niềm tin vững chắc với khách hàng và đối tác.",
-  },
-];
-
-// Default hero content
-const DEFAULT_HERO = {
-  title: "Chinh phục mọi",
-  titleHighlight: "thách thức quản lý",
-  description:
-    "Chào bạn đến với Timeso - nền tảng quản lý nhân sự AI tiên tiến, với sự kết hợp hoàn toàn giao diện app mobile của chúng tôi và dịch tự động, giúp bạn sử dụng có thể dễ đi tới vị trí tốt hơn cho các dự thể vận hàng mà tới sống.",
-};
-
-// Default story content
-const DEFAULT_STORY = `
-Timeso ra đời từ một câu hỏi đơn giản: "Làm sao để việc quản lý nhân sự và vận hành trở nên nhẹ nhàng hơn cho mọi cửa hàng?"
-
-Trong quá trình làm việc với nhiều cửa hàng và đội ngũ quản lý, chúng tôi nhận ra rằng những phương pháp thủ công không chỉ tốn thời gian mà còn khiến cửa hàng chậm lại.
-
-Chính từ nhu cầu đó, đội ngũ sáng lập Timeso quyết tâm tạo nên một nền tảng thông minh, dễ sử dụng nhưng đủ mạnh để tự động hóa những công việc phức tạp. Chúng tôi tin rằng khi cửa hàng tiết kiệm được thời gian, họ sẽ có nhiều hơn để tập trung vào điều quan trọng nhất: phát triển con người và tạo ra giá trị thật sự.
-`;
+const ICON_BG_COLORS = ["#21D4D4", "#F79009", "#F04438"];
 
 interface AboutPageClientProps {
   strapiData?: VeChungToiData | null;
@@ -92,26 +24,29 @@ interface AboutPageClientProps {
 }
 
 export default function AboutPageClient({ strapiData, teamMembers }: AboutPageClientProps) {
+  if (!strapiData) return null;
+
   // Hero data
-  const heroTitle = strapiData?.hero?.tieu_de ?? DEFAULT_HERO.title;
-  const heroDescription = strapiData?.hero?.mo_ta ?? DEFAULT_HERO.description;
-  const appStoreUrl = strapiData?.hero?.app_store_url ?? "#";
-  const googlePlayUrl = strapiData?.hero?.google_play_url ?? "#";
+  const heroTitle = strapiData.hero?.tieu_de ?? "";
+  const heroDescription = strapiData.hero?.mo_ta ?? "";
+  const appStoreUrl = strapiData.hero?.app_store_url ?? "#";
+  const googlePlayUrl = strapiData.hero?.google_play_url ?? "#";
 
   // Story content
-  const storyContent = strapiData?.cau_chuyen ?? DEFAULT_STORY;
   const storyImage =
-    getStrapiMediaUrl(strapiData?.hinh_cau_chuyen) ??
+    getStrapiMediaUrl(strapiData.hinh_cau_chuyen) ??
     "/images/about/73b7c2a56de9b2bde5d83664188677534e98ec81.png";
 
   // Core values
   const coreValues =
-    strapiData?.gia_tri_cot_loi?.map((item, i) => ({
-      icon: getStrapiMediaUrl(item.icon) ?? DEFAULT_CORE_VALUES[i]?.icon ?? "",
-      iconBg: DEFAULT_CORE_VALUES[i]?.iconBg ?? "#21D4D4",
-      title: item.tieu_de,
-      description: item.mo_ta ?? "",
-    })) ?? DEFAULT_CORE_VALUES;
+    strapiData.gia_tri_cot_loi?.map(
+      (item: { tieu_de: string; mo_ta?: string; icon?: unknown }, i: number) => ({
+        icon: getStrapiMediaUrl(item.icon as import("@/types/strapi").StrapiMedia) ?? "",
+        iconBg: ICON_BG_COLORS[i] ?? "#21D4D4",
+        title: item.tieu_de,
+        description: item.mo_ta ?? "",
+      })
+    ) ?? [];
 
   // Team members
   const teamData =
@@ -119,8 +54,8 @@ export default function AboutPageClient({ strapiData, teamMembers }: AboutPageCl
       name: member.ten,
       role: member.chuc_vu ?? "",
       description: member.mo_ta ?? "",
-      image: getStrapiMediaUrl(member.avatar) ?? DEFAULT_TEAM_MEMBERS[0]?.image ?? "",
-    })) ?? DEFAULT_TEAM_MEMBERS;
+      image: getStrapiMediaUrl(member.avatar) ?? "",
+    })) ?? [];
 
   return (
     <>

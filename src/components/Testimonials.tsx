@@ -12,47 +12,6 @@ import { getStrapiMediaUrl } from "@/lib/strapi";
 import "swiper/css";
 import "swiper/css/navigation";
 
-// Default content (fallback)
-const DEFAULT_TITLE = "Khách hàng nói gì về chúng tôi?";
-const DEFAULT_TESTIMONIALS = [
-  {
-    quote:
-      "Giao diện người dùng rất trực quan, giúp việc thực hiện công việc trở nên dễ dàng. Dù là mua bán hay quản lý danh mục tài sản số đa dạng của tôi, mọi thứ đều thuận tiện.",
-    name: "Mahmud Niloy",
-    role: "Super Admin",
-    avatar: "/images/testimonials/9d00e17f297cf8e19d4d37b8965aebaf7811f058.png",
-    logo: "/images/testimonials/b183bc32020423820d400f5916d1188f10822947.svg",
-    stars: 5,
-  },
-  {
-    quote:
-      "Tôi là một Freelancer, và việc quản lý thu nhập từ nhiều nền tảng số khác nhau từng là một rắc rối lớn. Mọi thứ thay đổi cho đến khi tôi khám phá ra Block/Timeso.",
-    name: "Mahmud Niloy",
-    role: "Super Web Designer",
-    avatar: "/images/testimonials/f1636e25bac66ef56895161ee57e3705824ace9c.png",
-    logo: "/images/testimonials/b183bc32020423820d400f5916d1188f10822947.svg",
-    stars: 5,
-  },
-  {
-    quote:
-      "Giao diện người dùng rất trực quan, giúp việc thực hiện công việc trở nên dễ dàng. Dù là mua bán hay quản lý danh mục tài sản số đa dạng của tôi, mọi thứ đều thuận tiện.",
-    name: "Mahmud Niloy",
-    role: "Super Admin",
-    avatar: "/images/testimonials/9d00e17f297cf8e19d4d37b8965aebaf7811f058.png",
-    logo: "/images/testimonials/b183bc32020423820d400f5916d1188f10822947.svg",
-    stars: 5,
-  },
-  {
-    quote:
-      "Tôi là một Freelancer, và việc quản lý thu nhập từ nhiều nền tảng số khác nhau từng là một rắc rối lớn. Mọi thứ thay đổi cho đến khi tôi khám phá ra Block/Timeso.",
-    name: "Mahmud Niloy",
-    role: "Super Web Designer",
-    avatar: "/images/testimonials/f1636e25bac66ef56895161ee57e3705824ace9c.png",
-    logo: "/images/testimonials/b183bc32020423820d400f5916d1188f10822947.svg",
-    stars: 5,
-  },
-];
-
 interface TestimonialsProps {
   data?: TestimonialsSection | null;
 }
@@ -60,17 +19,17 @@ interface TestimonialsProps {
 export default function Testimonials({ data }: TestimonialsProps) {
   const swiperRef = useRef<SwiperType | null>(null);
 
-  const title = data?.tieu_de ?? DEFAULT_TITLE;
-  const testimonials = data?.danh_gia?.length
-    ? data.danh_gia.map((item: TestimonialItem) => ({
-        quote: item.noi_dung,
-        name: item.ten,
-        role: item.chuc_vu ?? "",
-        avatar: getStrapiMediaUrl(item.avatar) ?? DEFAULT_TESTIMONIALS[0].avatar,
-        logo: getStrapiMediaUrl(item.logo_cong_ty) ?? DEFAULT_TESTIMONIALS[0].logo,
-        stars: item.so_sao ?? 5,
-      }))
-    : DEFAULT_TESTIMONIALS;
+  if (!data?.danh_gia?.length) return null;
+
+  const title = data.tieu_de ?? "";
+  const testimonials = data.danh_gia.map((item: TestimonialItem) => ({
+    quote: item.noi_dung,
+    name: item.ten,
+    role: item.chuc_vu ?? "",
+    avatar: getStrapiMediaUrl(item.avatar) ?? "/images/placeholder.png",
+    logo: getStrapiMediaUrl(item.logo_cong_ty) ?? "/images/placeholder.svg",
+    stars: item.so_sao ?? 5,
+  }));
 
   return (
     <section className="bg-white py-12 md:py-[80px]">

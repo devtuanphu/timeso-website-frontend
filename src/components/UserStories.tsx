@@ -6,44 +6,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import type { Swiper as SwiperType } from "swiper";
-import type { UserStoriesSection, UserStoryItem } from "@/types/strapi";
+import type { UserStoriesSection, UserStoryItem as UserStory } from "@/types/strapi";
 import { getStrapiMediaUrl } from "@/lib/strapi";
 
 import "swiper/css";
 import "swiper/css/navigation";
 
-// Icon assets from Figma (fallback)
-const ICON_RECRUITMENT = "/images/user-stories/v2/684d51a743fb1e1de2d0be959325e0f386394b7e.svg";
-const ICON_PAYROLL = "/images/user-stories/v2/04378bfeca771747dc4db9d746155fd18110a80a.svg";
-const ICON_ORDER = "/images/user-stories/v2/c95da694e6dc9fdf0029cd249f94111adb02d48b.svg";
-const ICON_WAREHOUSE = "/images/user-stories/v2/4cb621b8a7cf6873ee56c1f8a3c311a7700655d8.svg";
-
-const DEFAULT_STORIES = [
-  {
-    title: "Tuyển dụng",
-    desc: "AI tự động sàng lọc hồ sơ, đánh giá ứng viên và rút ngắn 70% thời gian tuyển dụng cho doanh nghiệp.",
-    icon: ICON_RECRUITMENT,
-    bg: "#1570EF",
-  },
-  {
-    title: "Tính lương tự động",
-    desc: "Hệ thống AI tính lương chính xác từ dữ liệu chấm công – ca làm, giảm lỗi thủ công và tăng hiệu suất vận hành.",
-    icon: ICON_PAYROLL,
-    bg: "#45556C",
-  },
-  {
-    title: "Quản lý đơn hàng",
-    desc: "AI theo dõi toàn bộ vòng đời đơn hàng, tự động cập nhật trạng thái và tối ưu hiệu suất xử lý.",
-    icon: ICON_ORDER,
-    bg: "#2B7FFF",
-  },
-  {
-    title: "Quản lý kho",
-    desc: "Quản lý tồn kho bằng AI, tự động cảnh báo thiếu hàng và tối ưu hiệu suất nhập – xuất mỗi ngày.",
-    icon: ICON_WAREHOUSE,
-    bg: "#01BCBC",
-  },
-];
+// Fallback colors from Figma design, used if Strapi doesn't provide mau_nen
+const FIGMA_BG_COLORS = ["#1570EF", "#45556C", "#2B7FFF", "#01BCBC"];
 
 interface UserStoriesProps {
   data?: UserStoriesSection | null;
@@ -52,23 +22,25 @@ interface UserStoriesProps {
 export default function UserStories({ data }: UserStoriesProps) {
   const swiperRef = useRef<SwiperType | null>(null);
 
-  const stories = data?.stories?.length
-    ? data.stories.map((item: UserStoryItem, index: number) => ({
-        title: item.tieu_de,
-        desc: item.mo_ta ?? "",
-        icon: getStrapiMediaUrl(item.hinh_anh) ?? DEFAULT_STORIES[index]?.icon ?? ICON_RECRUITMENT,
-        bg: DEFAULT_STORIES[index]?.bg ?? "#01BCBC",
-      }))
-    : DEFAULT_STORIES;
+  if (!data?.stories?.length) return null;
+
+  const title = data.tieu_de ?? "";
+  const description = data.mo_ta ?? "";
+  const stories = data.stories.map((story: UserStory, index: number) => ({
+    title: story.tieu_de,
+    desc: story.mo_ta ?? "",
+    icon: getStrapiMediaUrl(story.hinh_anh) ?? "/images/placeholder.svg",
+    bg: story.mau_nen || FIGMA_BG_COLORS[index] || "#1570EF",
+  }));
 
   return (
     <section className="bg-white py-12 md:py-[80px]">
       <div className="mx-auto mb-6 max-w-[1280px] px-4 md:mb-[40px] md:px-[80px]">
         <h2 className="text-center text-2xl font-bold tracking-tight text-[#101828] md:text-[48px] md:tracking-[-0.96px]">
-          User stories
+          {title}
         </h2>
         <p className="mt-3 text-center text-sm text-[#475467] md:mt-[16px] md:text-[16px]">
-          Cách các doanh nghiệp ứng dụng Timeso để tối ưu vận hành mỗi ngày.
+          {description}
         </p>
       </div>
 

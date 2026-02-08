@@ -8,23 +8,18 @@ const APP_STORE_BADGE = "/images/app-store-badge.svg";
 const GOOGLE_PLAY_BADGE = "/images/google-play-badge.png";
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
-// Default content (fallback)
-const DEFAULT_CONTENT = {
-  title: "Nền tảng quản lý nhân sự bằng",
-  description:
-    "Timeso giúp doanh nghiệp tự động hóa HR bằng AI, từ tuyển dụng đến chấm công và quản lý hiệu suất, giảm giấy tờ để tập trung phát triển nhân tài.",
-};
-
 interface HeroProps {
   data?: HeroSection | null;
 }
 
 export default function Hero({ data }: HeroProps) {
-  const title = data?.tieu_de ?? DEFAULT_CONTENT.title;
-  const description = data?.mo_ta ?? DEFAULT_CONTENT.description;
-  const showBadges = data?.hien_thi_badges ?? true;
-  const appStoreUrl = data?.app_store_url ?? "#";
-  const googlePlayUrl = data?.google_play_url ?? "#";
+  if (!data) return null;
+
+  const title = data.tieu_de ?? "";
+  const description = data.mo_ta ?? "";
+  const showBadges = data.hien_thi_badges ?? true;
+  const appStoreUrl = data.app_store_url ?? "#";
+  const googlePlayUrl = data.google_play_url ?? "#";
 
   // Video URL
   const videoUrl = data?.video?.url

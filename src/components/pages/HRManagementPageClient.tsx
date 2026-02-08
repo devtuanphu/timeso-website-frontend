@@ -6,79 +6,40 @@ import { DaLinhVucSection, AnimatedPageSection, AnimatedHero } from "@/component
 import type { QuanLyNhanSuData } from "@/types/strapi";
 import { getStrapiMediaUrl } from "@/lib/strapi";
 
-// Default Assets (fallback)
-const DEFAULT_HERO_IMAGE = "/figma_assets/e5cdb3bf6163b94e35b1793feba180e15ba1ccd0.png";
-
-// Default content (fallback)
-const DEFAULT_HERO = {
-  title: "Quản lý nhân sự",
-  titleLine2: "thông minh với",
-  titleHighlight: "AI Timeso",
-  description:
-    "Timeso ứng dụng AI để tự động xử lý quy trình nhân sự, từ ca làm, theo dõi hiệu suất đến tính lương. Mọi thao tác đều được tính giản để cửa hàng vận hành mượt mà và hiện đại.",
-};
-
-const DEFAULT_FEATURE_CARDS = [
-  {
-    title: "Tính lương tự động và chính xác",
-    description:
-      "Tự động tính lương từ dữ liệu chấm công thực tế, AI phát hiện gian lận và chấm công bất thường, giảm sai sót và đảm bảo công bằng.",
-  },
-  {
-    title: "Theo Dõi & Dự Báo Nhân Sự",
-    description:
-      "Phân tích dữ liệu nhân sự, dự báo nhu cầu nhân viên theo từng thời điểm và cảnh báo bất thường để nhà quản lý chủ động xử lý.",
-  },
-  {
-    title: "AI Quản Lý Nhân Sự",
-    description:
-      "Theo dõi hiệu suất, giờ làm và báo cáo ngay trên một nền tảng, giúp cửa hàng tối ưu quy trình và nâng cao năng suất.",
-  },
-];
-
-const DEFAULT_WHY_CHOOSE = [
-  "Giải pháp quản lý toàn diện, tiết kiệm thời gian",
-  "Tính năng vượt trội, giúp tối ưu hóa mọi quy trình",
-  "AI đề xuất & quản lý nhân viên thông minh",
-  "Đảm bảo sự phát triển bền vững",
-];
-
-const DEFAULT_CTA = {
-  title: "TẢI MIỄN PHÍ NGAY",
-  subtitle: "Trải nghiệm giải pháp quản lý nhân sự 4.0 từ Timeso",
-};
-
 interface HRManagementPageClientProps {
   strapiData?: QuanLyNhanSuData | null;
 }
 
 export function HRManagementPageClient({ strapiData }: HRManagementPageClientProps) {
+  if (!strapiData) return null;
+
   // Hero data
-  const heroTitle = strapiData?.hero?.tieu_de ?? DEFAULT_HERO.title;
-  const heroTitleHighlight = DEFAULT_HERO.titleHighlight;
-  const heroDescription = strapiData?.hero?.mo_ta ?? DEFAULT_HERO.description;
-  const heroImage = DEFAULT_HERO_IMAGE;
-  const appStoreUrl = strapiData?.hero?.app_store_url ?? "#";
-  const googlePlayUrl = strapiData?.hero?.google_play_url ?? "#";
+  const heroTitle = strapiData.hero?.tieu_de ?? "";
+  const heroDescription = strapiData.hero?.mo_ta ?? "";
+  const heroImage =
+    getStrapiMediaUrl(strapiData.hero?.video) ??
+    "/figma_assets/e5cdb3bf6163b94e35b1793feba180e15ba1ccd0.png";
+  const appStoreUrl = strapiData.hero?.app_store_url ?? "#";
+  const googlePlayUrl = strapiData.hero?.google_play_url ?? "#";
 
   // Feature cards
   const featureCards =
-    strapiData?.tinh_nang?.map((f, i) => ({
+    strapiData.tinh_nang?.map((f: { tieu_de: string; danh_sach?: string[] }) => ({
       title: f.tieu_de,
-      description: f.danh_sach?.join(" ") ?? DEFAULT_FEATURE_CARDS[i]?.description ?? "",
-    })) ?? DEFAULT_FEATURE_CARDS;
+      description: f.danh_sach?.join(" ") ?? "",
+    })) ?? [];
 
   // Why choose items
   const whyChooseItems =
-    strapiData?.why_choose?.cac_ly_do?.map((item) => item.tieu_de) ?? DEFAULT_WHY_CHOOSE;
+    strapiData.why_choose?.cac_ly_do?.map((item: { tieu_de: string }) => item.tieu_de) ?? [];
 
   // CTA data
-  const ctaTitle = strapiData?.cta?.tieu_de ?? DEFAULT_CTA.title;
-  const ctaSubtitle = strapiData?.cta?.mo_ta ?? DEFAULT_CTA.subtitle;
-  const ctaAppStoreUrl = strapiData?.cta?.app_store_url ?? "#";
-  const ctaGooglePlayUrl = strapiData?.cta?.google_play_url ?? "#";
+  const ctaTitle = strapiData.cta?.tieu_de ?? "";
+  const ctaSubtitle = strapiData.cta?.mo_ta ?? "";
+  const ctaAppStoreUrl = strapiData.cta?.app_store_url ?? "#";
+  const ctaGooglePlayUrl = strapiData.cta?.google_play_url ?? "#";
   const ctaImage =
-    getStrapiMediaUrl(strapiData?.cta?.hinh_anh) ??
+    getStrapiMediaUrl(strapiData.cta?.hinh_anh) ??
     "/images/recruitment/0fde196edc3946aa5fa9569f9c8de980a700b345.png";
 
   return (
@@ -94,10 +55,7 @@ export function HRManagementPageClient({ strapiData }: HRManagementPageClientPro
             <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
               <div className="text-center lg:text-left">
                 <h1 className="mb-6 text-[28px] leading-tight font-semibold text-[#101828] md:text-4xl lg:text-[48px] lg:leading-[1.2]">
-                  <span>{heroTitle}</span>
-                  <br />
-                  <span>{DEFAULT_HERO.titleLine2}</span>{" "}
-                  <span className="text-[#01CFCF]">{heroTitleHighlight}</span>
+                  {heroTitle}
                 </h1>
                 <p className="mx-auto mb-8 max-w-lg text-[14px] leading-relaxed text-[#475467] md:text-lg lg:mx-0">
                   {heroDescription}

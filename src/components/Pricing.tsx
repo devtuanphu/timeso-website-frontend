@@ -3,101 +3,46 @@
 import { Check } from "lucide-react";
 import type { PricingSection, PricingPlan } from "@/types/strapi";
 
-// Default plans (fallback)
-const DEFAULT_PLANS = [
+const PLAN_COLORS = [
   {
-    name: "Free",
-    nameColor: "text-[#00BAC7]",
-    price: "$0",
-    period: "/per month",
-    description: "Great for trying out Frames X component and templates.",
-    buttonText: "Get Started",
-    buttonStyle: "border border-[#D0D5DD] bg-white text-[#344054] hover:bg-gray-50",
-    features: [
-      "Design Guidelines",
-      "10 Web Components",
-      "5 Web Templates",
-      "Component Properties",
-      "Advanced Security",
-    ],
-    checkColor: "text-[#98A2B3]",
-    isPopular: false,
-    hasDashedBorder: false,
+    nameColor: "#00BAC7",
+    buttonStyle: "border border-[#00BAC7] text-[#00BAC7] hover:bg-[#00BAC7]/5",
+    checkColor: "text-[#00BAC7]",
   },
   {
-    name: "Professional",
-    nameColor: "text-[#101828]",
-    price: "$97",
-    period: "/per month",
-    description: "Best for professional freelancers and small teams.",
-    buttonText: "Get Started",
-    buttonStyle: "bg-[#00BAC7] text-white hover:bg-[#00A3AF]",
-    features: [
-      "Everything in Free",
-      "20 Web Components",
-      "15 Web Templates",
-      "Variants & Properties",
-      "Enhanced Security",
-    ],
+    nameColor: "#ffffff",
+    buttonStyle: "bg-white text-[#00BAC7] hover:bg-gray-50",
     checkColor: "text-[#00BAC7]",
-    isPopular: true,
-    hasDashedBorder: true,
   },
   {
-    name: "Enterprise",
-    nameColor: "text-[#00BAC7]",
-    price: "$257",
-    period: "/per month",
-    description: "Best for growing large company or enterprise design team.",
-    buttonText: "Book a call",
-    buttonStyle: "border border-[#D0D5DD] bg-white text-[#344054] hover:bg-gray-50",
-    features: [
-      "Design System Foundation",
-      "50 Web Components",
-      "25 Web Templates",
-      "Variants & Properties",
-      "Priority Security",
-    ],
-    checkColor: "text-[#00BAC7]",
-    isPopular: false,
-    hasDashedBorder: false,
+    nameColor: "#6366F1",
+    buttonStyle: "bg-[#6366F1] text-white hover:bg-[#5558E6]",
+    checkColor: "text-[#6366F1]",
   },
 ];
-
-const DEFAULT_CONTENT = {
-  title: "Choose the",
-  titleHighlight: "Right Plan!",
-  description:
-    "Select from best plans, ensuring a perfect match. Need more or less? Customize your subscription for a seamless fit!",
-};
 
 interface PricingProps {
   data?: PricingSection | null;
 }
 
 export default function Pricing({ data }: PricingProps) {
-  const title =
-    data?.tieu_de ??
-    `${DEFAULT_CONTENT.title} <span class="text-[#00BAC7] italic">${DEFAULT_CONTENT.titleHighlight}</span>`;
-  const description = data?.mo_ta ?? DEFAULT_CONTENT.description;
+  if (!data?.goi_gia?.length) return null;
 
-  const plans = data?.goi_gia?.length
-    ? data.goi_gia.map((plan: PricingPlan, index: number) => ({
-        name: plan.ten_goi,
-        nameColor: plan.noi_bat ? "text-[#101828]" : "text-[#00BAC7]",
-        price: plan.gia,
-        period: plan.don_vi ?? "/tháng",
-        description: plan.mo_ta ?? "",
-        buttonText: plan.nut_text ?? "Bắt đầu",
-        buttonStyle: plan.noi_bat
-          ? "bg-[#00BAC7] text-white hover:bg-[#00A3AF]"
-          : "border border-[#D0D5DD] bg-white text-[#344054] hover:bg-gray-50",
-        features: plan.tinh_nang ?? [],
-        checkColor: plan.noi_bat ? "text-[#00BAC7]" : "text-[#98A2B3]",
-        isPopular: plan.noi_bat ?? false,
-        hasDashedBorder: plan.noi_bat ?? false,
-      }))
-    : DEFAULT_PLANS;
+  const title = data.tieu_de ?? "";
+  const description = data.mo_ta ?? "";
+  const plans = data.goi_gia.map((plan: PricingPlan, index: number) => ({
+    name: plan.ten_goi,
+    price: plan.gia,
+    period: plan.don_vi ?? "/per month",
+    description: plan.mo_ta ?? "",
+    features: Array.isArray(plan.tinh_nang) ? plan.tinh_nang : [],
+    buttonText: plan.nut_text ?? "Get Started",
+    nameColor: PLAN_COLORS[index]?.nameColor ?? "#00BAC7",
+    buttonStyle: PLAN_COLORS[index]?.buttonStyle ?? "border border-[#00BAC7] text-[#00BAC7]",
+    checkColor: PLAN_COLORS[index]?.checkColor ?? "text-[#00BAC7]",
+    isPopular: plan.noi_bat ?? false,
+    hasDashedBorder: index === 2,
+  }));
 
   return (
     <section className="bg-white py-12 md:py-[80px]">

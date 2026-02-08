@@ -4,50 +4,18 @@ import Image from "next/image";
 import type { TargetAudienceSection, TargetAudienceItem } from "@/types/strapi";
 import { getStrapiMediaUrl } from "@/lib/strapi";
 
-// Default industries (fallback)
-const DEFAULT_INDUSTRIES = [
-  {
-    name: "Công ty Dịch vụ/Bán lẻ",
-    description: "Quản lý ca kíp, lịch làm việc phức tạp tại F&B, bán lẻ, và call center.",
-    img: "/images/industries/5335aa5a5b4407aacac944d21dc27ba3d924662d.png",
-  },
-  {
-    name: "Nhà máy – Xưởng Sản xuất",
-    description: "Chấm công chính xác và theo dõi hiệu suất làm việc của dây chuyền.",
-    img: "/images/industries/137494bf6ea5d4ae4f904542819ead4ced389612.png",
-  },
-  {
-    name: "Doanh nghiệp Công nghệ/Startup",
-    description: "Hệ thống quản lý nhân sự linh hoạt, dễ mở rộng khi tăng trưởng nhanh.",
-    img: "/images/industries/409ae12f959767b7ff87251e30bc2f13cae31f46.png",
-  },
-  {
-    name: "Chuỗi Cửa hàng & Showroom",
-    description: "Quản lý đồng bộ chấm công và ca kíp cho nhân viên tại nhiều điểm bán.",
-    img: "/images/industries/b2e778a95e6d251fccc53bb6025a4d2d23da5db4.png",
-  },
-  {
-    name: "Công ty Vận hành Lực lượng Lớn",
-    description: "Quản lý tập trung số lượng lớn nhân viên dịch vụ/ca kíp.",
-    img: "/images/industries/a107e23357b63b9e7c8eee9925beb1c919204abc.png",
-  },
-];
-
 interface TargetAudienceProps {
   data?: TargetAudienceSection | null;
 }
 
 export default function TargetAudience({ data }: TargetAudienceProps) {
-  const industries = data?.doi_tuong?.length
-    ? data.doi_tuong.map((item: TargetAudienceItem, index: number) => ({
-        name: item.tieu_de,
-        description: item.mo_ta ?? "",
-        img:
-          getStrapiMediaUrl(item.icon) ??
-          DEFAULT_INDUSTRIES[index]?.img ??
-          "/images/placeholder.png",
-      }))
-    : DEFAULT_INDUSTRIES;
+  if (!data?.doi_tuong?.length) return null;
+
+  const industries = data.doi_tuong.map((item: TargetAudienceItem) => ({
+    name: item.tieu_de,
+    description: item.mo_ta ?? "",
+    img: getStrapiMediaUrl(item.icon) ?? "/images/placeholder.png",
+  }));
 
   return (
     <section className="bg-white py-12 md:py-[80px]" id="customers">

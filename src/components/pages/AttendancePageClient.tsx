@@ -7,88 +7,45 @@ import type { ChamCongData } from "@/types/strapi";
 import { getStrapiMediaUrl } from "@/lib/strapi";
 
 // Default Assets (fallback)
-const DEFAULT_HERO_IMAGE = "/figma_assets/e8c319bd8f21d8adccc55871dd5f19444f498af7.png";
-const DEFAULT_FEATURE_CARD1_IMAGE = "/figma_assets/921e6cc61bedd673112e65a4e2276974bbfea3aa.png";
-const DEFAULT_FEATURE_CARD2_IMAGE = "/figma_assets/96e33c5f95eab3e4b2fb914ad8d4898e0f0e3297.png";
-
-// Default content (fallback)
-const DEFAULT_HERO = {
-  title: "Chấm Công",
-  titleHighlight: "& AI Theo Dõi Hiệu Suất",
-  description:
-    "Hệ thống Timeso theo dõi giờ làm, công suất và hiệu suất liên tục của từng nhân viên theo thời gian thực, giúp bạn nhanh chóng nắm bắt biến động, tối ưu quy trình và giảm thiểu sai sót trong quản lý.",
-};
-
-const DEFAULT_FEATURES = [
-  {
-    title: "Chấm công tự động bằng QR & GPS",
-    items: [
-      "Ghi nhận giờ làm chính xác tại đúng vị trí, hạn chế gian lận và tránh chấm công hộ.",
-      "Dữ liệu được đồng bộ theo thời gian thực, giúp quản lý nắm bắt tình trạng nhân sự mọi lúc.",
-    ],
-    bgColor: "#b7ffff",
-  },
-  {
-    title: "Giảm sai sót – Tăng minh bạch – Theo dõi hiệu suất theo thời gian thực",
-    items: [
-      "Tự động tổng hợp giờ làm, ca làm và hiệu suất của từng nhân viên trên một hệ thống duy nhất.",
-      "Mọi thay đổi được cập nhật tức thì, đảm bảo quy trình vận hành nhanh chóng và chính xác.",
-    ],
-    bgColor: "#f5f5f5",
-  },
-];
-
-const DEFAULT_WHY_CHOOSE = [
-  "Giải Pháp Quản Lý Nhân Sự Toàn Diện",
-  "Tự Động Hóa Quy Trình Tuyển Dụng",
-  "Quản Lý Ca Làm Thông Minh",
-  "Tính Lương Chính Xác & Minh Bạch",
-];
-
-const DEFAULT_CTA = {
-  title: "TẢI MIỄN PHÍ NGAY",
-  subtitle: "Mọi lúc mọi nơi – chấm công dễ dàng.",
-};
 
 interface AttendancePageClientProps {
   strapiData?: ChamCongData | null;
 }
 
 export function AttendancePageClient({ strapiData }: AttendancePageClientProps) {
-  // Hero data
-  const heroTitle = strapiData?.hero?.tieu_de ?? DEFAULT_HERO.title;
-  const heroTitleHighlight = DEFAULT_HERO.titleHighlight;
-  const heroDescription = strapiData?.hero?.mo_ta ?? DEFAULT_HERO.description;
-  const heroImage = DEFAULT_HERO_IMAGE;
-  const appStoreUrl = strapiData?.hero?.app_store_url ?? "#";
-  const googlePlayUrl = strapiData?.hero?.google_play_url ?? "#";
+  if (!strapiData) return null;
 
-  // Feature cards
+  // Hero data
+  const heroTitle = strapiData.hero?.tieu_de ?? "";
+  const heroDescription = strapiData.hero?.mo_ta ?? "";
+  const heroImage = "/figma_assets/e8c319bd8f21d8adccc55871dd5f19444f498af7.png";
+  const appStoreUrl = strapiData.hero?.app_store_url ?? "#";
+  const googlePlayUrl = strapiData.hero?.google_play_url ?? "#";
+
+  // Feature cards from Strapi
   const features =
-    strapiData?.tinh_nang?.map((f, i) => ({
-      title: f.tieu_de,
-      items: f.danh_sach ?? [],
-      bgColor: f.mau_nen ?? DEFAULT_FEATURES[i]?.bgColor ?? "#f5f5f5",
-      image:
-        getStrapiMediaUrl(f.hinh_anh) ??
-        (i === 0 ? DEFAULT_FEATURE_CARD1_IMAGE : DEFAULT_FEATURE_CARD2_IMAGE),
-    })) ??
-    DEFAULT_FEATURES.map((f, i) => ({
-      ...f,
-      image: i === 0 ? DEFAULT_FEATURE_CARD1_IMAGE : DEFAULT_FEATURE_CARD2_IMAGE,
-    }));
+    strapiData.tinh_nang?.map(
+      (f: { tieu_de: string; danh_sach?: string[]; mau_nen?: string; hinh_anh?: unknown }) => ({
+        title: f.tieu_de,
+        items: f.danh_sach ?? [],
+        bgColor: f.mau_nen ?? "#f5f5f5",
+        image:
+          getStrapiMediaUrl(f.hinh_anh as import("@/types/strapi").StrapiMedia) ??
+          "/images/placeholder.svg",
+      })
+    ) ?? [];
 
   // Why choose items
   const whyChooseItems =
-    strapiData?.why_choose?.cac_ly_do?.map((item) => item.tieu_de) ?? DEFAULT_WHY_CHOOSE;
+    strapiData.why_choose?.cac_ly_do?.map((item: { tieu_de: string }) => item.tieu_de) ?? [];
 
   // CTA data
-  const ctaTitle = strapiData?.cta?.tieu_de ?? DEFAULT_CTA.title;
-  const ctaSubtitle = strapiData?.cta?.mo_ta ?? DEFAULT_CTA.subtitle;
-  const ctaAppStoreUrl = strapiData?.cta?.app_store_url ?? "#";
-  const ctaGooglePlayUrl = strapiData?.cta?.google_play_url ?? "#";
+  const ctaTitle = strapiData.cta?.tieu_de ?? "";
+  const ctaSubtitle = strapiData.cta?.mo_ta ?? "";
+  const ctaAppStoreUrl = strapiData.cta?.app_store_url ?? "#";
+  const ctaGooglePlayUrl = strapiData.cta?.google_play_url ?? "#";
   const ctaImage =
-    getStrapiMediaUrl(strapiData?.cta?.hinh_anh) ??
+    getStrapiMediaUrl(strapiData.cta?.hinh_anh) ??
     "/images/recruitment/0fde196edc3946aa5fa9569f9c8de980a700b345.png";
 
   return (
@@ -104,9 +61,7 @@ export function AttendancePageClient({ strapiData }: AttendancePageClientProps) 
             <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
               <div className="text-center lg:text-left">
                 <h1 className="mb-6 text-[28px] leading-tight font-semibold text-[#101828] md:text-4xl lg:text-[48px] lg:leading-[1.2]">
-                  <span>{heroTitle}</span>
-                  <br />
-                  <span>{heroTitleHighlight}</span>
+                  {heroTitle}
                 </h1>
                 <p className="mx-auto mb-8 max-w-lg text-[14px] leading-relaxed text-[#475467] md:text-lg lg:mx-0">
                   {heroDescription}

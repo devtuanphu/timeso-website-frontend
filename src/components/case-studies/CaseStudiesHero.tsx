@@ -8,34 +8,17 @@ const ICON_CALENDAR = "/images/case-studies/1909b61f4bcd5c4448d50568c75d6f89a900
 const ICON_GPS = "/images/case-studies/6b66bf9d270d46d18d7d9b0f5931576c734e0399.svg";
 const ICON_SYNC = "/images/case-studies/050fafafd915d6db72c5f8596e6901ac6959d478.svg";
 
-const DEFAULT_HIGHLIGHTS = [
-  {
-    icon: ICON_CALENDAR,
-    text: "Tự động hóa giao – nhận ca, giảm lỗi thủ công.",
-  },
-  {
-    icon: ICON_GPS,
-    text: "Theo dõi hiệu suất nhân sự theo thời gian thực.",
-  },
-  {
-    icon: ICON_SYNC,
-    text: "Đồng bộ ca làm, lương thưởng và báo cáo trong một hệ thống.",
-  },
-];
-
-const DEFAULT_CONTENT = {
-  title: "Vận Hành Mượt Mà Mỗi Ngày, Mỗi Ca Làm",
-  description:
-    "Giải pháp Timeso giúp cửa hàng xử lý hơn 500 - 1000 đơn/ngày, duy trì vận hành ổn định 24/7, giảm lỗi thủ công và tăng hiệu suất toàn bộ đội ngũ.",
-};
+const HIGHLIGHT_ICONS = [ICON_CALENDAR, ICON_GPS, ICON_SYNC];
 
 interface CaseStudiesHeroProps {
   data?: HeroSection | null;
 }
 
 export default function CaseStudiesHero({ data }: CaseStudiesHeroProps) {
-  const title = data?.tieu_de ?? DEFAULT_CONTENT.title;
-  const description = data?.mo_ta ?? DEFAULT_CONTENT.description;
+  if (!data) return null;
+
+  const title = data.tieu_de ?? "";
+  const description = data.mo_ta ?? "";
 
   return (
     <section className="relative min-h-[600px] overflow-hidden pt-[140px] pb-16 md:min-h-[700px] md:pt-[160px] md:pb-20">
@@ -62,7 +45,14 @@ export default function CaseStudiesHero({ data }: CaseStudiesHeroProps) {
 
           {/* Highlight Cards - Dark semi-transparent background */}
           <div className="flex flex-col gap-4 md:flex-row md:gap-20">
-            {DEFAULT_HIGHLIGHTS.map((item, idx) => (
+            {[
+              { icon: HIGHLIGHT_ICONS[0], text: "Tự động hóa giao – nhận ca, giảm lỗi thủ công." },
+              { icon: HIGHLIGHT_ICONS[1], text: "Theo dõi hiệu suất nhân sự theo thời gian thực." },
+              {
+                icon: HIGHLIGHT_ICONS[2],
+                text: "Đồng bộ ca làm, lương thưởng và báo cáo trong một hệ thống.",
+              },
+            ].map((item: { icon: string; text: string }, idx: number) => (
               <div key={idx} className="flex items-center gap-4 rounded-[16px] bg-black/60 p-6">
                 <Image src={item.icon} alt="" width={32} height={32} className="h-8 w-8 shrink-0" />
                 <p className="text-[16px] leading-[26px] font-medium text-white md:text-[20px]">

@@ -4,33 +4,22 @@ import Image from "next/image";
 import ContactForm from "@/components/contact/ContactForm";
 import { AnimatedPageSection, AnimatedHero } from "@/components/ui";
 import type { LienHeData } from "@/types/strapi";
-import { getStrapiMediaUrl } from "@/lib/strapi";
-
-// Default Assets (fallback)
-const DEFAULT_HERO_IMAGE = "/figma_assets/463c3571bb784baeb275a97250798b8cbdc26b2c.png";
-const DEFAULT_OFFICE_IMAGE = "/figma_assets/2fb5e002bbde20b8fcf8bb51fa906026401747e4.png";
-
-// Default content (fallback)
-const DEFAULT_CONTACT = {
-  email: "sales@untitledui.com",
-  address: "100 Smith Street\nCollingwood VIC 3068 AU",
-  phone: "+1 (555) 000-0000",
-  hours: "Mon-Fri from 8am to 5pm.",
-};
 
 interface ContactPageClientProps {
   strapiData?: LienHeData | null;
 }
 
 export function ContactPageClient({ strapiData }: ContactPageClientProps) {
+  if (!strapiData) return null;
+
   // Hero image
-  const heroImage = DEFAULT_HERO_IMAGE;
+  const heroImage = "/figma_assets/463c3571bb784baeb275a97250798b8cbdc26b2c.png";
 
   // Contact info
-  const email = strapiData?.email ?? DEFAULT_CONTACT.email;
-  const address = strapiData?.dia_chi ?? DEFAULT_CONTACT.address;
-  const phone = strapiData?.so_dien_thoai ?? DEFAULT_CONTACT.phone;
-  const hours = strapiData?.gio_lam_viec ?? DEFAULT_CONTACT.hours;
+  const email = strapiData.email ?? "";
+  const address = strapiData.dia_chi ?? "";
+  const phone = strapiData.so_dien_thoai ?? "";
+  const hours = strapiData.gio_lam_viec ?? "";
 
   return (
     <div className="min-h-screen bg-white">
@@ -55,7 +44,12 @@ export function ContactPageClient({ strapiData }: ContactPageClientProps) {
       <AnimatedPageSection delay={0.1}>
         <div className="container mx-auto mt-16 px-4 md:mt-24">
           <div className="relative aspect-3/1 w-full overflow-hidden rounded-2xl bg-gray-100">
-            <Image src={DEFAULT_OFFICE_IMAGE} alt="Timeso Office" fill className="object-cover" />
+            <Image
+              src="/figma_assets/2fb5e002bbde20b8fcf8bb51fa906026401747e4.png"
+              alt="Timeso Office"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
       </AnimatedPageSection>

@@ -4,46 +4,24 @@ import Image from "next/image";
 import type { AiSection, FeatureItem } from "@/types/strapi";
 import { getStrapiMediaUrl } from "@/lib/strapi";
 
-// Asset Constants (Figma hashes) - Fallback
+// Asset Constants
 const ICON_BADGE = "/images/ai-features/3d8e558f616f315cbad59f89011b5f38bb69daeb.svg";
-const ICON_TRACKING = "/images/ai-features/v2/e14180eedc20164e61d19332e203164af616145e.svg";
-const ICON_MATCHING = "/images/ai-features/v2/2f3fc883e9bd51dce429cfe095498b07e655ab60.svg";
-const ICON_INSIGHTS = "/images/ai-features/v2/c54e0c0727a937b17aca19dbe262dae12811c588.svg";
-const MOCKUP_MAIN = "/images/ai-features/6c8d12863128766f14e439931aa6554efe391b38.png";
 
-const DEFAULT_FEATURES = [
-  {
-    icon: ICON_TRACKING,
-    title: "AI Tracking",
-    description: "Tự động phát hiện bất thường trong giờ làm, vị trí, và sự sụt giảm hiệu suất.",
-  },
-  {
-    icon: ICON_MATCHING,
-    title: "AI Matching",
-    description: "Phân tích CV chuyên sâu, chấm điểm phù hợp và ưu tiên ứng viên tốt nhất.",
-  },
-  {
-    icon: ICON_INSIGHTS,
-    title: "AI Insights",
-    description: "Dự đoán năng suất, rủi ro nghỉ việc, và đề xuất tối ưu ca làm.",
-  },
-];
-
-interface AISectionRefinedProps {
+interface AISectionProps {
   data?: AiSection | null;
 }
 
-export default function AISectionRefined({ data }: AISectionRefinedProps) {
-  const title = data?.tieu_de ?? "AI giúp cửa hàng vận hành nhanh hơn và chính xác hơn";
-  const mockupImage = getStrapiMediaUrl(data?.hinh_anh) ?? MOCKUP_MAIN;
+export default function AISectionRefined({ data }: AISectionProps) {
+  if (!data?.tinh_nang?.length) return null;
 
-  const features = data?.tinh_nang?.length
-    ? data.tinh_nang.map((item: FeatureItem, index: number) => ({
-        icon: getStrapiMediaUrl(item.icon) ?? DEFAULT_FEATURES[index]?.icon ?? ICON_TRACKING,
-        title: item.tieu_de,
-        description: item.mo_ta ?? "",
-      }))
-    : DEFAULT_FEATURES;
+  const title = data.tieu_de ?? "";
+  const mockUpImage = getStrapiMediaUrl(data.hinh_anh) ?? "/images/placeholder.png";
+
+  const features = data.tinh_nang.map((item: FeatureItem) => ({
+    icon: getStrapiMediaUrl(item.icon) ?? "/images/placeholder.svg",
+    title: item.tieu_de,
+    description: item.mo_ta ?? "",
+  }));
 
   return (
     <section className="relative overflow-hidden bg-white py-12 md:py-24">
@@ -71,7 +49,7 @@ export default function AISectionRefined({ data }: AISectionRefinedProps) {
 
           <div className="relative z-10 w-full max-w-[1000px]">
             <Image
-              src={mockupImage}
+              src={mockUpImage}
               alt="Timeso AI Dashboard Mockup"
               width={1280}
               height={800}

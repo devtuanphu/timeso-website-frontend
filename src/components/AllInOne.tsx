@@ -6,46 +6,6 @@ import Image from "next/image";
 import type { AllInOneSection, AllInOneModule } from "@/types/strapi";
 import { getStrapiMediaUrl } from "@/lib/strapi";
 
-// Default modules (fallback)
-const DEFAULT_MODULES = [
-  {
-    id: 1,
-    title: "Tuyển dụng",
-    desc: "Tự động lọc CV, đánh giá ứng viên và quản lý toàn bộ quy trình tuyển dụng trên một nền tảng.",
-    image: "/images/all-in-one/590d59e746e6e2148986c4d0850c4434393b07c0.png",
-  },
-  {
-    id: 2,
-    title: "Quản lý nhân sự tự động",
-    desc: "Lưu trữ hồ sơ điện tử, theo dõi hợp đồng – lương – phụ cấp và xử lý onboarding/offboarding tự động.",
-    image: "/images/all-in-one/a998eb2ed393b08cb42215a71c61c1ac9cc019bb.png",
-  },
-  {
-    id: 3,
-    title: "Chấm công & Theo dõi hiệu suất",
-    desc: "Chấm công bằng AI (FaceID, GPS, Wi-Fi), phát hiện bất thường và đánh giá KPI theo thời gian thực.",
-    image: "/images/all-in-one/590d59e746e6e2148986c4d0850c4434393b07c0.png",
-  },
-  {
-    id: 4,
-    title: "Tạo đơn hàng",
-    desc: "Timeso giúp cửa hàng tạo đơn nhanh chóng, thanh toán dễ dàng. Quản lý lịch hẹn, đơn hàng một cách rõ ràng.",
-    image: "/images/all-in-one/a998eb2ed393b08cb42215a71c61c1ac9cc019bb.png",
-  },
-  {
-    id: 5,
-    title: "Quản lý tài sản",
-    desc: "Theo dõi thiết bị cấp phát, tình trạng sử dụng và lịch sử bàn giao theo từng nhân viên.",
-    image: "/images/all-in-one/590d59e746e6e2148986c4d0850c4434393b07c0.png",
-  },
-];
-
-const DEFAULT_CONTENT = {
-  title: "Mọi tính năng bạn cần",
-  titleSuffix: "— trong một nền tảng",
-  description: "Tự động hóa quy trình và tối ưu vận hành từ tuyển dụng đến quản lý nhân sự.",
-};
-
 interface AllInOneProps {
   data?: AllInOneSection | null;
 }
@@ -53,21 +13,18 @@ interface AllInOneProps {
 export default function AllInOne({ data }: AllInOneProps) {
   const [activeId, setActiveId] = useState(1);
 
-  const modules = data?.modules?.length
-    ? data.modules.map((mod: AllInOneModule, index: number) => ({
-        id: index + 1,
-        title: mod.tieu_de,
-        desc: mod.mo_ta ?? "",
-        image:
-          getStrapiMediaUrl(mod.hinh_anh) ??
-          DEFAULT_MODULES[index]?.image ??
-          "/images/placeholder.png",
-      }))
-    : DEFAULT_MODULES;
+  if (!data?.modules?.length) return null;
 
-  const title = data?.tieu_de ?? DEFAULT_CONTENT.title;
-  const titleSuffix = data?.tieu_de_phu ?? DEFAULT_CONTENT.titleSuffix;
-  const description = data?.mo_ta ?? DEFAULT_CONTENT.description;
+  const modules = data.modules.map((mod: AllInOneModule, index: number) => ({
+    id: index + 1,
+    title: mod.tieu_de,
+    desc: mod.mo_ta ?? "",
+    image: getStrapiMediaUrl(mod.hinh_anh) ?? "/images/placeholder.png",
+  }));
+
+  const title = data.tieu_de ?? "";
+  const titleSuffix = data.tieu_de_phu ?? "";
+  const description = data.mo_ta ?? "";
 
   return (
     <section className="overflow-hidden bg-[#FCFFFF] py-12 md:py-24" id="features">

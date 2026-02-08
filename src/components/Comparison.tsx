@@ -6,29 +6,22 @@ import type { ComparisonSection } from "@/types/strapi";
 // Decorative highlight SVG
 const HIGHLIGHT_SVG = "/images/comparison/704011790be524e124547ff7c942359a3da3ddb5.svg";
 
-const DEFAULT_DATA = [
-  { feature: "Chấm công", traditional: "Dễ lỗi", timeso: "AI + FaceID + GPS" },
-  { feature: "Quản lý ca kíp", traditional: "Rời rạc", timeso: "Tự động sắp ca" },
-  { feature: "Quản lý ca kíp", traditional: "Khó tìm kiếm", timeso: "Hồ sơ điện tử 1 chạm" },
-  { feature: "Tính lương", traditional: "Mất 3–5 ngày", timeso: "Tự động, chính xác" },
-  { feature: "Hiệu suất", traditional: "Không đo được", timeso: "Báo cáo AI" },
-  { feature: "Trợ giúp", traditional: "Chậm trễ", timeso: "AI chat 24/7" },
-];
-
 interface ComparisonProps {
   data?: ComparisonSection | null;
 }
 
 export default function Comparison({ data }: ComparisonProps) {
-  const title = data?.tieu_de ?? "So sánh với cách làm truyền thống";
-  const description =
-    data?.mo_ta ?? "Tự động hóa quy trình và tối ưu vận hành từ tuyển dụng đến quản lý nhân sự.";
+  if (!data?.du_lieu?.length) return null;
+
+  const title = data.tieu_de ?? "";
+  const description = data.mo_ta ?? "";
 
   // Use Strapi data if available, otherwise use default
-  const rawData = data?.du_lieu;
-  const comparisonData = Array.isArray(rawData)
-    ? (rawData as { feature: string; traditional: string; timeso: string }[])
-    : DEFAULT_DATA;
+  const comparisonData = data.du_lieu as unknown as {
+    feature: string;
+    traditional: string;
+    timeso: string;
+  }[];
 
   return (
     <section className="bg-white">

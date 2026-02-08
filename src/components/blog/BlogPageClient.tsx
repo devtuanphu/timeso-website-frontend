@@ -79,25 +79,6 @@ const CATEGORIES = [
   { id: "data", label: "Quản lý dữ liệu" },
 ];
 
-const FALLBACK_POSTS: BlogPost[] = [
-  {
-    id: 1,
-    title: "Tối Ưu Ca Làm Bằng AI",
-    slug: "toi-uu-ca-lam-bang-ai",
-    desc: "Làm sao để AI dự đoán nhu cầu theo giờ cao điểm và tự động đề xuất ca làm tối ưu?",
-    author: {
-      name: "Timeso Team",
-      avatar: "/images/blog/avatar-default.png",
-      color: "#C7B9DA",
-    },
-    date: "20 Jan 2022",
-    tags: ["AI", "Đề xuất xem"],
-    category: "Công nghệ & AI",
-    image: "/images/blog/31db83164c6379a997eca9fe6670a6346ec9afdf.png",
-    featured: true,
-  },
-];
-
 // --- Components ---
 
 const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (v: boolean) => void }) => {
@@ -299,18 +280,15 @@ const BlogCard = ({ post }: { post: BlogPost }) => {
 export default function BlogPageClient({ pageData, posts }: BlogPageClientProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Map Strapi posts to BlogPost format, or use fallback
-  const blogPosts: BlogPost[] =
-    posts.length > 0 ? posts.map(mapStrapiPostToBlogPost) : FALLBACK_POSTS;
+  // Map Strapi posts to BlogPost format
+  const blogPosts: BlogPost[] = posts.map(mapStrapiPostToBlogPost);
 
   const featuredPost = blogPosts.find((p) => p.featured) || blogPosts[0];
-  const gridPosts = blogPosts.filter((p) => p.id !== featuredPost.id);
+  const gridPosts = featuredPost ? blogPosts.filter((p) => p.id !== featuredPost.id) : blogPosts;
 
-  // Page content from Strapi or defaults
-  const heroTitle = pageData?.hero?.tieu_de || "Kiến Thức Quản Lý & Vận Hành Hiện Đại";
-  const heroDesc =
-    pageData?.hero?.mo_ta ||
-    "Nơi cập nhật thông tin, góc nhìn thực tiễn và kinh nghiệm triển khai Timeso.";
+  // Page content from Strapi
+  const heroTitle = pageData?.hero?.tieu_de ?? "";
+  const heroDesc = pageData?.hero?.mo_ta ?? "";
 
   return (
     <div className="min-h-screen bg-white">

@@ -5,29 +5,21 @@ import Image from "next/image";
 import type { CtaSection } from "@/types/strapi";
 import { getStrapiMediaUrl } from "@/lib/strapi";
 
-// Default content (fallback)
-const PHONE_MOCKUP = "/images/cta/927772feb12cf7bb3461f8731b250063c9238795.png";
 const APP_STORE_BADGE = "/images/app-store-badge.svg";
 const GOOGLE_PLAY_BADGE = "/images/google-play-badge.png";
-
-const DEFAULT_CONTENT = {
-  title: "TRẢI NGHIỆM NGAY",
-  subtitle: "- Nâng tầm cửa hàng của bạn!",
-  description:
-    "Dễ dàng theo dõi và tối ưu hiệu suất làm việc của bạn mọi lúc, mọi nơi với bản dùng thử miễn phí.",
-};
 
 interface BottomCTAProps {
   data?: CtaSection | null;
 }
 
 export default function BottomCTA({ data }: BottomCTAProps) {
-  const title = data?.tieu_de ?? DEFAULT_CONTENT.title;
-  const subtitle = DEFAULT_CONTENT.subtitle;
-  const description = data?.mo_ta ?? DEFAULT_CONTENT.description;
-  const phoneImage = getStrapiMediaUrl(data?.hinh_anh) ?? PHONE_MOCKUP;
-  const appStoreUrl = data?.app_store_url ?? "#";
-  const googlePlayUrl = data?.google_play_url ?? "#";
+  if (!data) return null;
+
+  const title = data.tieu_de ?? "";
+  const description = data.mo_ta ?? "";
+  const phoneImage = getStrapiMediaUrl(data.hinh_anh) ?? "/images/placeholder.png";
+  const appStoreUrl = data.app_store_url ?? "#";
+  const googlePlayUrl = data.google_play_url ?? "#";
 
   return (
     <section
@@ -45,7 +37,7 @@ export default function BottomCTA({ data }: BottomCTAProps) {
             {title}
           </h2>
           <p className="mb-4 text-xl leading-tight font-medium text-[#101828] md:mb-[20px] md:text-[36px] md:leading-[44px]">
-            {subtitle}
+            {description}
           </p>
 
           {/* Description */}

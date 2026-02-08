@@ -6,42 +6,27 @@ import { DaLinhVucSection, AnimatedPageSection, AnimatedHero } from "@/component
 import type { QuanLyDonHangData } from "@/types/strapi";
 import { getStrapiMediaUrl } from "@/lib/strapi";
 
-// Default Assets (fallback)
-const DEFAULT_HERO_IMAGE = "/figma_assets/f39d24ee2279b11358426c47a3f20d748d9bfa5a.png";
-
-// Default content (fallback)
-const DEFAULT_HERO = {
-  title: "Quản Lý Đơn Hàng",
-  description: [
-    "Timeso giúp cửa hàng tạo và quản lý đơn hàng nhanh chóng.",
-    "Khi khách đến, nhân viên chỉ cần bấm tạo đơn và đặt lịch phục vụ cho khách ngay trên hệ thống, giúp theo dõi đơn rõ ràng, tránh nhầm lẫn và phục vụ đúng thời gian.",
-  ],
-};
-
-const DEFAULT_CTA = {
-  title: "Start your free trial",
-  subtitle: "Personal performance tracking made easy.",
-};
-
 interface OrderManagementPageClientProps {
   strapiData?: QuanLyDonHangData | null;
 }
 
 export function OrderManagementPageClient({ strapiData }: OrderManagementPageClientProps) {
+  if (!strapiData) return null;
+
   // Hero data
-  const heroTitle = strapiData?.hero?.tieu_de ?? DEFAULT_HERO.title;
-  const heroDescription = strapiData?.hero?.mo_ta ?? DEFAULT_HERO.description.join(" ");
-  const heroImage = DEFAULT_HERO_IMAGE;
-  const appStoreUrl = strapiData?.hero?.app_store_url ?? "#";
-  const googlePlayUrl = strapiData?.hero?.google_play_url ?? "#";
+  const heroTitle = strapiData.hero?.tieu_de ?? "";
+  const heroDescription = strapiData.hero?.mo_ta ?? "";
+  const heroImage = "/figma_assets/f39d24ee2279b11358426c47a3f20d748d9bfa5a.png";
+  const appStoreUrl = strapiData.hero?.app_store_url ?? "#";
+  const googlePlayUrl = strapiData.hero?.google_play_url ?? "#";
 
   // CTA data
-  const ctaTitle = strapiData?.cta?.tieu_de ?? DEFAULT_CTA.title;
-  const ctaSubtitle = strapiData?.cta?.mo_ta ?? DEFAULT_CTA.subtitle;
-  const ctaAppStoreUrl = strapiData?.cta?.app_store_url ?? "#";
-  const ctaGooglePlayUrl = strapiData?.cta?.google_play_url ?? "#";
+  const ctaTitle = strapiData.cta?.tieu_de ?? "";
+  const ctaSubtitle = strapiData.cta?.mo_ta ?? "";
+  const ctaAppStoreUrl = strapiData.cta?.app_store_url ?? "#";
+  const ctaGooglePlayUrl = strapiData.cta?.google_play_url ?? "#";
   const ctaImage =
-    getStrapiMediaUrl(strapiData?.cta?.hinh_anh) ??
+    getStrapiMediaUrl(strapiData.cta?.hinh_anh) ??
     "/images/recruitment/0fde196edc3946aa5fa9569f9c8de980a700b345.png";
 
   return (

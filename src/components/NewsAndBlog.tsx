@@ -8,46 +8,6 @@ import { getStrapiMediaUrl } from "@/lib/strapi";
 // Arrow icon from Figma
 const ARROW_ICON = "/images/news/266f668087d1051c6ee2d22f45366e87a0618c23.svg";
 
-// Default fallback data
-const FALLBACK_POSTS = [
-  {
-    id: 1,
-    title: "Tự động hóa Quyết định",
-    desc: "Tự động Chấp thuận: Giảm Tải 80% Công việc Hành chính cho Quản lý",
-    image: "/images/news/9f2dfde3dc3cba8c21f04f9b90074b1ec656da49.png",
-    author: "Olivia Rhye",
-    date: "20 Jan 2022",
-    slug: "#",
-    tags: [
-      { label: "Design", color: "bg-[#F9F5FF] text-[#6941C6]" },
-      { label: "Research", color: "bg-[#EEF4FF] text-[#3538CD]" },
-    ],
-  },
-  {
-    id: 2,
-    title: "Quản Lý Vận Hành Hiệu Quả",
-    desc: "Đơn Giản Hóa Quản Lý Chuỗi: Tạm biệt Ca kíp Rối Rắm!",
-    image: "/images/news/b10b6e2f81e8cd130fc5980ac1e70319d7eb4fb0.png",
-    author: "Lana Steiner",
-    date: "18 Jan 2022",
-    slug: "#",
-    tags: [{ label: "Software Development", color: "bg-[#ECFDF3] text-[#027A48]" }],
-  },
-  {
-    id: 3,
-    title: "AI Theo dõi Hiệu suất",
-    desc: "Sử dụng AI để nhanh chóng xác định các điểm bất thường",
-    image: "/images/news/961775ee44c3d63e0abfba137bcda5e250751037.png",
-    author: "Phoenix Baker",
-    date: "19 Jan 2022",
-    slug: "#",
-    tags: [
-      { label: "Product", color: "bg-[#F9F5FF] text-[#6941C6]" },
-      { label: "SaaS", color: "bg-[#FFF1F3] text-[#C01048]" },
-    ],
-  },
-];
-
 interface NewsAndBlogProps {
   posts?: BaiViet[];
 }
@@ -76,20 +36,19 @@ function getTagColor(category?: string): string {
 }
 
 export default function NewsAndBlog({ posts }: NewsAndBlogProps) {
-  // Transform Strapi posts or use fallback
-  const blogPosts =
-    posts && posts.length > 0
-      ? posts.slice(0, 3).map((post) => ({
-          id: post.id,
-          title: post.tieu_de,
-          desc: post.mo_ta ?? "",
-          image: getStrapiMediaUrl(post.hinh_dai_dien) ?? FALLBACK_POSTS[0].image,
-          author: post.tac_gia ?? "Timeso Team",
-          date: formatDate(post.createdAt),
-          slug: post.slug,
-          tags: post.danh_muc ? [{ label: post.danh_muc, color: getTagColor(post.danh_muc) }] : [],
-        }))
-      : FALLBACK_POSTS;
+  if (!posts || posts.length === 0) return null;
+
+  // Transform Strapi posts
+  const blogPosts = posts.slice(0, 3).map((post) => ({
+    id: post.id,
+    title: post.tieu_de,
+    desc: post.mo_ta ?? "",
+    image: getStrapiMediaUrl(post.hinh_dai_dien) ?? "/images/placeholder.png",
+    author: post.tac_gia ?? "Timeso Team",
+    date: formatDate(post.createdAt),
+    slug: post.slug,
+    tags: post.danh_muc ? [{ label: post.danh_muc, color: getTagColor(post.danh_muc) }] : [],
+  }));
 
   return (
     <section className="bg-white py-12 md:py-[96px]">

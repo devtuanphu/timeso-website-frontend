@@ -1,39 +1,8 @@
 import { Zap, Users, Headphones, Lock, Store } from "lucide-react";
 import type { WhyChooseSection, FeatureItem } from "@/types/strapi";
 
-// Default content (fallback)
-const DEFAULT_CONTENT = {
-  title: "Why Choose Timeso?",
-  description:
-    "Nền tảng HR hiện đại với tốc độ triển khai nhanh, dễ sử dụng và đảm bảo bảo mật chuẩn doanh nghiệp.",
-};
-
-const DEFAULT_CARDS = [
-  {
-    icon: "Zap",
-    title: "Triển khai nhanh",
-    description: "Tải về và dùng ngay!",
-    color: "#00E5FF",
-  },
-  {
-    icon: "Users",
-    title: "Đơn giản cho mọi đối tượng",
-    description: "Giao diện hiện đại trực quan, thân thiện cho cả HR lẫn nhân viên.",
-    color: "#6366F1",
-  },
-  {
-    icon: "Headphones",
-    title: "Luôn đồng hành cùng bạn",
-    description: "Hỗ trợ 24/7 và onboarding miễn phí cho toàn bộ đội ngũ.",
-    color: "#B24A4A",
-  },
-  {
-    icon: "Lock",
-    title: "Bảo mật tiêu chuẩn doanh nghiệp",
-    description: "Tuân thủ ISO, mã hóa AES-256 và nhiều lớp bảo vệ dữ liệu.",
-    color: "#D97706",
-  },
-];
+const ICON_COLORS = ["#00E5FF", "#6366F1", "#B24A4A", "#D97706"];
+const ICON_NAMES = ["Zap", "Users", "Headphones", "Lock"];
 
 const IconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Zap,
@@ -48,15 +17,15 @@ interface WhyChooseProps {
 }
 
 export default function WhyChoose({ data }: WhyChooseProps) {
-  const title = data?.tieu_de ?? DEFAULT_CONTENT.title;
-  const cards = data?.cac_ly_do?.length
-    ? data.cac_ly_do.map((item: FeatureItem, index: number) => ({
-        icon: DEFAULT_CARDS[index]?.icon ?? "Store",
-        title: item.tieu_de,
-        description: item.mo_ta ?? "",
-        color: DEFAULT_CARDS[index]?.color ?? "#00BAC7",
-      }))
-    : DEFAULT_CARDS;
+  if (!data?.cac_ly_do?.length) return null;
+
+  const title = data.tieu_de ?? "";
+  const cards = data.cac_ly_do.map((item: FeatureItem, index: number) => ({
+    icon: ICON_NAMES[index] ?? "Store",
+    title: item.tieu_de,
+    description: item.mo_ta ?? "",
+    color: ICON_COLORS[index] ?? "#00BAC7",
+  }));
 
   return (
     <section className="relative overflow-hidden bg-white py-12 md:py-24" id="why-choose">
@@ -67,7 +36,7 @@ export default function WhyChoose({ data }: WhyChooseProps) {
             {title}
           </h2>
           <p className="text-sm leading-relaxed text-[#475467] md:text-[16px] md:leading-[24px]">
-            {DEFAULT_CONTENT.description}
+            {""}
           </p>
         </div>
 

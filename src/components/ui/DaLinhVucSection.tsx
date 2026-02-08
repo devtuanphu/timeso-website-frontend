@@ -6,12 +6,6 @@ import { useInView } from "react-intersection-observer";
 import { CountUpStats } from "./CountUpStats";
 import type { DaLinhVucSection as DaLinhVucSectionType } from "@/types/strapi";
 
-const DEFAULT_STATS = [
-  { value: 12, suffix: "", label: "Ngành nghề áp dụng từ bán lẻ, F&B đến sản xuất" },
-  { value: 30, suffix: "%", label: "Tăng hiệu suất vận hành HR trung bình" },
-  { value: 5000, suffix: "+", label: "Nhân viên được quản lý và chấm công bằng AI" },
-];
-
 const images = [
   {
     src: "/images/recruitment/c29b80739a21e6e6f8454883c205bbe7ec0bece7.png",
@@ -69,12 +63,12 @@ export function DaLinhVucSection({ data }: DaLinhVucSectionProps) {
 
   const title = data?.tieu_de ?? "ĐA LĨNH VỰC";
   const stats = data?.thong_ke?.length
-    ? data.thong_ke.map((s, i) => ({
-        value: parseInt(s.gia_tri, 10) || DEFAULT_STATS[i]?.value || 0,
-        suffix: s.hau_to ?? DEFAULT_STATS[i]?.suffix ?? "",
-        label: s.mo_ta ?? DEFAULT_STATS[i]?.label ?? "",
+    ? data.thong_ke.map((s: { gia_tri: string; hau_to?: string; mo_ta?: string }) => ({
+        value: parseInt(s.gia_tri, 10) || 0,
+        suffix: s.hau_to ?? "",
+        label: s.mo_ta ?? "",
       }))
-    : DEFAULT_STATS;
+    : [];
 
   return (
     <section ref={sectionRef} className="bg-white px-4 py-16 md:px-8 md:py-[80px]">

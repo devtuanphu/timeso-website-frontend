@@ -10,6 +10,7 @@ import type {
   LienHeData,
   TrangBlogData,
   TrangCaseStudyData,
+  ChinhSachBaoMatData,
   BaiViet,
   CaseStudy,
   ThanhVien,
@@ -284,6 +285,11 @@ export async function getVeChungToi(): Promise<VeChungToiData | null> {
 
 export async function getLienHe(): Promise<LienHeData | null> {
   const response = await fetchFromStrapi<LienHeData>("lien-he");
+  return response?.data ?? null;
+}
+
+export async function getChinhSachBaoMat(): Promise<ChinhSachBaoMatData | null> {
+  const response = await fetchFromStrapi<ChinhSachBaoMatData>("chinh-sach-bao-mat");
   return response?.data ?? null;
 }
 

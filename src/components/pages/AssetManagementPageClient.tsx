@@ -6,51 +6,31 @@ import { DaLinhVucSection, AnimatedPageSection, AnimatedHero } from "@/component
 import type { QuanLyTaiSanData } from "@/types/strapi";
 import { getStrapiMediaUrl } from "@/lib/strapi";
 
-// Default Assets (fallback)
-const DEFAULT_HERO_IMAGE = "/figma_assets/9c2595df78e94d7405bb4b531ceb329dbb04e509.png";
-
-// Default content (fallback)
-const DEFAULT_HERO = {
-  title: "Quản Lý Tài Sản Thông Minh & Chính Xác",
-  description:
-    "Timeso giúp bạn theo dõi tài sản, thiết bị và kho hàng một cách rõ ràng và chính xác. Mọi thay đổi đều được cập nhật theo thời gian thực, giúp giảm thất thoát và tối ưu chi phí vận hành.",
-};
-
-const DEFAULT_WHY_CHOOSE = [
-  "Giải pháp quản lý toàn diện, tiết kiệm thời gian",
-  "Tính năng vượt trội, giúp tối ưu hóa mọi quy trình",
-  "Tối ưu hóa hiệu suất nhân viên",
-  "Đảm bảo sự phát triển bền vững",
-];
-
-const DEFAULT_CTA = {
-  title: "TẢI MIỄN PHÍ NGAY",
-  subtitle: "Quản lý tài sản & kho thông minh – mọi lúc mọi nơi.",
-};
-
 interface AssetManagementPageClientProps {
   strapiData?: QuanLyTaiSanData | null;
 }
 
 export function AssetManagementPageClient({ strapiData }: AssetManagementPageClientProps) {
+  if (!strapiData) return null;
+
   // Hero data
-  const heroTitle = strapiData?.hero?.tieu_de ?? DEFAULT_HERO.title;
-  const heroDescription = strapiData?.hero?.mo_ta ?? DEFAULT_HERO.description;
-  const heroImage = DEFAULT_HERO_IMAGE;
-  const appStoreUrl = strapiData?.hero?.app_store_url ?? "#";
-  const googlePlayUrl = strapiData?.hero?.google_play_url ?? "#";
+  const heroTitle = strapiData.hero?.tieu_de ?? "";
+  const heroDescription = strapiData.hero?.mo_ta ?? "";
+  const heroImage = "/figma_assets/9c2595df78e94d7405bb4b531ceb329dbb04e509.png";
+  const appStoreUrl = strapiData.hero?.app_store_url ?? "#";
+  const googlePlayUrl = strapiData.hero?.google_play_url ?? "#";
 
   // Why choose items
   const whyChooseItems =
-    strapiData?.why_choose?.cac_ly_do?.map((item) => item.tieu_de) ?? DEFAULT_WHY_CHOOSE;
+    strapiData.why_choose?.cac_ly_do?.map((item: { tieu_de: string }) => item.tieu_de) ?? [];
 
   // CTA data
-  const ctaTitle = strapiData?.cta?.tieu_de ?? DEFAULT_CTA.title;
-  const ctaSubtitle = strapiData?.cta?.mo_ta ?? DEFAULT_CTA.subtitle;
-  const ctaAppStoreUrl = strapiData?.cta?.app_store_url ?? "#";
-  const ctaGooglePlayUrl = strapiData?.cta?.google_play_url ?? "#";
+  const ctaTitle = strapiData.cta?.tieu_de ?? "";
+  const ctaSubtitle = strapiData.cta?.mo_ta ?? "";
+  const ctaAppStoreUrl = strapiData.cta?.app_store_url ?? "#";
+  const ctaGooglePlayUrl = strapiData.cta?.google_play_url ?? "#";
   const ctaImage =
-    getStrapiMediaUrl(strapiData?.cta?.hinh_anh) ??
+    getStrapiMediaUrl(strapiData.cta?.hinh_anh) ??
     "/images/recruitment/0fde196edc3946aa5fa9569f9c8de980a700b345.png";
 
   return (

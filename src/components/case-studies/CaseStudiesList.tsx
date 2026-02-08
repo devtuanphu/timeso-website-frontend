@@ -14,38 +14,6 @@ const CATEGORIES = [
   { id: "recruitment", label: "Tuyển dụng" },
 ];
 
-const DEFAULT_CASE_STUDIES = [
-  {
-    id: 1,
-    categoryId: "experience",
-    category: "Chia sẻ kinh nghiệm",
-    title: "Quản lý nhân sự cho cửa hàng vừa và nhỏ",
-    description: "Timeso giúp cửa hàng quản lý từ 0-30 nhân sự đơn giản và hiệu quả.",
-    image: "/images/case-studies/22e4c682258f224f70841b23f4805d4f91d23c3a.png",
-    imagePosition: "left" as const,
-  },
-  {
-    id: 2,
-    categoryId: "operations",
-    category: "Quản lý cửa hàng",
-    title: "Phát Triển Chuỗi Cửa Hàng",
-    description:
-      "Trước: Mỗi chi nhánh làm 1 kiểu, khó chuẩn hoá. Sau: Một nền tảng thống nhất cho vận hành & nhân sự. Kết quả: Mở thêm chi nhánh nhanh chóng.",
-    image: "/images/case-studies/22e4c682258f224f70841b23f4805d4f91d23c3a.png",
-    imagePosition: "right" as const,
-  },
-  {
-    id: 3,
-    categoryId: "operations",
-    category: "Quản lý kho",
-    title: "Quản Lý Tài Sản – Kho – Thiết Bị",
-    description:
-      "Trước: Tài sản thất lạc, bỏ quên bảo trì, ghi tay. Sau: Quản lý trên app, cảnh báo, lịch bảo trì tự động.",
-    image: "/images/case-studies/22e4c682258f224f70841b23f4805d4f91d23c3a.png",
-    imagePosition: "left" as const,
-  },
-];
-
 interface CaseStudiesListProps {
   caseStudies?: CaseStudy[];
 }
@@ -55,20 +23,17 @@ export default function CaseStudiesList({ caseStudies = [] }: CaseStudiesListPro
   const [currentPage, setCurrentPage] = useState(1);
 
   // Transform Strapi data to display format
-  const displayStudies =
-    caseStudies.length > 0
-      ? caseStudies.map((study, idx) => ({
-          id: study.id,
-          categoryId: study.nganh ?? "experience",
-          category: study.nganh ?? "Chia sẻ kinh nghiệm",
-          title: study.tieu_de,
-          description: study.mo_ta ?? "",
-          image:
-            getStrapiMediaUrl(study.hinh_dai_dien) ??
-            "/images/case-studies/22e4c682258f224f70841b23f4805d4f91d23c3a.png",
-          imagePosition: (idx % 2 === 0 ? "left" : "right") as "left" | "right",
-        }))
-      : DEFAULT_CASE_STUDIES;
+  const displayStudies = caseStudies.map((study: CaseStudy, idx: number) => ({
+    id: study.id,
+    categoryId: study.nganh ?? "experience",
+    category: study.nganh ?? "Chia sẻ kinh nghiệm",
+    title: study.tieu_de,
+    description: study.mo_ta ?? "",
+    image:
+      getStrapiMediaUrl(study.hinh_dai_dien) ??
+      "/images/case-studies/22e4c682258f224f70841b23f4805d4f91d23c3a.png",
+    imagePosition: (idx % 2 === 0 ? "left" : "right") as "left" | "right",
+  }));
 
   const filteredStudies =
     activeCategory === "all"

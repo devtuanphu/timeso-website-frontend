@@ -6,20 +6,17 @@ const CTA_IMAGE = "/images/case-studies/image 2555.png";
 const APP_STORE_BADGE = "/images/app-store-badge.svg";
 const GOOGLE_PLAY_BADGE = "/images/google-play-badge.png";
 
-const DEFAULT_CONTENT = {
-  title: "Start your free trial",
-  description: "Personal performance tracking made easy.",
-};
-
 interface CaseStudiesCTAProps {
   data?: CtaSection | null;
 }
 
 export default function CaseStudiesCTA({ data }: CaseStudiesCTAProps) {
-  const title = data?.tieu_de ?? DEFAULT_CONTENT.title;
-  const description = data?.mo_ta ?? DEFAULT_CONTENT.description;
-  const appStoreUrl = data?.app_store_url ?? "#";
-  const googlePlayUrl = data?.google_play_url ?? "#";
+  if (!data) return null;
+
+  const title = data.tieu_de ?? "";
+  const description = data.mo_ta ?? "";
+  const appStoreUrl = data.app_store_url ?? "#";
+  const googlePlayUrl = data.google_play_url ?? "#";
 
   return (
     <section className="bg-[#E6FAFA] py-16 md:py-24">

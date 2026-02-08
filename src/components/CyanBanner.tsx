@@ -1,40 +1,27 @@
 "use client";
 
 import Image from "next/image";
-import { UserCheck, Sparkles, Wand2, BarChart3 } from "lucide-react";
-import type { CyanBannerSection, StatItem } from "@/types/strapi";
+import { BarChart3, Clock, DollarSign, CalendarCheck } from "lucide-react";
+import type { CyanBannerSection } from "@/types/strapi";
 
 // Image Assets
 const ILLUSTRATION = "/images/banner/Layer 1.png";
 
-const DEFAULT_BADGES = [
-  { icon: "UserCheck", text: "Chấm công chính xác" },
-  { icon: "Sparkles", text: "Tối ưu chi phí nhân sự" },
-  { icon: "Wand2", text: "Phân ca tự động bằng AI" },
-  { icon: "BarChart3", text: "Báo cáo hiệu suất tức thì" },
-];
-
-const IconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  UserCheck,
-  Sparkles,
-  Wand2,
-  BarChart3,
-};
+const BADGE_ICONS = [Clock, DollarSign, CalendarCheck, BarChart3];
 
 interface CyanBannerProps {
   data?: CyanBannerSection | null;
 }
 
 export default function CyanBanner({ data }: CyanBannerProps) {
-  const title = data?.tieu_de ?? "Tăng tốc quản lý với sức mạnh AI";
-  const subtitle = data?.tieu_de_phu ?? "Quản lý nhanh hơn – thông minh hơn với AI";
+  if (!data?.thong_ke?.length) return null;
 
-  const badges = data?.thong_ke?.length
-    ? data.thong_ke.map((item: StatItem, index: number) => ({
-        icon: DEFAULT_BADGES[index]?.icon ?? "Sparkles",
-        text: item.mo_ta,
-      }))
-    : DEFAULT_BADGES;
+  const title = data.tieu_de ?? "";
+  const subtitle = data.tieu_de_phu ?? "";
+  const badges = data.thong_ke.map((stat, index: number) => ({
+    icon: BADGE_ICONS[index] ?? BarChart3,
+    text: stat.mo_ta ?? "",
+  }));
 
   return (
     <section className="hidden bg-white py-10 md:block">
@@ -70,7 +57,7 @@ export default function CyanBanner({ data }: CyanBannerProps) {
           {/* Badges Container */}
           <div className="absolute top-[113.88px] left-[30.54px] z-10 flex items-center gap-[12px]">
             {badges.map((badge, index) => {
-              const Icon = IconMap[badge.icon] ?? Sparkles;
+              const Icon = badge.icon;
               return (
                 <Badge
                   key={index}

@@ -191,6 +191,7 @@ export interface UserStoryItem {
   mo_ta?: string;
   hinh_anh?: StrapiMedia;
   link?: string;
+  mau_nen?: string;
 }
 
 export interface UserStoriesSection {
@@ -310,6 +311,13 @@ export interface TrangCaseStudyData {
   hero?: HeroSection;
   mo_ta_trang?: string;
   cta?: CtaSection;
+}
+
+export interface ChinhSachBaoMatData {
+  seo?: SeoMeta;
+  tieu_de?: string;
+  noi_dung?: string;
+  ngay_cap_nhat?: string;
 }
 
 // ==================== Collection Types ====================

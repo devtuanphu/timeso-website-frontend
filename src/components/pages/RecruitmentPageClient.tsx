@@ -9,143 +9,82 @@ import { AnimatedPageSection, AnimatedHero } from "@/components/ui";
 import type { TuyenDungData } from "@/types/strapi";
 import { getStrapiMediaUrl } from "@/lib/strapi";
 
-// Default Hero Content
-const DEFAULT_HERO = {
-  title: "Timeso - Giải Pháp Chấm Dứt Nỗi Lo Tuyển Dụng",
-  description:
-    "Tự động hóa tuyển dụng từ lọc hồ sơ đến phỏng vấn, Giúp doanh nghiệp thu hút và tuyển chọn nhân tài nhanh chóng – hiệu quả với công nghệ AI phỏng vấn và đánh giá ứng viên. Timeso giúp các đối tác kinh doanh tự động, giống như một nền tảng HR bạn cần.",
-};
-
-const DEFAULT_CTA = {
-  title: "TẢI MIỄN PHÍ NGAY",
-  subtitle: "Trải nghiệm giải pháp tuyển dụng 4.0 từ Timeso",
-};
-
-const DEFAULT_CTA_IMAGE = "/images/recruitment/0fde196edc3946aa5fa9569f9c8de980a700b345.png";
-
-// Services data
-const SERVICES = [
-  {
-    title: "Tự động hoá quy trình tuyển dụng",
-    desc: "Giảm tài quy trình rườm rà nhiều công đoạn, giảm chi phí tuyển dụng tối đa",
-    hasArrow: true,
-  },
-  {
-    title: "Phỏng vấn trực tiếp qua video trực tiếp trên app",
-    desc: "Tiết kiệm thời gian và tăng hiệu quả đánh giá ứng viên.",
-  },
-  {
-    title: "Lọc hồ sơ nhanh chóng",
-    desc: "Dễ dàng tìm kiếm & đề xuất ứng viên phù hợp nhất.",
-  },
-  {
-    title: "Dễ theo dõi ứng viên",
-    desc: "Quản lý thông tin ứng viên đầy đủ và hiệu quả hơn.",
-  },
-  {
-    title: "Tối ưu hoá quy trình tuyển dụng",
-    desc: "Đảm bảo quy trình tuyển dụng diễn ra dễ dàng và công bằng.",
-  },
-  {
-    title: "Quản lý đội ngũ nhân sự",
-    desc: "Hỗ trợ xây dựng đội ngũ mạnh mẽ từ nền tảng tuyển dụng.",
-  },
-];
-
-// Stats data
-const STATS = [
-  { value: "12", label: "Ngành nghề áp dụng từ bán lẻ, F&B đến sản xuất" },
-  { value: "30%", label: "Tăng hiệu suất vận hành HR trung bình" },
-  { value: "5.000+", label: "Nhân viên được quản lý và chấm công bằng AI" },
-];
-
-// FAQ/Challenges data
-const CHALLENGES = [
-  {
-    title: "Lọc CV thủ công",
-    desc: "Xem hồ sơ từng cái, tốn thời gian và dễ sót.",
-    highlighted: true,
-  },
-  { title: "Ứng viên ảo quá nhiều", desc: "Nộp CV nhưng không phản hồi, không đến phỏng vấn." },
-  { title: "Phản hồi chậm", desc: "Mất cơ hội giữ người." },
-  { title: "Ứng viên bỏ phỏng vấn", desc: "Thiếu tương tác, quên lịch và dễ bỏ cuộc." },
-  { title: "Vòng phỏng vấn thiếu thống nhất", desc: "Khó tìm đúng người." },
-  {
-    title: "Tuyển dụng tốn thời gian",
-    desc: "Quy trình nhiều bước, thiếu công cụ tự động hỗ trợ.",
-  },
-];
-
-// Solutions data
-const SOLUTIONS = [
-  {
-    title: "Tự động hóa quy trình tuyển dụng",
-    desc: "Đăng tin, lọc và theo dõi ứng viên hoàn toàn tự động, giảm việc thủ công cho HR.",
-    image: "/images/recruitment/63f9c370d89f6ecb68865811f101ebbc846a18ee.png",
-  },
-  {
-    title: "Phỏng vấn trực tiếp trong app",
-    desc: "Phỏng vấn từ xa ngay trong ứng dụng, đánh giá ứng viên hiệu quả mà không cần gặp trực tiếp.",
-    image: "/images/recruitment/897695a710a8051c0701021981372d346a8fbdeb.png",
-  },
-  {
-    title: "AI lọc hồ sơ và đề xuất thông minh",
-    desc: "Tự động phân loại và ưu tiên hồ sơ giúp tìm đúng ứng viên phù hợp nhanh hơn.",
-    image: "/images/recruitment/050e03a0a2974b760dfd0a4a69db80f85e288205.png",
-  },
-  {
-    title: "Quy trình hiện đại đơn giản",
-    desc: "Mọi bước tuyển dụng được chuẩn hóa và tự động hóa, giảm sai sót và tăng minh bạch.",
-    image: "/images/recruitment/4df5e2403700710633eda3ae95d759e0d4a6a3a2.png",
-  },
-  {
-    title: "Theo dõi ứng viên dễ dàng",
-    desc: "Cập nhật tiến độ, ghi chú và trạng thái ứng viên trên một hệ thống thống nhất.",
-    image: "/images/recruitment/7ba69e17447d538fd39a723b8cab2ad13056eb31.png",
-  },
-  {
-    title: "Xây dựng đội ngũ mạnh mẽ",
-    desc: "Kết nối tuyển dụng – chấm công – hiệu suất để phát triển đội ngũ ổn định, hiệu quả.",
-    image: "/images/recruitment/203f29c8b05dd366c331565d4460cb115df17c18.png",
-  },
-];
-
-// Why Choose data
-const WHY_CHOOSE = [
-  {
-    icon: "/images/recruitment/bdd84670688d8fcad11fa3c0afc58b9eb83ef0da.svg",
-    title: "Tiết kiệm thời gian",
-    desc: "Giảm 70% thời gian\nlọc hồ sơ và phỏng vấn.",
-  },
-  {
-    icon: "/images/recruitment/0ddeff3440393d0b8a0d19fa4138aabbc5ff222e.svg",
-    title: "Tiết kiệm chi phí",
-    desc: "Cắt giảm chi phí đăng tin\nvà nhân sự tuyển dụng.",
-  },
-  {
-    icon: "/images/recruitment/b88f98ffab648935ccc0acfe4752efd0d5d23db3.svg",
-    title: "Dễ dùng, giao diện hiện đại",
-    desc: "Giao diện trực quan giúp chủ doanh nghiệp\nvà nhân viên quản lý thao tác dễ dàng,\nkhông cần kiến thức công nghệ nhưng\nvẫn đạt hiệu quả cao.",
-  },
-];
-
 interface RecruitmentPageClientProps {
   strapiData?: TuyenDungData | null;
 }
 
 export function RecruitmentPageClient({ strapiData }: RecruitmentPageClientProps) {
-  // Extract Strapi data with fallbacks
-  const heroTitle = strapiData?.hero?.tieu_de ?? DEFAULT_HERO.title;
-  const heroDescription = strapiData?.hero?.mo_ta ?? DEFAULT_HERO.description;
-  const appStoreUrl = strapiData?.hero?.app_store_url ?? "#";
-  const googlePlayUrl = strapiData?.hero?.google_play_url ?? "#";
+  if (!strapiData) return null;
+
+  // Hero data
+  const heroTitle = strapiData.hero?.tieu_de ?? "";
+  const heroDescription = strapiData.hero?.mo_ta ?? "";
+  const appStoreUrl = strapiData.hero?.app_store_url ?? "#";
+  const googlePlayUrl = strapiData.hero?.google_play_url ?? "#";
+
+  // Services
+  const services =
+    strapiData.dich_vu?.dich_vu?.map((s: { tieu_de: string; mo_ta?: string }, i: number) => ({
+      title: s.tieu_de,
+      desc: s.mo_ta ?? "",
+      hasArrow: i === 0,
+    })) ?? [];
+  const servicesDashboardImage =
+    getStrapiMediaUrl(strapiData.dich_vu?.hinh_anh) ??
+    "/images/recruitment/85b42fc8e141b80565f28cff8ba1d70ac8e47064.png";
+
+  // Stats
+  const stats =
+    strapiData.da_linh_vuc?.thong_ke?.map(
+      (s: { gia_tri: string; hau_to?: string; mo_ta?: string }) => ({
+        value: `${s.gia_tri}${s.hau_to ?? ""}`,
+        label: s.mo_ta ?? "",
+      })
+    ) ?? [];
+
+  // Challenges
+  const challenges =
+    strapiData.thach_thuc?.thach_thuc?.map((c: { tieu_de: string; mo_ta?: string }, i: number) => ({
+      title: c.tieu_de,
+      desc: c.mo_ta ?? "",
+      highlighted: i === 0,
+    })) ?? [];
+  const challengeImage =
+    getStrapiMediaUrl(strapiData.thach_thuc?.hinh_anh) ??
+    "/images/recruitment/e2944d07e911aa0580feeda675a549795c0a1050.png";
+
+  // Solutions
+  const solutions =
+    strapiData.giai_phap?.giai_phap?.map(
+      (s: { tieu_de: string; mo_ta?: string; icon?: unknown }) => ({
+        title: s.tieu_de,
+        desc: s.mo_ta ?? "",
+        image:
+          getStrapiMediaUrl(s.icon as import("@/types/strapi").StrapiMedia) ??
+          "/images/placeholder.svg",
+      })
+    ) ?? [];
+
+  // Why Choose
+  const whyChoose =
+    strapiData.why_choose?.cac_ly_do?.map(
+      (w: { tieu_de: string; mo_ta?: string; icon?: unknown }) => ({
+        icon:
+          getStrapiMediaUrl(w.icon as import("@/types/strapi").StrapiMedia) ??
+          "/images/placeholder.svg",
+        title: w.tieu_de,
+        desc: w.mo_ta ?? "",
+      })
+    ) ?? [];
 
   // CTA data
-  const ctaTitle = strapiData?.cta?.tieu_de ?? DEFAULT_CTA.title;
-  const ctaSubtitle = strapiData?.cta?.mo_ta ?? DEFAULT_CTA.subtitle;
-  const ctaAppStoreUrl = strapiData?.cta?.app_store_url ?? "#";
-  const ctaGooglePlayUrl = strapiData?.cta?.google_play_url ?? "#";
-  const ctaImage = getStrapiMediaUrl(strapiData?.cta?.hinh_anh) ?? DEFAULT_CTA_IMAGE;
+  const ctaTitle = strapiData.cta?.tieu_de ?? "";
+  const ctaSubtitle = strapiData.cta?.mo_ta ?? "";
+  const ctaAppStoreUrl = strapiData.cta?.app_store_url ?? "#";
+  const ctaGooglePlayUrl = strapiData.cta?.google_play_url ?? "#";
+  const ctaImage =
+    getStrapiMediaUrl(strapiData.cta?.hinh_anh) ??
+    "/images/recruitment/0fde196edc3946aa5fa9569f9c8de980a700b345.png";
 
   return (
     <>
@@ -236,27 +175,29 @@ export function RecruitmentPageClient({ strapiData }: RecruitmentPageClientProps
             <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
               {/* Features Grid */}
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:w-1/2">
-                {SERVICES.map((service, idx) => (
-                  <div key={idx} className="flex flex-col">
-                    <h3 className="mb-2 text-[16px] leading-[24px] font-semibold text-[#01CFCF] md:text-[18px]">
-                      {service.title}
-                    </h3>
-                    <p className="mb-3 text-[14px] leading-relaxed text-[#475467]">
-                      {service.desc}
-                    </p>
-                    {service.hasArrow && (
-                      <button className="flex h-10 w-10 items-center justify-center rounded-full bg-[#01CFCF] text-white transition-transform hover:scale-105">
-                        <ArrowRight className="h-5 w-5" />
-                      </button>
-                    )}
-                  </div>
-                ))}
+                {services.map(
+                  (service: { title: string; desc: string; hasArrow?: boolean }, idx: number) => (
+                    <div key={idx} className="flex flex-col">
+                      <h3 className="mb-2 text-[16px] leading-[24px] font-semibold text-[#01CFCF] md:text-[18px]">
+                        {service.title}
+                      </h3>
+                      <p className="mb-3 text-[14px] leading-relaxed text-[#475467]">
+                        {service.desc}
+                      </p>
+                      {service.hasArrow && (
+                        <button className="flex h-10 w-10 items-center justify-center rounded-full bg-[#01CFCF] text-white transition-transform hover:scale-105">
+                          <ArrowRight className="h-5 w-5" />
+                        </button>
+                      )}
+                    </div>
+                  )
+                )}
               </div>
 
               {/* Dashboard Image */}
               <div className="relative h-[300px] lg:h-auto lg:w-1/2">
                 <Image
-                  src="/images/recruitment/85b42fc8e141b80565f28cff8ba1d70ac8e47064.png"
+                  src={servicesDashboardImage}
                   alt="Timeso Dashboard"
                   fill
                   className="rounded-[12px] object-cover shadow-2xl"
@@ -281,7 +222,7 @@ export function RecruitmentPageClient({ strapiData }: RecruitmentPageClientProps
 
                 {/* Stats - 3 items in a row */}
                 <div className="flex w-full flex-col gap-8 md:flex-row md:gap-8">
-                  {STATS.map((stat, idx) => (
+                  {stats.map((stat: { value: string; label: string }, idx: number) => (
                     <div key={idx} className="flex flex-1 flex-col items-center lg:items-start">
                       <p className="mb-2 text-[40px] font-bold text-[#212121] md:text-[48px]">
                         {stat.value}
@@ -406,7 +347,7 @@ export function RecruitmentPageClient({ strapiData }: RecruitmentPageClientProps
               {/* Left - Image */}
               <div className="relative h-[300px] w-full shrink-0 md:h-[464px] md:w-[480px] lg:w-[480px]">
                 <Image
-                  src="/images/recruitment/e2944d07e911aa0580feeda675a549795c0a1050.png"
+                  src={challengeImage}
                   alt="Stressed businessman"
                   fill
                   className="object-cover object-top"
@@ -421,17 +362,19 @@ export function RecruitmentPageClient({ strapiData }: RecruitmentPageClientProps
 
                 {/* Cards Grid - 2 columns */}
                 <div className="grid grid-cols-2 gap-4 md:gap-6">
-                  {CHALLENGES.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className={`flex min-h-[140px] flex-col justify-between rounded-[12px] p-5 ${
-                        item.highlighted ? "bg-[#00FFFF] text-black" : "bg-white text-black"
-                      }`}
-                    >
-                      <h3 className="text-[16px] leading-tight font-bold">{item.title}</h3>
-                      <p className="text-[14px] leading-relaxed text-black/70">{item.desc}</p>
-                    </div>
-                  ))}
+                  {challenges.map(
+                    (item: { title: string; desc: string; highlighted?: boolean }, idx: number) => (
+                      <div
+                        key={idx}
+                        className={`flex min-h-[140px] flex-col justify-between rounded-[12px] p-5 ${
+                          item.highlighted ? "bg-[#00FFFF] text-black" : "bg-white text-black"
+                        }`}
+                      >
+                        <h3 className="text-[16px] leading-tight font-bold">{item.title}</h3>
+                        <p className="text-[14px] leading-relaxed text-black/70">{item.desc}</p>
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             </div>
@@ -458,38 +401,40 @@ export function RecruitmentPageClient({ strapiData }: RecruitmentPageClientProps
 
             {/* Solutions Grid - 3x2 */}
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {SOLUTIONS.map((solution, idx) => {
-                const isTeal = idx % 2 === 0;
-                return (
-                  <div key={idx} className="relative h-[280px] overflow-hidden rounded-[16px]">
-                    <Image
-                      src={solution.image}
-                      alt={solution.title}
-                      fill
-                      className="object-cover"
-                    />
-                    <div
-                      className={`absolute inset-0 ${
-                        isTeal
-                          ? "bg-[linear-gradient(180deg,rgba(0,194,194,0)_0%,#00B4B4_71.72%)]"
-                          : "bg-linear-to-b from-transparent via-white/50 to-white"
-                      }`}
-                    />
-                    <div className="absolute right-4 bottom-4 left-4">
-                      <h3
-                        className={`mb-2 text-[16px] font-bold ${isTeal ? "text-white" : "text-[#141414]"}`}
-                      >
-                        {solution.title}
-                      </h3>
-                      <p
-                        className={`text-[14px] leading-[24px] ${isTeal ? "text-white/90" : "text-[#45556c]"}`}
-                      >
-                        {solution.desc}
-                      </p>
+              {solutions.map(
+                (solution: { title: string; desc: string; image: string }, idx: number) => {
+                  const isTeal = idx % 2 === 0;
+                  return (
+                    <div key={idx} className="relative h-[280px] overflow-hidden rounded-[16px]">
+                      <Image
+                        src={solution.image}
+                        alt={solution.title}
+                        fill
+                        className="object-cover"
+                      />
+                      <div
+                        className={`absolute inset-0 ${
+                          isTeal
+                            ? "bg-[linear-gradient(180deg,rgba(0,194,194,0)_0%,#00B4B4_71.72%)]"
+                            : "bg-linear-to-b from-transparent via-white/50 to-white"
+                        }`}
+                      />
+                      <div className="absolute right-4 bottom-4 left-4">
+                        <h3
+                          className={`mb-2 text-[16px] font-bold ${isTeal ? "text-white" : "text-[#141414]"}`}
+                        >
+                          {solution.title}
+                        </h3>
+                        <p
+                          className={`text-[14px] leading-[24px] ${isTeal ? "text-white/90" : "text-[#45556c]"}`}
+                        >
+                          {solution.desc}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
             </div>
           </div>
         </section>
@@ -508,7 +453,7 @@ export function RecruitmentPageClient({ strapiData }: RecruitmentPageClientProps
             </h2>
 
             <div className="grid grid-cols-1 gap-0 border-b border-dashed border-[#55DFDF] md:grid-cols-3">
-              {WHY_CHOOSE.map((item, idx) => (
+              {whyChoose.map((item: { icon: string; title: string; desc: string }, idx: number) => (
                 <div
                   key={idx}
                   className={`flex flex-col items-center border-dashed border-[#55DFDF] p-8 text-center ${

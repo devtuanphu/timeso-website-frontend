@@ -6,52 +6,31 @@ import { DaLinhVucSection, AnimatedPageSection, AnimatedHero } from "@/component
 import type { SapCaThongMinhData } from "@/types/strapi";
 import { getStrapiMediaUrl } from "@/lib/strapi";
 
-// Default Assets (fallback)
-const DEFAULT_HERO_IMAGE = "/figma_assets/3d4deb506f9fd18b409cb0aafaf717ea62928e41.png";
-
-// Default content (fallback)
-const DEFAULT_HERO = {
-  title: "Tự động hóa phân ca — Vận hành mượt hơn mỗi ngày",
-  description:
-    "AI tối ưu lịch làm việc theo nhu cầu thực tế: giảm thiếu người, hạn chế trùng ca và tiết kiệm đến 60% thời gian sắp ca thủ công.",
-  features: ["Tối ưu theo kỹ năng", "Giảm xung đột & OT", "Đồng bộ chấm công–lương"],
-};
-
-const DEFAULT_WHY_CHOOSE = [
-  "Giảm 50–60% thời gian phân ca lỗi trùng ca, thiếu ca",
-  "Tối ưu chi phí nhân sự theo giờ cao điểm",
-  "Tăng sự chủ động của nhân viên",
-  "Minh bạch dữ liệu – dễ dàng đối soát",
-];
-
-const DEFAULT_CTA = {
-  title: "TẢI MIỄN PHÍ NGAY",
-  subtitle: "Quản lý ca làm thông minh – mọi lúc mọi nơi.",
-};
-
 interface SmartSchedulingPageClientProps {
   strapiData?: SapCaThongMinhData | null;
 }
 
 export function SmartSchedulingPageClient({ strapiData }: SmartSchedulingPageClientProps) {
+  if (!strapiData) return null;
+
   // Hero data
-  const heroTitle = strapiData?.hero?.tieu_de ?? DEFAULT_HERO.title;
-  const heroDescription = strapiData?.hero?.mo_ta ?? DEFAULT_HERO.description;
-  const heroImage = DEFAULT_HERO_IMAGE;
-  const appStoreUrl = strapiData?.hero?.app_store_url ?? "#";
-  const googlePlayUrl = strapiData?.hero?.google_play_url ?? "#";
+  const heroTitle = strapiData.hero?.tieu_de ?? "";
+  const heroDescription = strapiData.hero?.mo_ta ?? "";
+  const heroImage = "/figma_assets/3d4deb506f9fd18b409cb0aafaf717ea62928e41.png";
+  const appStoreUrl = strapiData.hero?.app_store_url ?? "#";
+  const googlePlayUrl = strapiData.hero?.google_play_url ?? "#";
 
   // Why choose items
   const whyChooseItems =
-    strapiData?.why_choose?.cac_ly_do?.map((item) => item.tieu_de) ?? DEFAULT_WHY_CHOOSE;
+    strapiData.why_choose?.cac_ly_do?.map((item: { tieu_de: string }) => item.tieu_de) ?? [];
 
   // CTA data
-  const ctaTitle = strapiData?.cta?.tieu_de ?? DEFAULT_CTA.title;
-  const ctaSubtitle = strapiData?.cta?.mo_ta ?? DEFAULT_CTA.subtitle;
-  const ctaAppStoreUrl = strapiData?.cta?.app_store_url ?? "#";
-  const ctaGooglePlayUrl = strapiData?.cta?.google_play_url ?? "#";
+  const ctaTitle = strapiData.cta?.tieu_de ?? "";
+  const ctaSubtitle = strapiData.cta?.mo_ta ?? "";
+  const ctaAppStoreUrl = strapiData.cta?.app_store_url ?? "#";
+  const ctaGooglePlayUrl = strapiData.cta?.google_play_url ?? "#";
   const ctaImage =
-    getStrapiMediaUrl(strapiData?.cta?.hinh_anh) ??
+    getStrapiMediaUrl(strapiData.cta?.hinh_anh) ??
     "/images/recruitment/0fde196edc3946aa5fa9569f9c8de980a700b345.png";
 
   return (
@@ -74,12 +53,14 @@ export function SmartSchedulingPageClient({ strapiData }: SmartSchedulingPageCli
                 </p>
 
                 <ul className="mx-auto mb-8 max-w-lg space-y-3 text-left text-[14px] text-[#101828] md:text-[16px] lg:mx-0">
-                  {DEFAULT_HERO.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center gap-3">
-                      <span className="text-lg text-[#01CFCF]">&gt;</span>
-                      <span className="font-medium">{feature}</span>
-                    </li>
-                  ))}
+                  {["Tối ưu theo kỹ năng", "Giảm xung đột & OT", "Đồng bộ chấm công–lương"].map(
+                    (feature: string, idx: number) => (
+                      <li key={idx} className="flex items-center gap-3">
+                        <span className="text-lg text-[#01CFCF]">&gt;</span>
+                        <span className="font-medium">{feature}</span>
+                      </li>
+                    )
+                  )}
                 </ul>
 
                 <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6 lg:justify-start">
