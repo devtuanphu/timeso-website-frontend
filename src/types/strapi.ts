@@ -320,6 +320,32 @@ export interface ChinhSachBaoMatData {
   ngay_cap_nhat?: string;
 }
 
+// ==================== Footer Types ====================
+
+export interface ThongTinLienLac {
+  nhan: string;
+  gia_tri: string;
+  loai: "phone" | "email" | "zalo";
+}
+
+export interface LienKet {
+  nhan: string;
+  duong_dan: string;
+  icon?: StrapiMedia;
+}
+
+export interface ChanTrangData {
+  logo?: StrapiMedia;
+  lien_lac?: ThongTinLienLac[];
+  dieu_huong?: LienKet[];
+  mang_xa_hoi?: LienKet[];
+  app_store_url?: string;
+  google_play_url?: string;
+  ban_quyen?: string;
+  hotline?: string;
+  lien_ket_chinh_sach?: LienKet[];
+}
+
 // ==================== Collection Types ====================
 
 export interface BaiViet {

@@ -17,6 +17,7 @@ import type {
   KhachHang,
   DoiTac,
   StrapiMedia,
+  ChanTrangData,
 } from "@/types/strapi";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
@@ -300,6 +301,11 @@ export async function getTrangBlog(): Promise<TrangBlogData | null> {
 
 export async function getTrangCaseStudy(): Promise<TrangCaseStudyData | null> {
   const response = await fetchFromStrapi<TrangCaseStudyData>("trang-case-study");
+  return response?.data ?? null;
+}
+
+export async function getChanTrang(): Promise<ChanTrangData | null> {
+  const response = await fetchFromStrapi<ChanTrangData>("chan-trang");
   return response?.data ?? null;
 }
 
