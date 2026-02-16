@@ -77,7 +77,8 @@ export default async function Footer() {
   const data = await getChanTrang();
 
   // Resolve data with fallbacks
-  const logoUrl = (data?.logo ? getStrapiMediaUrl(data.logo) : null) || LOGO_IMAGE;
+  const strapiLogoUrl = getStrapiMediaUrl(data?.logo);
+  const logoUrl = strapiLogoUrl || LOGO_IMAGE;
   const contacts = data?.lien_lac?.length ? data.lien_lac : FALLBACK_CONTACTS;
   const navLinks = data?.dieu_huong?.length ? data.dieu_huong : FALLBACK_NAV_LINKS;
   const socialLinks = data?.mang_xa_hoi?.length ? data.mang_xa_hoi : FALLBACK_SOCIAL_LINKS;
@@ -101,6 +102,7 @@ export default async function Footer() {
               width={111}
               height={49}
               className="h-[40px] w-auto"
+              unoptimized={!!strapiLogoUrl}
             />
           </Link>
 
@@ -200,6 +202,7 @@ export default async function Footer() {
                 width={200}
                 height={49}
                 className="h-[64px] w-[111px]"
+                unoptimized={!!strapiLogoUrl}
               />
             </Link>
 

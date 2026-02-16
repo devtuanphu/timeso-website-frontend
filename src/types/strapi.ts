@@ -290,6 +290,14 @@ export interface VeChungToiData {
   cta?: CtaSection;
 }
 
+export interface TheLienHe {
+  icon?: StrapiMedia;
+  tieu_de: string;
+  mo_ta?: string;
+  gia_tri: string;
+  loai: "email" | "address" | "phone";
+}
+
 export interface LienHeData {
   seo?: SeoMeta;
   hero?: HeroSection;
@@ -298,6 +306,7 @@ export interface LienHeData {
   so_dien_thoai?: string;
   gio_lam_viec?: string;
   ban_do_url?: string;
+  the_lien_he?: TheLienHe[];
 }
 
 export interface TrangBlogData {

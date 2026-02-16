@@ -3,7 +3,42 @@
 import Image from "next/image";
 import ContactForm from "@/components/contact/ContactForm";
 import { AnimatedPageSection, AnimatedHero } from "@/components/ui";
-import type { LienHeData } from "@/types/strapi";
+import type { LienHeData, TheLienHe } from "@/types/strapi";
+import { getStrapiMediaUrl } from "@/lib/strapi";
+
+// Fallback card data
+const FALLBACK_CARDS: TheLienHe[] = [
+  {
+    tieu_de: "Chat to sales",
+    mo_ta: "Speak to our friendly team.",
+    gia_tri: "",
+    loai: "email",
+  },
+  {
+    tieu_de: "Visit us",
+    mo_ta: "Visit our office HQ.",
+    gia_tri: "",
+    loai: "address",
+  },
+  {
+    tieu_de: "Call us",
+    mo_ta: "",
+    gia_tri: "",
+    loai: "phone",
+  },
+];
+
+const FALLBACK_ICONS: Record<string, string> = {
+  email: "/images/contact/Featured icon.png",
+  address: "/images/contact/Featured icon2.png",
+  phone: "/images/contact/Featured icon3.png",
+};
+
+function getCardHref(loai: string, value: string): string {
+  if (loai === "email") return `mailto:${value}`;
+  if (loai === "phone") return `tel:${value.replace(/\s/g, "")}`;
+  return "#";
+}
 
 interface ContactPageClientProps {
   strapiData?: LienHeData | null;
@@ -15,11 +50,19 @@ export function ContactPageClient({ strapiData }: ContactPageClientProps) {
   // Hero image
   const heroImage = "/figma_assets/463c3571bb784baeb275a97250798b8cbdc26b2c.png";
 
-  // Contact info
+  // Contact info (used as fallback values for cards)
   const email = strapiData.email ?? "";
   const address = strapiData.dia_chi ?? "";
   const phone = strapiData.so_dien_thoai ?? "";
   const hours = strapiData.gio_lam_viec ?? "";
+
+  // Build cards from CMS data or fallback
+  const cmsCards = strapiData.the_lien_he?.length ? strapiData.the_lien_he : null;
+  const cards = cmsCards || FALLBACK_CARDS.map((card) => ({
+    ...card,
+    gia_tri: card.loai === "email" ? email : card.loai === "address" ? address : phone,
+    mo_ta: card.loai === "phone" ? hours : card.mo_ta,
+  }));
 
   return (
     <div className="min-h-screen bg-white">
@@ -58,52 +101,33 @@ export function ContactPageClient({ strapiData }: ContactPageClientProps) {
       <AnimatedPageSection delay={0.1}>
         <div className="container mx-auto px-4 py-16 md:py-24">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {/* Chat Card */}
-            <div className="rounded-2xl bg-white p-6">
-              <div className="mb-6">
-                <Image src="/images/contact/Featured icon.png" alt="Chat" width={48} height={48} />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold text-[#101828]">Chat to sales</h3>
-              <p className="mb-4 text-base text-[#475467]">Speak to our friendly team.</p>
-              <a href={`mailto:${email}`} className="font-semibold text-[#01CFCF] hover:underline">
-                {email}
-              </a>
-            </div>
-
-            {/* Visit Card */}
-            <div className="rounded-2xl bg-white p-6">
-              <div className="mb-6">
-                <Image
-                  src="/images/contact/Featured icon2.png"
-                  alt="Visit"
-                  width={48}
-                  height={48}
-                />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold text-[#101828]">Visit us</h3>
-              <p className="mb-4 text-base text-[#475467]">Visit our office HQ.</p>
-              <a
-                href="#"
-                className="font-semibold whitespace-pre-line text-[#01CFCF] hover:underline"
-              >
-                {address}
-              </a>
-            </div>
-
-            {/* Call Card */}
-            <div className="rounded-2xl bg-white p-6">
-              <div className="mb-6">
-                <Image src="/images/contact/Featured icon3.png" alt="Call" width={48} height={48} />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold text-[#101828]">Call us</h3>
-              <p className="mb-4 text-base text-[#475467]">{hours}</p>
-              <a
-                href={`tel:${phone.replace(/\s/g, "")}`}
-                className="font-semibold text-[#01CFCF] hover:underline"
-              >
-                {phone}
-              </a>
-            </div>
+            {cards.map((card, idx) => {
+              const strapiIconUrl = getStrapiMediaUrl(card.icon);
+              const iconSrc = strapiIconUrl || FALLBACK_ICONS[card.loai] || FALLBACK_ICONS.email;
+              return (
+                <div key={idx} className="rounded-2xl bg-white p-6">
+                  <div className="mb-6">
+                    <Image
+                      src={iconSrc}
+                      alt={card.tieu_de}
+                      width={48}
+                      height={48}
+                      unoptimized={!!strapiIconUrl}
+                    />
+                  </div>
+                  <h3 className="mb-2 text-xl font-semibold text-[#101828]">{card.tieu_de}</h3>
+                  {card.mo_ta && (
+                    <p className="mb-4 text-base text-[#475467]">{card.mo_ta}</p>
+                  )}
+                  <a
+                    href={getCardHref(card.loai, card.gia_tri)}
+                    className="font-semibold whitespace-pre-line text-[#01CFCF] hover:underline"
+                  >
+                    {card.gia_tri}
+                  </a>
+                </div>
+              );
+            })}
           </div>
         </div>
       </AnimatedPageSection>
