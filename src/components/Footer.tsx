@@ -101,7 +101,6 @@ export default async function Footer() {
               alt="Timeso"
               width={111}
               height={49}
-              className="h-[40px] w-auto"
               unoptimized={!!strapiLogoUrl}
             />
           </Link>
@@ -201,7 +200,6 @@ export default async function Footer() {
                 alt="Timeso"
                 width={200}
                 height={49}
-                className="h-[64px] w-[111px]"
                 unoptimized={!!strapiLogoUrl}
               />
             </Link>
