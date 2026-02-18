@@ -36,9 +36,9 @@ export default function BottomCTA({ data }: BottomCTAProps) {
           <h2 className="text-2xl leading-tight font-bold tracking-tight text-[#00BAC7] uppercase md:text-[48px] md:leading-[58px] md:tracking-[-0.96px]">
             {title}
           </h2>
-          <p className="mb-4 text-xl leading-tight font-medium text-[#101828] md:mb-[20px] md:text-[36px] md:leading-[44px]">
+          {/* <p className="mb-4 text-xl leading-tight font-medium text-[#101828] md:mb-[20px] md:text-[36px] md:leading-[44px]">
             {description}
-          </p>
+          </p> */}
 
           {/* Description */}
           <p className="mb-6 text-sm leading-relaxed text-[#475467] md:mb-[40px] md:max-w-[486px] md:text-[16px] md:leading-[30px]">
