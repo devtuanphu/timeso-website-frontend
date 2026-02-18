@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
         hostname: "admin.dichvuthammyhanoi.com",
         pathname: "/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "cms.timeso.vn",
+        pathname: "/uploads/**",
+      },
     ],
   },
 };

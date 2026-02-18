@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { AnimatedPageSection, AnimatedHero } from "@/components/ui";
 import type { TuyenDungData } from "@/types/strapi";
 import { getStrapiMediaUrl } from "@/lib/strapi";
@@ -515,7 +514,7 @@ export function RecruitmentPageClient({ strapiData }: RecruitmentPageClientProps
           </div>
         </section>
       </AnimatedPageSection>
-      <Footer />
+
     </>
   );
 }

@@ -41,7 +41,7 @@ export default function AboutPageClient({ strapiData, teamMembers }: AboutPageCl
   const coreValues =
     strapiData.gia_tri_cot_loi?.map(
       (item: { tieu_de: string; mo_ta?: string; icon?: unknown }, i: number) => ({
-        icon: getStrapiMediaUrl(item.icon as import("@/types/strapi").StrapiMedia) ?? "",
+        icon: getStrapiMediaUrl(item.icon as import("@/types/strapi").StrapiMedia) ?? "/images/placeholder.svg",
         iconBg: ICON_BG_COLORS[i] ?? "#21D4D4",
         title: item.tieu_de,
         description: item.mo_ta ?? "",
@@ -54,7 +54,7 @@ export default function AboutPageClient({ strapiData, teamMembers }: AboutPageCl
       name: member.ten,
       role: member.chuc_vu ?? "",
       description: member.mo_ta ?? "",
-      image: getStrapiMediaUrl(member.avatar) ?? "",
+      image: getStrapiMediaUrl(member.avatar) ?? "/images/placeholder.svg",
     })) ?? [];
 
   return (
@@ -632,7 +632,7 @@ function TeamMemberCard({
   return (
     <div className="relative h-[450px] overflow-hidden rounded-[16px] md:h-[520px] md:rounded-[20px]">
       {/* Full-height Background Image */}
-      <Image src={member.image} alt={member.name} fill className="object-cover" />
+      {member.image && <Image src={member.image} alt={member.name} fill className="object-cover" />}
 
       {/* Glassmorphism Content Box at bottom */}
       <div
